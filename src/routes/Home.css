@@ -69,7 +69,7 @@
   position: absolute;
   /* left: 200px; */
   /* bottom: 15px; */
-  left: 8.5vw;
+  left: 18vw;
   color: black;
   background: rgb(90, 210, 216);
   font-size: 13px;
@@ -190,6 +190,6 @@ form{
     margin-top: 0px;
   }
   .removePlay{
-    left: 25vw;
+    left: 32vw;
   }
 }
