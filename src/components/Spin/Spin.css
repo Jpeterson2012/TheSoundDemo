@@ -112,7 +112,7 @@
   }
 
   @media(min-height: 1000px){    
-    .svgContainer{
+    /* .svgContainer{
       max-width: 900px;
     }
     .svgImage{
@@ -124,7 +124,7 @@
       width: 600px;
       height: 490px;
       right: 127px;
-    }
+    } */
     #svg3{
       width: 600px;
       height: 590px;
