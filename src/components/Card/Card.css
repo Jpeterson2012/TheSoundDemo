@@ -1,0 +1,53 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 285px;
+    margin-bottom: 50px;
+    /* background-color: #212351; */
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);  
+    border-radius: 10px;
+    z-index: 1;
+    position: relative;
+    animation: fadeIn 0.5s;
+
+    font-size: 17px;
+    color: rgb(90, 210, 216);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    
+    /* display: flex;
+    flex-direction: column; */
+
+    
+  }
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+a {
+  cursor: pointer;
+}
+a:hover{
+  color: black
+}
+
+
+img {
+  border-radius: 10px;
+}
+p {
+  color: rgb(90, 210, 216);
+  font-size: 17px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; 
+} 
+@keyframes fadeIn {
+  0%{
+      opacity: 0;
+  }
+  100%{
+      opacity: 1;
+  }
+}

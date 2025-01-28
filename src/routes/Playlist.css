@@ -1,0 +1,39 @@
+div .fade-in-imageP{
+    animation: fadeIn 0.5s;
+    margin-left: 1vw;
+    position: relative;
+}
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+#deleteSong{
+    position: absolute;
+    left: 180px;
+    cursor: pointer;
+}
+.lolP{
+    margin-left: 65vw;
+    font-weight: bolder;
+    font-size: large;
+    font-family: Arial,Helvetica, sans-serif;
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+@media(min-height: 1000px){
+    #deleteSong{
+        left: 600px;
+    }
+    .lolP{
+        margin-left: 55.4vw;
+    }
+    
+}

@@ -1,0 +1,132 @@
+.svgContainer{
+    display: flex;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;    
+    /* margin-bottom: 100px;       */
+    align-items: center;
+    animation: fadeIn 0.5s;
+  }
+
+  .svgImage{
+    height: 359px;
+    width: 359px;
+    
+    position: relative;
+    left: 100px;
+    
+    z-index: 1;
+  }
+  #svg1 {
+    position: relative;
+    right: 100px;
+    z-index: 0;
+    /* position: absolute; */
+    
+    
+    width: 400px;
+    height: 390px;
+    border: 1px solid 0066ff;
+    background: black;
+    overflow: hidden;      
+  }
+  #svg2{
+    z-index: 0;
+    position: absolute;
+    left: 17px;
+    bottom: -2px;
+    width: 80px;
+    height: 70px;
+    border: 1px solid 0066ff;
+    background: black;
+  }
+  #svg3{
+    width: 400px;
+    height: 390px;
+    border: 1px solid 0066ff;
+    background: black;
+    overflow: hidden;
+  }
+  
+  @keyframes spin {
+    100%{transform: rotate(360deg);}
+  }
+  
+  #record,#record2 {
+    transform-origin: center center;
+    animation: spin 2.5s linear infinite;
+  }
+  #record3{
+    transform-origin: center center;
+    animation: spin 1.25s reverse linear infinite;
+  }
+  
+  .line1 {
+    stroke: #cc33ff;
+    stroke-width: 2;
+  }
+  .line2{
+    stroke: #d093e5;
+    stroke-width: 2;
+  }
+  .line3{
+    stroke: #4d73ad;
+    stroke-width: 2;
+  }
+  .line4 {
+    stroke: #d093e5;
+    stroke-width: 2;
+  }
+  .line5{
+    stroke: #4d73ad;
+    stroke-width: 2;
+  }
+  .line6{
+    stroke: #cc33ff;
+    stroke-width: 2;
+  }
+  .line7 {
+    stroke: #cc33ff;    
+    stroke-width: 4;
+  }
+  .line8{
+    stroke: #d093e5;
+    stroke-width: 4;
+  }
+  .line9{
+    stroke: #4d73ad;
+    stroke-width: 4;
+  }
+  .writing{
+    font-weight: bold;    
+  }
+
+  @keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+  }
+
+  @media(min-height: 1000px){    
+    .svgContainer{
+      max-width: 900px;
+    }
+    .svgImage{
+      width: 433px;
+      height: 433px;
+      left: 102px;
+    }
+    #svg1{
+      width: 600px;
+      height: 490px;
+      right: 127px;
+    }
+    #svg3{
+      width: 600px;
+      height: 590px;
+    }
+  }

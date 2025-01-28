@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ES5", "ES6", "DOM", "DOM.Iterable"
+    ]
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

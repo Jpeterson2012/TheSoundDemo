@@ -1,0 +1,101 @@
+.topDiv{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.albumImage{
+    height: 359px;
+    position: absolute;
+    right: 440px;
+    top: 18px;
+    z-index: 1;
+}
+.topDiv h2{
+    margin-left: auto;
+    margin-right: auto;
+}
+.artistName{
+    font-weight: bolder;
+}
+.albumDescription{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: rgb(90, 210, 216);
+}
+.innerDescription{
+    display: flex;
+    margin-right: 10px;
+}
+.desc1{
+    margin-right: 5px;
+}
+.tinyArtist{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;    
+}
+
+.uTitle,.uTitle2 {
+    font-weight: bolder;
+    font-size: large;
+    font-family: Arial,Helvetica, sans-serif;
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.fade-in-image2{
+    animation: fadeIn 0.5s;
+    margin-left: 28vw;
+    margin-top: 30px;
+     /* margin-bottom: 450px; */
+    /* position: relative; */
+     
+}
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+  
+  @keyframes pulse3 {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(238, 238, 238, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgb(90, 210, 216);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgb(90, 210, 216);
+    }
+}
+
+@media(min-height: 1000px){
+    .fade-in-image2{
+        margin-left: 19.2vw;
+    }    
+    .topDiv{
+        margin-top: 0px;
+    }
+    .albumImage{
+        height: 459px;
+        right: 500px;
+    }
+    .artistName{
+        margin-top: 10vw;
+        font-size: 35px;
+    }
+  }
+  
+  

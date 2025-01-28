@@ -1,0 +1,27 @@
+.renderImage{
+    /* height: 300px;
+    width: 300px;
+    margin-right: 50px; */    
+    animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.mainRender{
+    /* height: 300px;
+    width: 300px;
+    margin-right: 50px;        */
+}
+.subRender{
+    display: flex;    
+}
+.subsubRender{
+    /* height: 150px;
+    width: 150px; */
+    /* border-radius: 0; */
+}

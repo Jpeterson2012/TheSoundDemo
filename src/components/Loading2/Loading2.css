@@ -1,0 +1,93 @@
+  
+  .muzieknootjes2 {
+    display: block;
+    margin: auto;
+    position: relative;
+    width: 50%;
+    min-width: 300px;
+    height: 200px;
+    border: 0px solid #000;
+  }
+  
+  .tnoot-2,
+  .tnoot-1,
+  .tnoot-3,
+  .tnoot-4,
+  .tnoot-5,
+  .tnoot-6,
+  .tnoot-7,
+  .tnoot-8 {
+    position: absolute;
+    animation: notes 2s infinite linear;
+    font-size: 35px;
+    opacity: 0;
+    color: #0066ff;
+  }
+  
+  .tnoot-1 {
+    top: 60px;
+    left: 0;
+    animation-delay: 0.5s;
+  }
+  
+  .tnoot-2 {
+    top: 30px;
+    left: 30%;
+    animation-delay: 1s;
+  }
+  
+  .tnoot-3 {
+    top: 90px;
+    left: 60%;
+    animation-delay: 1.5s;
+  }
+  
+  .tnoot-4 {
+    top: 40px;
+    left: 90%;
+    animation-delay: 2s;
+  }
+
+  .tnoot-5 {
+    top: 70px;
+    left: 50%;
+    animation-delay: 0.75s;
+  }
+  
+  .tnoot-6 {
+    top: 20px;
+    left: 40%;
+    animation-delay: 1.25s;
+  }
+  
+  .tnoot-7 {
+    top: 100px;
+    left: 45%;
+    animation-delay: 1.75s;
+  }
+  
+  .tnoot-8 {
+    top: 35px;
+    left: 80%;
+    animation-delay: 2.1s;
+  }
+  
+  @keyframes notes {
+    0% {
+      transform: scale(1) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.5) translate(50%, -50%);
+    }
+    80% {
+      opacity: 0;
+      transform: scale(1.5) translate(100%, -100%);
+    }
+    100% {
+      transform: scale(1.5) translate(100%, -100%);
+      opacity: 0;
+    }
+  }
+  

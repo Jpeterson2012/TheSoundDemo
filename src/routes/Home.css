@@ -1,0 +1,195 @@
+.fade-in-image{
+  animation: fadeIn 0.5s;
+}
+.homeButtons{
+  animation: fadeIn 0.5s;
+  position: relative;
+}
+@keyframes fadeIn {
+  0%{
+      opacity: 0;
+  }
+  100%{
+      opacity: 1;
+  }
+}
+.dropbtn {
+  background-color: rgb(90, 210, 216);
+  color: black;
+  /* padding: 16px; */
+  font-size: 16px;
+  border: none;
+  position: relative;
+  /* left: 200px; */
+  animation: fadeIn 0.5s;
+  
+}
+.theme{
+  height: 40px;
+  width: 65px;
+  margin: 5px;
+  font-size: 12px;
+  background-color: rgb(90, 210, 216);
+  color: black;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  /* left: 200px; */
+  background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 16px;
+  z-index: 2;
+}
+
+.removeAlbum{
+  display: none;
+  position: absolute;
+  /* left: 200px; */
+  /* bottom: 15px; */
+  color: black;
+  background: rgb(90, 210, 216);
+  font-size: 13px;
+  width: 130px;
+  height: 50px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 16px;
+  z-index: 2;
+}
+.removePlay{
+  display: none;
+  position: absolute;
+  /* left: 200px; */
+  /* bottom: 15px; */
+  left: 8.5vw;
+  color: black;
+  background: rgb(90, 210, 216);
+  font-size: 13px;
+  width: 130px;
+  height: 50px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 16px;
+  z-index: 2;
+}
+
+/* Links inside the dropdown */
+/* .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+} */
+
+/* Change color of dropdown links on hover */
+.dropdown-content, a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+.removeContainer:hover .removeAlbum {display: block;}
+.removePContainer:hover .removePlay {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #7a19e9;}
+
+.homeContainer{
+  /* margin-top: 40px; */
+  /* margin-bottom: 25vw; */
+}
+
+.addPlaylist{
+  margin: 0px;
+  cursor: pointer; 
+  border: 2px solid #7a19e9; 
+  color: rgb(90, 210, 216); 
+  border-radius: 50%;
+  height: 35px; 
+  width: 35px;
+  font-size: 30px;
+  position: relative;
+  left: 10vw;
+  top: 5px;
+  line-height: 28px;  
+  padding: 3px 5px;     
+  
+}
+.addPlaylist:hover{  
+  transform: scale(1);
+  animation: pulse3 1.5s infinite;
+}
+
+form label {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  text-align: left;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.wrap2 button{
+  position: relative;
+  width: 90%;
+  height: 65px;
+  margin-top: 35px;
+  color: white;
+  background-color: #0066ff;
+  /* left: 0; */
+  /* left: 150px; */
+  
+}
+form{
+  
+}
+#modal4{
+  margin: 0px !important;
+  padding: 15px !important;
+  min-width: 400px !important;
+  min-height: 370px !important;
+  overflow: hidden !important;  
+
+  background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+}
+
+@keyframes pulse3 {
+  0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(238, 238, 238, 0.7);
+  }
+
+  70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgb(90, 210, 216);
+  }
+
+  100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgb(90, 210, 216);
+  }
+}
+
+@media(min-height: 1000px){
+  .homeContainer{
+    margin-top: 0px;
+  }
+  .removePlay{
+    left: 24vw;
+  }
+}

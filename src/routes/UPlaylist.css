@@ -1,0 +1,136 @@
+div .fade-in-imageP{
+    animation: fadeIn 0.5s;
+    margin-left: 1vw;
+    position: relative;
+}
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+#deleteSong{
+    position: absolute;
+    left: 180px;
+    cursor: pointer;
+}
+.lolP2{
+    margin-left: 30px;
+}
+.lolP,.lolP2{    
+    font-weight: bolder;
+    font-size: large;
+    font-family: Arial,Helvetica, sans-serif;
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.mainImage{
+    height: 360px;
+     width: 350px;
+    z-index: 1; 
+    position: relative; 
+    right: 110px; 
+    top: 10px;
+}
+.mainImage2{
+    height: 360px;
+    width: 360px;    
+    margin: 0px;
+    padding: 0px;
+    z-index: 1;    
+    /* position: relative;  */
+    /* right: 110px;  */
+    
+}
+.subImage{
+    display: flex;    
+}
+.subsubImage{
+    height: 180px;
+    width: 180px;
+    border-radius: 0;
+}
+.removeAlbum1{
+    display: none;
+    position: absolute;
+    left: 2.5vw;
+    /* left: 200px; */
+    /* bottom: 15px; */
+    color: white;
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+    font-size: 10px;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 16px;
+    z-index: 2;
+}
+.removeAlbum2{
+    display: none;
+    position: absolute;
+    left: 2.5vw;
+    /* left: 200px; */
+    /* bottom: 15px; */
+    padding: 5px;
+    background: black;
+    font-size: 12px;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* border-radius: 16px; */
+    z-index: 2;
+}
+.removeContainer2:hover .removeAlbum2 {display: flex; flex-direction: column; gap: 10px}
+
+#mybtn{
+    display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 10vh; /* Place the button at the bottom of the page */
+  right: 2vw; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: rgb(90, 210, 216); /* Set a background color */
+  color: black; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+  width: 80px;
+  height: 40px;
+  line-height: 0px;
+}
+#mybtn:hover{
+    background-color: #555;
+}
+
+@media(min-height: 1000px){
+    #deleteSong{
+        left: 600px;
+    }
+    .lolP{
+        /* margin-left: 55.4vw; */
+    }
+    .mainImage{
+        height: 460px;
+        width: 450px;
+        right: 160px;
+    }
+    .mainImage2{
+        height: 400px;
+        width: 400px;
+        margin-bottom: 10px;
+    }
+    .subsubImage{
+        height: 192px;
+        width: 192px;
+    }
+    .removeAlbum2{
+        left: 4.8vw;
+    }
+    
+}

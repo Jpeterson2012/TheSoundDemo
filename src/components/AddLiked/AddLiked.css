@@ -1,0 +1,35 @@
+@keyframes pulse3 {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(238, 238, 238, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgb(90, 210, 216);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgb(90, 210, 216);
+    }
+}
+
+#addSong{
+  position: relative;
+  height: 35px; 
+  width: 35px;
+  font-size: 20px; 
+  margin-left: 23vw; 
+  margin-bottom: 25px; 
+  cursor: pointer; 
+  border: 2px solid #7a19e9; 
+  color: rgb(90, 210, 216); 
+  border-radius: 50%;
+}
+
+@media(min-height: 1000px){
+  #addSong{
+    margin-left: 34vw;     
+  }
+}
