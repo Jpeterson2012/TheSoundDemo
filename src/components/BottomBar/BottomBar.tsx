@@ -106,7 +106,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                     }}>
                     <span>
                     <img src={current_track.album.images[0]?.url} 
-                        className="now-playing__cover" alt="" style={{left: '-3px', bottom: '5px', zIndex: '1',position: 'absolute'}} />
+                        className="now-playing__cover" alt="" style={{left: '-3px', bottom: '0', zIndex: '1',position: 'absolute'}} />
                         <div>{is_active && Spin2(is_active,is_paused)}</div>
                     </span>
                     </a>
