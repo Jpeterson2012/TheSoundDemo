@@ -118,7 +118,7 @@ export default function Artist({paused}: any) {
     <p hidden>{count++}</p>
     </div>
   )
-  const listItems = artists2.filter((a: any) => a.album_group === 'album').map((a: any, i:any) =>
+  const listItems = artists2.albums?.items?.filter((a: any) => a.album_group === 'album').map((a: any, i:any) =>
     <div key={i}> 
       <h5>{a.release_date}</h5>
     <Card
@@ -133,7 +133,7 @@ export default function Artist({paused}: any) {
     </div>
   )
   
-  const listItems2 = artists2.filter((a: any) => a.album_group === 'single').map((a: any, i:any) =>
+  const listItems2 = artists2.albums?.items?.filter((a: any) => a.album_group === 'single').map((a: any, i:any) =>
     <div key={i}>
       <h5>{a.release_date}</h5>
     <Card
@@ -148,7 +148,7 @@ export default function Artist({paused}: any) {
     </div>
   )
 
-  const listItems3 = artists2.filter((a: any) => a.album_group === 'compilation').map((a: any, i: any) =>
+  const listItems3 = artists2.albums?.items?.filter((a: any) => a.album_group === 'compilation').map((a: any, i: any) =>
     <div key={i}>
       <h5>{a.release_date}</h5> 
     <Card
@@ -162,7 +162,7 @@ export default function Artist({paused}: any) {
     />
     </div>
   )
-  const listItems4 = artists2.filter((a: any) => a.album_group === 'appears_on').map((a: any, i:any) =>
+  const listItems4 = artists2.albums?.items?.filter((a: any) => a.album_group === 'appears_on').map((a: any, i:any) =>
     <div key={i}>
       <h5>{a.release_date}</h5> 
     <Card
