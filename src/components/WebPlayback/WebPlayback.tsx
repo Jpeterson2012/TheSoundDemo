@@ -63,7 +63,7 @@ export default function WebPlayback() {
                 fetch(import.meta.env.VITE_URL + "/token/refresh_token")
                 .then(data => data.json()).then(a => sessionStorage.setItem("token", a.items))
                 console.log(sessionStorage.getItem("token"))
-            },10000)
+            },1000 * 60 * 55)
             
             document.body.appendChild(script);
             
