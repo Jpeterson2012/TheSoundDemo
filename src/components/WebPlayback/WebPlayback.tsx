@@ -61,8 +61,9 @@ export default function WebPlayback() {
             //Handles refresh token
             setInterval(() => {
                 fetch(import.meta.env.VITE_URL + "/token/refresh_token")
-                .then(data => data.json()).then(a => sessionStorage.setItem("token", a.items))                
-            },1000 * 59 * 59)
+                .then(data => data.json()).then(a => sessionStorage.setItem("token", a.items))
+                console.log(sessionStorage.getItem("token"))
+            },10000)
             
             document.body.appendChild(script);
             
