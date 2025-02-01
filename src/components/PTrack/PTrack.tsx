@@ -27,7 +27,7 @@ export default function PTrack ( {uri, name, number, duration, liked, artist, t_
                 
                     const headers = {
                         "Content-Type": "application/json",
-                        Authorization: 'Bearer ' + localStorage.getItem("token")
+                        Authorization: 'Bearer ' + sessionStorage.getItem("token")
                     }
                     try{
                     fetch(url, {

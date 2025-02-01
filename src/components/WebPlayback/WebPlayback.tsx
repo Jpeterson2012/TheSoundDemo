@@ -54,9 +54,8 @@ export default function WebPlayback() {
             const fetchToken = async () => {
                 const response = await fetch(import.meta.env.VITE_URL + "/token")
                 const data = await response.json()
-                token = data.items
-                import.meta.env.VITE_TOKEN = data.items
-                localStorage.setItem("token", data.items)                
+                token = data.items                
+                sessionStorage.setItem("token", data.items)                
             }
             fetchToken()
             //Handles refresh token
