@@ -74,59 +74,59 @@ export default function RPlaylist({lastSegment, active, paused}: any){
           setLoading(false)
         }
         else{
-          const fetchpTracks = async () => {
-              // setLoading(true)
-              const resp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`,{
-                method: 'GET',
-                headers: {"Content-Type":"application/json"},
-              })
-              setLoading(false)
-              let reader = resp.body!.getReader()
-              let result
-              let temp
-              let a = []
-              let decoder = new TextDecoder('utf8')
-              while(!result?.done){
-                result = await reader.read()
-                if (!result?.done){
+          // const fetchpTracks = async () => {
+          //     // setLoading(true)
+          //     const resp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`,{
+          //       method: 'GET',
+          //       headers: {"Content-Type":"application/json"},
+          //     })
+          //     setLoading(false)
+          //     let reader = resp.body!.getReader()
+          //     let result
+          //     let temp
+          //     let a = []
+          //     let decoder = new TextDecoder('utf8')
+          //     while(!result?.done){
+          //       result = await reader.read()
+          //       if (!result?.done){
                   
-                let chunk = decoder.decode(result.value)
-                console.log(chunk ? JSON.parse(chunk) : {})                
-                total ? null : setTotal(JSON.parse(chunk).total),
-                temp = JSON.parse(chunk).items,
-                a.push(...temp),  
-                setpTracks([...a])                
-                }
-              }
-              // console.log(ptracks)
+          //       let chunk = decoder.decode(result.value)
+          //       console.log(chunk ? JSON.parse(chunk) : {})                
+          //       total ? null : setTotal(JSON.parse(chunk).total),
+          //       temp = JSON.parse(chunk).items,
+          //       a.push(...temp),  
+          //       setpTracks([...a])                
+          //       }
+          //     }
+          //     // console.log(ptracks)
         
-          }
-          fetchpTracks()
+          // }
+          // fetchpTracks()
 
 
 
-        //   const fetchTracks = async () => {
-        //     try {
-        //         var temp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`)
-        //       .then((res) => {
-        //         // console.log(res.json())
-        //         return res.json();
-        //       }).then((data) => {return data})
-        //         return temp
-        //       }
-        //       catch (err) {}
-        // }
-        // const assignTracks = async () => {
-        //   // setIsLoading(true)
-        //   const tempTracks = await fetchTracks()
-        //   setLoading(false)
-        //   console.log(tempTracks)
-        //   setpTracks(tempTracks.items)
-        //   // sessionStorage.setItem("ref_id", lastSegment!)
-        //   // sessionStorage.setItem("ref_items", JSON.stringify(tempTracks))
+          const fetchTracks = async () => {
+            try {
+                var temp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`)
+              .then((res) => {
+                // console.log(res.json())
+                return res.json();
+              }).then((data) => {return data})
+                return temp
+              }
+              catch (err) {}
+        }
+        const assignTracks = async () => {
+          // setIsLoading(true)
+          const tempTracks = await fetchTracks()
+          setLoading(false)
+          console.log(tempTracks)
+          setpTracks(tempTracks.items)
+          // sessionStorage.setItem("ref_id", lastSegment!)
+          // sessionStorage.setItem("ref_items", JSON.stringify(tempTracks))
   
-        // }
-        // assignTracks()
+        }
+        assignTracks()
 
         }            
         

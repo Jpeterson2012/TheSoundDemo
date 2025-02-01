@@ -39,55 +39,55 @@ export default function Artist({paused}: any) {
     }
     assignArtists()    
 
-  //   const fetchArtist2 = async () => {
-  //     try {
-  //         var temp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`)
-  //       .then((res) => {
-  //         // console.log(res.json())
-  //         return res.json();
-  //       }).then((data) => {return data})
-  //         return temp
-  //       }
-  //       catch (err) {}
-  // }
-  // const assignArtists2 = async () => {
-  //   // setLoading(true)
-  //   const tempArtists2 = await fetchArtist2()    
-  //   setLoading2(false)
-  //   setArtists2(tempArtists2)
-
-  // }
-  // assignArtists2()
-
-
-
-  const fetchArtist2 = async () => {
-    const resp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{
-      method: 'GET',
-      headers: {"Content-Type":"application/json"},
-    })
-    setLoading2(false)
-    let reader = resp.body!.getReader()
-    let result
-    let temp
-    let a = []
-    let decoder = new TextDecoder('utf8')
-    while(!result?.done){
-      result = await reader.read()
-      if (!result?.done){
-      let chunk = decoder.decode(result.value)
-      // console.log(chunk ? JSON.parse(chunk) : {})
-      // console.log('\n')
-                   
-      temp = JSON.parse(chunk).albums.items,
-      a.push(...temp),  
-      // a.push(...artists2),
-      setArtists2([...a])
-      }
-    
-    }
+    const fetchArtist2 = async () => {
+      try {
+          var temp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`)
+        .then((res) => {
+          // console.log(res.json())
+          return res.json();
+        }).then((data) => {return data})
+          return temp
+        }
+        catch (err) {}
   }
-    fetchArtist2()
+  const assignArtists2 = async () => {
+    // setLoading(true)
+    const tempArtists2 = await fetchArtist2()    
+    setLoading2(false)
+    setArtists2(tempArtists2)
+
+  }
+  assignArtists2()
+
+
+
+  // const fetchArtist2 = async () => {
+  //   const resp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{
+  //     method: 'GET',
+  //     headers: {"Content-Type":"application/json"},
+  //   })
+  //   setLoading2(false)
+  //   let reader = resp.body!.getReader()
+  //   let result
+  //   let temp
+  //   let a = []
+  //   let decoder = new TextDecoder('utf8')
+  //   while(!result?.done){
+  //     result = await reader.read()
+  //     if (!result?.done){
+  //     let chunk = decoder.decode(result.value)
+  //     // console.log(chunk ? JSON.parse(chunk) : {})
+  //     // console.log('\n')
+                   
+  //     temp = JSON.parse(chunk).albums.items,
+  //     a.push(...temp),  
+  //     // a.push(...artists2),
+  //     setArtists2([...a])
+  //     }
+    
+  //   }
+  // }
+  //   fetchArtist2()
 
 
     // console.log(artists2)
