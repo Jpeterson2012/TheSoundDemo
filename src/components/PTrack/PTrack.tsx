@@ -11,12 +11,13 @@ function timeCalc (ms: number) {
 }
 
 export default function PTrack ( {uri, name, number, duration, liked, artist, t_uri, pause}: any ) {
+    
     const artists = JSON.parse(sessionStorage.getItem("currentTrack")!)
     return (
         <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
             <a onClick={function handleClick () {
-                
-                // sessionStorage.setItem("name", sessionStorage.getItem("playlist_name"))
+                                                
+                sessionStorage.setItem("name", sessionStorage.getItem("playlist_name")!)
                 if (sessionStorage.getItem("currentContext")! === null || sessionStorage.getItem("currentContext")! === "null"){
                     var url = `https://api.spotify.com/v1/me/player/play?device_id=${sessionStorage.getItem("device_id")}`
                 }
@@ -26,9 +27,9 @@ export default function PTrack ( {uri, name, number, duration, liked, artist, t_
                 
                     const headers = {
                         "Content-Type": "application/json",
-                        Authorization: 'Bearer ' + sessionStorage.getItem("token")
+                        Authorization: 'Bearer ' + localStorage.getItem("token")
                     }
-                    
+                    try{
                     fetch(url, {
                         method: 'PUT',
                         headers: headers,
@@ -36,6 +37,8 @@ export default function PTrack ( {uri, name, number, duration, liked, artist, t_
                         // body: liked !== null ? JSON.stringify({uris: liked, offset: {position: number}}) : JSON.stringify({context_uri: uri, offset: {position: number}})
                         body: JSON.stringify({uris: liked, offset: {position: number}})
                     })
+                    }
+                    catch(e) {console.log(e)}
                 
             }}>
             <div>            

@@ -13,9 +13,9 @@ import { useGetUserQuery,useGetAlbumsQuery, useGetPlaylistsQuery } from '../../A
 function getTracks(ptracks: any) {
     var key = 0
     return (
-      ptracks.map((t:any) =>
+      ptracks.map((t:any, i:any) =>
   
-        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center'}}>
+        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center'}} key={i}>
             
             <img src={t.images.filter((t:any) => t.height == 64).map((s:any) => s.url)} style={{height: '64px', width: '64px'}}/>
             <Track 
@@ -38,7 +38,7 @@ function getTracks(ptracks: any) {
     
     return (
       palbums.map((t:any) =>
-        <a onClick={function handleClick() {
+        <a key={t.id} onClick={function handleClick() {
           
           //Check if album is already in library or not
           let found = albumss?.find((e: any) => e?.album_id === t.id)
@@ -68,7 +68,7 @@ function getTracks(ptracks: any) {
   function getArtists(partists: any, nav: any, close: any){
     return (
       partists.map((a:any) => 
-        <a onClick={function handleClick() {
+        <a key={a.id} onClick={function handleClick() {
           nav(`/app/artist/${a.id}`)
           close()
         }}>
@@ -84,7 +84,7 @@ function getTracks(ptracks: any) {
   function getPlaylists(plistss:any,plists: any, nav: any, close: any){
     return (
       plists.map((a:any) =>
-      <>
+      <div key={a.id}>
 
       <a onClick={function handleClick() {
         let found = plistss?.find((e: any) => e?.playlist_id === a.id)
@@ -103,7 +103,7 @@ function getTracks(ptracks: any) {
       <br></br>
       </a>
       
-    </>
+    </div>
       )
     )
   }
@@ -111,7 +111,7 @@ function getTracks(ptracks: any) {
 let counter = 0
 
 export default function Logo () {
-    const navigate = useNavigate()
+    const navigate: any = useNavigate()
 
     const [html, setHtml] = useState<any>(null)
     const [tracks, setTracks] = useState<any>([]);
@@ -119,7 +119,7 @@ export default function Logo () {
     const [plist, setPlist] = useState<any>([]);
     const [artist, setArtist] = useState<any>([])
     const {data: albumss = []} = useGetAlbumsQuery()
-    const {data: playlists = []} = useGetPlaylistsQuery()
+    const {data: playlists = [], refetch} = useGetPlaylistsQuery()
     
 
     const [open, setOpen] = useState(false);
@@ -129,7 +129,7 @@ export default function Logo () {
     const fetchSearch = async () => {
 
       try {
-        var temp = await fetch(`https://playground.jmpeterson.dev/auth/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`)
+        var temp = await fetch(import.meta.env.VITE_URL + `/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`)
       .then((res) => {
         // console.log(res.json())
         return res.json();
@@ -186,14 +186,14 @@ export default function Logo () {
               <h2 className='userName'>{isSuccess ? user!.items : 'hi'}</h2>
 
               <h2 className='navIcon1' onClick={function handleClick(){
-                if (window.history?.length && window.history.length > 1) navigate(-1)
+                if (window.history?.length && window.history.length > 1) navigate(-1, {replace: true})
                 else navigate('/app/', {replace: true})
               }}>{"<"}</h2>
 
               <img className='searchimg' src={search} onClick={function handleClick(){onOpenModal()}} />
 
               <h2 className='navIcon2' onClick={function handleClick(){
-                if (window.history?.length && window.history.length > 1) navigate(1)
+                if (window.history?.length && window.history.length > 1) navigate(1, {replace: true})
                   else navigate('/app/', {replace: true})
               }}>{">"}</h2>
               
@@ -216,7 +216,7 @@ export default function Logo () {
 
                         setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); counter = 0;
 
-                        console.log((document.getElementById("searchTerm") as HTMLInputElement).value);
+                        // console.log((document.getElementById("searchTerm") as HTMLInputElement).value);
                         let t = document.getElementById('modalbuttons')!
                         t.style.display = 'flex'
                         t.style.animation = 'fadeIn 0.5s'

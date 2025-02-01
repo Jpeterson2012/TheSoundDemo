@@ -14,10 +14,10 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
   return (
     ptracks?.map((t: any) => 
 
-      <div style={{display: 'flex', alignItems: 'center'}} >
+      <div style={{display: 'flex', alignItems: 'center'}} key={t.uri.split(':').pop()}>
 
           <p hidden>{liked_urls.push(t.uri)}</p>  
-          {!paused ? <span style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+          {!paused ? <span style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0]?.name === t.artist[0]?.name)) ? musicBar() : null}</span> : null}
           <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
 
           <button className="removeAlbum3" onClick={function handleClick(){        
@@ -60,9 +60,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
 
     var liked_uris: any = []
 
-    useEffect (() => {            
-      console.log(found)    
-      // console.log(loading)
+    useEffect (() => {                 
           
         if (sessionStorage.getItem("ref_id") === lastSegment) {
           setpTracks(JSON.parse(sessionStorage.getItem("ref_items")!))
@@ -70,58 +68,59 @@ export default function RPlaylist({lastSegment, active, paused}: any){
           setLoading(false)
         }
         else{
-          // const fetchpTracks = async () => {
-          //     // setLoading(true)
-          //     const resp = await fetch(`https://playground.jmpeterson.dev/auth/ptracks/${lastSegment}`,{
-          //       method: 'GET',
-          //       headers: {"Content-Type":"application/json"},
-          //     })
-          //     setLoading(false)
-          //     let reader = resp.body!.getReader()
-          //     let result
-          //     let temp
-          //     let a = []
-          //     let decoder = new TextDecoder('utf8')
-          //     while(!result?.done){
-          //       result = await reader.read()
-          //       if (!result?.done){
+          const fetchpTracks = async () => {
+              // setLoading(true)
+              const resp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`,{
+                method: 'GET',
+                headers: {"Content-Type":"application/json"},
+              })
+              setLoading(false)
+              let reader = resp.body!.getReader()
+              let result
+              let temp
+              let a = []
+              let decoder = new TextDecoder('utf8')
+              while(!result?.done){
+                result = await reader.read()
+                if (!result?.done){
                   
-          //       let chunk = decoder.decode(result.value)
-          //       // console.log(chunk ? JSON.parse(chunk) : {})                
-          //       total ? null : setTotal(JSON.parse(chunk).total),
-          //       temp = JSON.parse(chunk).items,
-          //       a.push(...temp),  
-          //       setpTracks([...a])                
-          //       }
-          //     }
-        
-          // }
-          // fetchpTracks()
-
-
-
-          const fetchTracks = async () => {
-            try {
-                var temp = await fetch(`https://playground.jmpeterson.dev/auth/ptracks/${lastSegment}`)
-              .then((res) => {
-                // console.log(res.json())
-                return res.json();
-              }).then((data) => {return data})
-                return temp
+                let chunk = decoder.decode(result.value)
+                // console.log(chunk ? JSON.parse(chunk) : {})                
+                total ? null : setTotal(JSON.parse(chunk).total),
+                temp = JSON.parse(chunk).items,
+                a.push(...temp),  
+                setpTracks([...a])                
+                }
               }
-              catch (err) {}
-        }
-        const assignTracks = async () => {
-          // setIsLoading(true)
-          const tempTracks = await fetchTracks()
-          setLoading(false)
-          console.log(tempTracks)
-          setpTracks(tempTracks.items)
-          sessionStorage.setItem("ref_id", lastSegment!)
-          sessionStorage.setItem("ref_items", JSON.stringify(tempTracks))
+              // console.log(ptracks)
+        
+          }
+          fetchpTracks()
+
+
+
+        //   const fetchTracks = async () => {
+        //     try {
+        //         var temp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`)
+        //       .then((res) => {
+        //         // console.log(res.json())
+        //         return res.json();
+        //       }).then((data) => {return data})
+        //         return temp
+        //       }
+        //       catch (err) {}
+        // }
+        // const assignTracks = async () => {
+        //   // setIsLoading(true)
+        //   const tempTracks = await fetchTracks()
+        //   setLoading(false)
+        //   console.log(tempTracks)
+        //   setpTracks(tempTracks.items)
+        //   // sessionStorage.setItem("ref_id", lastSegment!)
+        //   // sessionStorage.setItem("ref_items", JSON.stringify(tempTracks))
   
-        }
-        assignTracks()
+        // }
+        // assignTracks()
 
         }            
         
@@ -159,7 +158,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                       if (found === undefined ){           
                                         setSnack(true)         
                                           setTimeout (() => {
-                                            fetch(`https://playground.jmpeterson.dev/auth/users/playlist`, {
+                                            fetch(import.meta.env.VITE_URL + `/users/playlist`, {
                                               method: 'POST',
                                               headers: {"Content-Type":"application/json"},
                                               body: JSON.stringify({id: lastSegment,name: sessionStorage.getItem("playlist_name"), images: JSON.parse(sessionStorage.getItem("fullp_image")!)})                                        

@@ -22,7 +22,7 @@ export default function Artist({paused}: any) {
     lastSegment! !== id ? setArtists2([]): null
     const fetchArtist = async () => {
         try {
-            var temp = await fetch(`https://playground.jmpeterson.dev/auth/artists/${lastSegment}`)
+            var temp = await fetch(import.meta.env.VITE_URL + `/artists/${lastSegment}`)
           .then((res) => {
             // console.log(res.json())
             return res.json();
@@ -39,56 +39,55 @@ export default function Artist({paused}: any) {
     }
     assignArtists()    
 
-    const fetchArtist2 = async () => {
-      try {
-          var temp = await fetch(`https://playground.jmpeterson.dev/auth/artists2/${lastSegment}`)
-        .then((res) => {
-          // console.log(res.json())
-          return res.json();
-        }).then((data) => {return data})
-          return temp
-        }
-        catch (err) {}
-  }
-  const assignArtists2 = async () => {
-    // setLoading(true)
-    const tempArtists2 = await fetchArtist2()   
-    console.log(tempArtists2) 
-    setLoading2(false)
-    setArtists2(tempArtists2)
-
-  }
-  assignArtists2()
-
-
-
-  // const fetchArtist2 = async () => {
-  //   const resp = await fetch(`https://playground.jmpeterson.dev/auth/artists2/${lastSegment}`,{
-  //     method: 'GET',
-  //     headers: {"Content-Type":"application/json"},
-  //   })
-  //   setLoading2(false)
-  //   let reader = resp.body!.getReader()
-  //   let result
-  //   let temp
-  //   let a = []
-  //   let decoder = new TextDecoder('utf8')
-  //   while(!result?.done){
-  //     result = await reader.read()
-  //     if (!result?.done){
-  //     let chunk = decoder.decode(result.value)
-  //     // console.log(chunk ? JSON.parse(chunk) : {})
-  //     // console.log('\n')
-                   
-  //     temp = JSON.parse(chunk).albums.items,
-  //     a.push(...temp),  
-  //     // a.push(...artists2),
-  //     setArtists2([...a])
-  //     }
-    
-  //   }
+  //   const fetchArtist2 = async () => {
+  //     try {
+  //         var temp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`)
+  //       .then((res) => {
+  //         // console.log(res.json())
+  //         return res.json();
+  //       }).then((data) => {return data})
+  //         return temp
+  //       }
+  //       catch (err) {}
   // }
-  //   fetchArtist2()
+  // const assignArtists2 = async () => {
+  //   // setLoading(true)
+  //   const tempArtists2 = await fetchArtist2()    
+  //   setLoading2(false)
+  //   setArtists2(tempArtists2)
+
+  // }
+  // assignArtists2()
+
+
+
+  const fetchArtist2 = async () => {
+    const resp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{
+      method: 'GET',
+      headers: {"Content-Type":"application/json"},
+    })
+    setLoading2(false)
+    let reader = resp.body!.getReader()
+    let result
+    let temp
+    let a = []
+    let decoder = new TextDecoder('utf8')
+    while(!result?.done){
+      result = await reader.read()
+      if (!result?.done){
+      let chunk = decoder.decode(result.value)
+      // console.log(chunk ? JSON.parse(chunk) : {})
+      // console.log('\n')
+                   
+      temp = JSON.parse(chunk).albums.items,
+      a.push(...temp),  
+      // a.push(...artists2),
+      setArtists2([...a])
+      }
+    
+    }
+  }
+    fetchArtist2()
 
 
     // console.log(artists2)
@@ -99,9 +98,9 @@ export default function Artist({paused}: any) {
     
   }, [id]);
   var count: number = 1
-  const listTTracks = artists.tracks?.tracks.map((t: any) =>
+  const listTTracks = artists.tracks?.tracks.map((t: any, i:any) =>
 
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}}>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}} key={i}>
       
     {!paused ? <span style={{position: 'absolute', left: '7.5vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
     <p style={{marginLeft: '16px',overflow: 'visible'}}>{count < 10 ? '0' + count : count}</p> 
@@ -119,8 +118,8 @@ export default function Artist({paused}: any) {
     <p hidden>{count++}</p>
     </div>
   )
-  const listItems = artists2?.albums?.items.filter((a: any) => a.album_group === 'album').map((a: any) =>
-    <div> 
+  const listItems = artists2.filter((a: any) => a.album_group === 'album').map((a: any, i:any) =>
+    <div key={i}> 
       <h5>{a.release_date}</h5>
     <Card
       // key={a.id}
@@ -134,8 +133,8 @@ export default function Artist({paused}: any) {
     </div>
   )
   
-  const listItems2 = artists2?.albums?.items.filter((a: any) => a.album_group === 'single').map((a: any) =>
-    <div>
+  const listItems2 = artists2.filter((a: any) => a.album_group === 'single').map((a: any, i:any) =>
+    <div key={i}>
       <h5>{a.release_date}</h5>
     <Card
       // key={a.id}
@@ -149,8 +148,8 @@ export default function Artist({paused}: any) {
     </div>
   )
 
-  const listItems3 = artists2?.albums?.items.filter((a: any) => a.album_group === 'compilation').map((a: any) =>
-    <div>
+  const listItems3 = artists2.filter((a: any) => a.album_group === 'compilation').map((a: any, i: any) =>
+    <div key={i}>
       <h5>{a.release_date}</h5> 
     <Card
       // key={a.id}
@@ -163,8 +162,8 @@ export default function Artist({paused}: any) {
     />
     </div>
   )
-  const listItems4 = artists2?.albums?.items.filter((a: any) => a.album_group === 'appears_on').map((a: any) =>
-    <div>
+  const listItems4 = artists2.filter((a: any) => a.album_group === 'appears_on').map((a: any, i:any) =>
+    <div key={i}>
       <h5>{a.release_date}</h5> 
     <Card
       // key={a.id}
@@ -189,7 +188,7 @@ export default function Artist({paused}: any) {
         <p style={{margin: '20px auto'}} >{artists.artists?.followers.total.toLocaleString()} followers</p>
         <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
             <p className="headers">Genre(s):</p>
-            {artists?.artists?.genres.length > 0 ? artists.artists?.genres.map((s: any) => <p>{s}</p>) : <p>Music I guess. Idk</p>}
+            {artists?.artists?.genres.length > 0 ? artists.artists?.genres.map((s: any, i: any) => <p key={i}>{s}</p>) : <p>Music I guess. Idk</p>}
         </div>
         
             <p className="headers">Top Tracks</p>

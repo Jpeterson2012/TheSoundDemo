@@ -24,7 +24,7 @@ export default function Categories() {
         else{
         const fetchcPlaylists = async () => {
             setLoading(true)
-            const resp = await fetch(`https://playground.jmpeterson.dev/auth/cplaylists/${lastSegment}`)
+            const resp = await fetch(import.meta.env.VITE_URL + `/cplaylists/${lastSegment}`)
             // const data = await resp.json()
             setLoading(false)
             let reader = resp.body?.getReader()

@@ -29,7 +29,7 @@ export default function Track ( {uri, name, number, duration, album_name, artist
                 
                     const headers = {
                         "Content-Type": "application/json",
-                        Authorization: 'Bearer ' + sessionStorage.getItem("token")
+                        Authorization: 'Bearer ' + localStorage.getItem("token")
                     }
                     
                     fetch(url, {

@@ -25,10 +25,10 @@ createRoot(document.getElementById('root')!).render(
       <Router>
       <ScrollToTop />
             <Routes>
-              <Route path='/' element={<App />} errorElement={<ErrorPage />} key={0}/>
-              <Route path = '/login' element={<Login />}key={1}/>
-              <Route path = '/1' element={<Loading />} key={2}/>
-              <Route path='/app/*' element={<WebPlayback />} key={3}/>
+              <Route path='/' element={<App />} errorElement={<ErrorPage />} />
+              <Route path = '/login' element={<Login />}/>
+              <Route path = '/loading' element={<Loading />} />
+              <Route path='/app/*' element={<WebPlayback />} />
 
               {/* <Route path='*' element={<WebPlayback /> }/> */}
             </Routes>

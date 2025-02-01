@@ -16,12 +16,14 @@
 }
 
 #addSong{
-  position: relative;
+  position: absolute;
   height: 35px; 
   width: 35px;
+  right: 31vw;
+  bottom: -17px;
   font-size: 20px; 
-  margin-left: 23vw; 
-  margin-bottom: 25px; 
+  /* margin-left: 23vw; 
+  margin-bottom: 25px;  */
   cursor: pointer; 
   border: 2px solid #7a19e9; 
   color: rgb(90, 210, 216); 

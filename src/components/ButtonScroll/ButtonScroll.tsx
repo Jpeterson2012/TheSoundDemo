@@ -4,9 +4,9 @@ function scrollFunction(){
     let mybutton = document.getElementById('scrollButton')!
   
     if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
-      mybutton.style.display = "block";
+      mybutton ? mybutton.style.display = "block" : null
     } else {
-      mybutton.style.display = "none";
+      mybutton ? mybutton.style.display = "none" : null
     }
   }
 export default function ButtonScroll(){

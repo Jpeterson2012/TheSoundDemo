@@ -22,7 +22,9 @@ function useInterval(callback: any, delay: any){
   }
 
 export default function SeekBar({duration, player, paused}: any){
+  
     const [pos, setPos] = useState<any>(0)
+        
     let found = sessionStorage.getItem("currentContext") === null ? true : sessionStorage.getItem("currentContext") === "null" ? true : false
     
     //Checks if current device is The Sound. If not uses session variable to update song progress
@@ -40,7 +42,7 @@ export default function SeekBar({duration, player, paused}: any){
     }          
 
     return(
-        <input id='seeker' type='range' min="0" max={duration} value={pos} step="100" onChange={function handleChange(e){ 
+        <input id='seeker' type='range' min="0" max={duration === undefined ? 0 : duration} value={pos === undefined ? 0 : pos} step="100" onChange={function handleChange(e){ 
             setPos(e.target.value)
             let temp = (document.getElementById('seeker') as HTMLInputElement)
 
@@ -49,13 +51,13 @@ export default function SeekBar({duration, player, paused}: any){
             }
             else 
               setTimeout(() => {                
-                fetch(`https://playground.jmpeterson.dev/auth/player/seek/${sessionStorage.getItem("currentContext")},${+e.target.value}`, {
+                fetch(import.meta.env.VITE_URL + `/player/seek/${sessionStorage.getItem("currentContext")},${+e.target.value}`, {
                   method: 'POST',
                   headers: {"Content-Type":"application/json"},                                        
                 })
               },150)
             
-        }} style={{position: 'absolute', left: '280px', bottom: '12px', width: '500px'}} />
+        }}/>
     )
 }
 

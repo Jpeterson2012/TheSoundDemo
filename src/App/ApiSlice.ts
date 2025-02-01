@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
+import { createSelector } from '@reduxjs/toolkit'
+import { RootState } from './store'
 
 
 interface Albums {
@@ -71,10 +72,10 @@ interface Audiobooks{
 }
 
 export type { Playlists, Albums, Devices }
-// baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8888/auth' }),
+
 export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://playground.jmpeterson.dev/auth' }),
+    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_URL }),
     keepUnusedDataFor: 60 * 60,
     endpoints: builder => ({
         getAlbums: builder.query<Albums[], void>({

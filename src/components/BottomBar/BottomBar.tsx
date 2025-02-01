@@ -20,7 +20,7 @@ import { Spin2 } from '../Spin/Spin.tsx';
 
 function playbackState(uri: string, setPaused: any, currentDev: any){
     //Playback controls when current device isnt this application
-    let url = "https://playground.jmpeterson.dev/auth/player"
+    let url = import.meta.env.VITE_URL + "/player"
     switch(uri){
         case '/pause':
             fetch(url + uri + `/${currentDev.id}`, {
@@ -105,7 +105,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         current_track.type === 'episode' ? null : navigate(`/app/album/${lastSegment}`)
                     }}>
                     <span>
-                    <img src={current_track.album.images[0]?.url} 
+                    <img src={current_track?.album?.images[0]?.url} 
                         className="now-playing__cover" alt="" style={{left: '-3px', bottom: '0', zIndex: '1',position: 'absolute'}} />
                         <div>{is_active && Spin2(is_active,is_paused)}</div>
                     </span>
@@ -115,39 +115,41 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                     <div className="now-playing__side">
                         <div className='scrollbar1'>
                         <div className="now-playing__name" style={{fontWeight: 'bold',margin: '0px', padding: '0px'}}><p style={{margin: '0px', padding: '0px', gap: '1rem'}}>{
-                            current_track.name
+                            current_track?.name
                             }</p>
                             {/* <p style={{margin: '0px', padding: '0px', gap: '1rem'}}>{
                             current_track.name
                             }</p> */}
-                            <p className='temp' style={{margin: '0px', padding: '0px'}}>{current_track.name}</p>
-                            {current_track.name ? <HScroll name={"scrollbar1"}/> : null}</div>
+                            <p className='temp' style={{margin: '0px', padding: '0px'}}>{current_track?.name}</p>
+                            {current_track?.name ? <HScroll name={"scrollbar1"}/> : null}</div>
                         </div>
                             
                         <div className='scrollbar2'>
                             <div className="now-playing__artist" data-direction="right">
-                                <p style={{margin: '0px', padding: '0px', gap: '1rem'}}>{current_track.artists.map((s:any,i:number,row:any) => <a onClick={function handleClick(){ 
-                                    current_track.type === 'episode' ? null : navigate(`/app/artist/${s.uri.split(':').pop()}`)
+                                <p style={{margin: '0px', padding: '0px', gap: '1rem'}}>{current_track?.artists.map((s:any,i:number,row:any) => <a key={i} onClick={function handleClick(){ 
+                                    current_track?.type === 'episode' ? null : navigate(`/app/artist/${s.uri.split(':').pop()}`)
                                     }} style={{color: 'rgb(90, 210, 216)'}}>{row.length - 1 !== i ? s.name + ", " : s.name}</a>)}
                                 </p>
                                 {/* <p className='temp' style={{margin: '0px', padding: '0px'}}>{current_track.artists.map((s:any,i:number,row:any) => <a onClick={function handleClick(){ 
                                     navigate(`/app/artist/${s.uri.split(':').pop()}`)
                                     }} style={{color: 'rgb(90, 210, 216)'}}>{row.length - 1 !== i ? s.name + ", " : s.name}</a>)}
                                 </p> */}
-                                {current_track.name ? <HScroll name={'scrollbar2'} /> : null}
+                                {current_track?.name ? <HScroll name={'scrollbar2'} /> : null}
                             </div>
                         </div>
                                 
                     </div>
-                                
-                    {/* Replaced old modal method for adding to playlists here */}
-                    <AddLiked active={is_active} trackUri={current_track} duration={duration} />                        
+                                                                            
                                 
                 </div>
         
                 <div className='buttonWrapper'>
-                    <div>
-                        <img id="volumeIcon" src={volume} style={{position: 'absolute',right: '430px',bottom: '8px', height: '30px', cursor: 'pointer'}} 
+                    
+                    <div className='volAddContainer'>
+                        {/* Replaced old modal method for adding to playlists here */}
+                        <AddLiked active={is_active} trackUri={current_track} duration={duration} />
+
+                        <img id="volumeIcon" src={volume} 
                         onMouseEnter={(() => {
                             document.getElementById("volumeIcon")!.style.opacity = '1'
                         })} 
@@ -168,7 +170,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                 }
                                 else{ 
                                 temp.value = pVol
-                                fetch(`https://playground.jmpeterson.dev/auth/player/volume/${sessionStorage.getItem("currentContext")},${+pVol * 100}`, {
+                                fetch(import.meta.env.VITE_URL + `/player/volume/${sessionStorage.getItem("currentContext")},${+pVol * 100}`, {
                                     method: 'POST',
                                     headers: {"Content-Type":"application/json"},                                        
                                 })
@@ -186,7 +188,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                  }
                                 else{ 
                                 temp.value = "0"
-                                fetch(`https://playground.jmpeterson.dev/auth/player/volume/${sessionStorage.getItem("currentContext")},${0}`, {
+                                fetch(import.meta.env.VITE_URL + `/player/volume/${sessionStorage.getItem("currentContext")},${0}`, {
                                     method: 'POST',
                                     headers: {"Content-Type":"application/json"}                                        
                                 })
@@ -196,7 +198,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
 
                             }
                         }}/>
-                        <input id='volumeBar' type='range' min={0} max={1} step={0.05} style={{position: 'absolute', bottom: '14px',right: '290px'}} onChange={function handleChange(e){
+                        <input id='volumeBar' type='range' min={0} max={1} step={0.05} onChange={function handleChange(e){
                             let temp2 = document.getElementById("volumeIcon")!                            
                             let found = sessionStorage.getItem("currentContext") === null ? true : sessionStorage.getItem("currentContext") === "null" ? true : false
                             e.target.value === "0" ? temp2.style.opacity = '0' : temp2.style.opacity = e.target.value
@@ -208,7 +210,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                             else{
                             //Waits for user to release handle so api isn't getting polled multiple times a second                                
                                 setTimeout(() => { 
-                                fetch(`https://playground.jmpeterson.dev/auth/player/volume/${sessionStorage.getItem("currentContext")},${+e.target.value * 100}`, {
+                                fetch(import.meta.env.VITE_URL + `/player/volume/${sessionStorage.getItem("currentContext")},${+e.target.value * 100}`, {
                                     method: 'POST',
                                     headers: {"Content-Type":"application/json"}                                
                                 })
@@ -216,16 +218,17 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                             }
 
                         }} />
-                        </div>
-        
-                        <img id='toggle1' src={repeated < 2 ? repeat : repeat1} style={{position: 'absolute', right: '250px', bottom: '12px', height: '20px', cursor: 'pointer', opacity: repeated === 0 ? '0.5' : 1}} onClick={function handleClick(){   
+                    </div>
+
+                        <div className='fiveButtonContainer'>
+                        <img id='toggle1' src={repeated < 2 ? repeat : repeat1} style={{position: 'absolute', right: '240px', bottom: '12px', height: '20px', cursor: 'pointer', opacity: repeated === 0 ? '0.5' : 1}} onClick={function handleClick(){   
                             let temp = document.getElementById('toggle1')!
                             temp.style.animation = 'hithere 1s ease'  
                         
                             if (repeated === 0) setRepeated(1)
                             else if (repeated === 1) setRepeated(2)
                             else if (repeated === 2) setRepeated(0)                                            
-                            fetch(`https://playground.jmpeterson.dev/auth/shuffle`, {
+                            fetch(import.meta.env.VITE_URL + `/shuffle`, {
                                 method: 'POST',
                                 headers: {"Content-Type":"application/json"},
                                 body: JSON.stringify({state: repeated === 0 ? 'context' : (repeated === 1 ? 'track' : 'off')})
@@ -247,16 +250,16 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                 <span className="bar n8">H</span>
                                 </div>
                             ))}
-
-                        <button className="btn-spotify" onClick={() => { currentDev.name === "TheSound" ? (pos > 3000 ? player!.seek(0) : player!.previousTrack()) : playbackState('/previous', null, currentDev) }} >
+                        
+                        <button className="btn-spotify" style={{width: '70px'}} onClick={() => { currentDev.name === "TheSound" ? (pos > 3000 ? player!.seek(0) : player!.previousTrack()) : playbackState('/previous', null, currentDev) }} >
                             &lt;&lt;
                         </button>
                         
-                        <button className="btn-spotify" style={{maxWidth: '85px', minWidth: '85px'}} onClick={() => { currentDev.name === "TheSound" ? player!.togglePlay() : (is_paused ? playbackState('/play', setPaused, currentDev) : playbackState('/pause', setPaused, currentDev)) }} >
+                        <button className="btn-spotify" style={{width: '80px', padding: ' 8px 0px'}}  onClick={() => { currentDev.name === "TheSound" ? player!.togglePlay() : (is_paused ? playbackState('/play', setPaused, currentDev) : playbackState('/pause', setPaused, currentDev)) }} >
                             { is_paused ? "PLAY" : "PAUSE" }
                         </button>
                         
-                        <button className="btn-spotify" onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
+                        <button className="btn-spotify" style={{width: '70px'}} onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
                             &gt;&gt;
                         </button>
                         
@@ -267,7 +270,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         
                             if (shuffled === true) setisShuffled(false)
                             else setisShuffled(true)                
-                            fetch(`https://playground.jmpeterson.dev/auth/shuffle`, {
+                            fetch(import.meta.env.VITE_URL + `/shuffle`, {
                                 method: 'POST',
                                 headers: {"Content-Type":"application/json"},
                                 body: JSON.stringify({state: shuffled})
@@ -277,7 +280,8 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                             }, 750)
 
 
-                            }} />                                
+                            }} />     
+                        </div>                           
 
                         {/* Replaced old music seek bar method here */}
                         <SeekBar duration={duration} player={player} paused={is_paused} />
@@ -285,9 +289,9 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         <img src={device} onClick={function handleClick(){      
                             refetch()
                             onOpenModal()
-                            console.log(currentDev.name)                                          
+                            console.log(devices)                                          
                             !isFetching ? console.log(devices) : null                                                
-                            }} style={{position: 'absolute', right: '-42vw', height: '42px', cursor: 'pointer'}} />
+                            }} style={{position: 'absolute', right: '-42vw', bottom: '0', height: '42px', cursor: 'pointer'}} />
 
                         <Modal modalId='modal1' open={open} onClose={onCloseModal} closeIcon={closeIcon} >
                             <div style={{marginTop: '60px'}}>
@@ -298,18 +302,19 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                 <a onClick={function handleClick(){
                                         setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id")})
                                         sessionStorage.setItem("currentContext", "null")
-                                        fetch(`https://playground.jmpeterson.dev/auth/player/${sessionStorage.getItem("device_id")}`, {
+                                        fetch(import.meta.env.VITE_URL + `/player/${sessionStorage.getItem("device_id")}`, {
                                             method: 'POST',
                                             headers: {"Content-Type":"application/json"},                                        
                                         })
                                     }}>
                                        <p>TheSound</p> 
                                     </a> 
-                                {devices.map(a =>
-                                    a.name === "TheSound" ? null : <a onClick={function handleClick(){
+                                {devices.map((a,i) =>
+                                    a.name === "TheSound" ? null : <a key={i} onClick={function handleClick(){
+                                        // console.log(a)
                                         setCurrentDev({name: a.name, id: a.id})
                                         sessionStorage.setItem("currentContext", a.id)
-                                        fetch(`https://playground.jmpeterson.dev/auth/player/${a.id}`, {
+                                        fetch(import.meta.env.VITE_URL + `/player/${a.id}`, {
                                             method: 'POST',
                                             headers: {"Content-Type":"application/json"},                                        
                                         })

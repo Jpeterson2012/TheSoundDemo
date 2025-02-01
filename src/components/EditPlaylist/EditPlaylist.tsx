@@ -7,7 +7,7 @@ import escape from '../../images/escape.jpg'
 import { imageRender } from '../ImageRender/ImageRender';
 
 export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
-    const {data: liked} = useGetLikedQuery()
+    const {data: liked, isSuccess: lsuccess} = useGetLikedQuery()
     const {data: playlists} = useGetPlaylistsQuery()
     
     const [removeSong] = useDeleteNewLikedMutation()
@@ -27,7 +27,7 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
 
     const [open, setOpen] = useState(boolVal);
 
-    // const onOpenModal = () => {setOpen(true),submit1 = [], submit2 = []}
+    const onOpenModal = () => {setOpen(true),submit1 = [], submit2 = []}
     const onCloseModal = () => {
         //Potential idea for delaying backend requests
         // let num = 500

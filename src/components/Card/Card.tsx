@@ -30,14 +30,14 @@ export default function Card( {id, image, name, artist, a_id}: any ) {
             }}> <img src={image} alt="Avatar" style={{width:'80%',height:'190px'}}/>
             </a>
 
-            <p><b>{zip.map((s: any,i: any,row: any) =>
-                <>
+            <div><b>{zip.map((s: any,i: any,row: any) =>
+                <div key={i}>
                 <a onClick={function handleClick() {
                     navigate(`/app/artist/${s[1]}`)
                 }} style={{color: 'rgb(90, 210, 216)', fontWeight: 'bold'}}>{row.length - 1 !== i ? s[0] + ", " : s[0]}</a>
                 <span hidden>{key++}</span>
-                </>
-            )}</b></p>                
+                </div>
+            )}</b></div>                
                 
             <p><b className='cardName'>{name}</b></p>
         

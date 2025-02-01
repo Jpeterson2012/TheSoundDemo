@@ -18,12 +18,12 @@ function customImage(ptracks: any){
   return(
     <div className="mainImage2">
       <div className="subImage" >
-        <img className="subsubImage" style={{borderRadius: '15px 0px 0px 0px'}} src={ptracks.tracks[0].images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
-        <img className="subsubImage" style={{borderRadius: '0px 15px 0px 0px'}} src={ptracks.tracks[1].images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
+        <img className="subsubImage" style={{borderRadius: '15px 0px 0px 0px'}} src={ptracks.tracks[0]?.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
+        <img className="subsubImage" style={{borderRadius: '0px 15px 0px 0px'}} src={ptracks.tracks[1]?.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
       </div>
       <div className="subImage" >
-        <img className="subsubImage" style={{borderRadius: '0px 0px 0px 15px'}} src={ptracks.tracks[2].images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
-        <img className="subsubImage" style={{borderRadius: '0px 0px 15px 0px'}} src={ptracks.tracks[3].images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
+        <img className="subsubImage" style={{borderRadius: '0px 0px 0px 15px'}} src={ptracks.tracks[2]?.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
+        <img className="subsubImage" style={{borderRadius: '0px 0px 15px 0px'}} src={ptracks.tracks[3]?.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}/>
       </div>
     </div>
   )
@@ -43,7 +43,7 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
   return (
     userLists?.tracks?.map((t: any) =>
 
-      <div style={{display: 'flex', alignItems: 'center'}}>
+      <div key={t.uri.split(':').pop()} style={{display: 'flex', alignItems: 'center'}}>
 
           <p hidden>{liked_urls.push(t.uri)}</p>
           <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
@@ -164,7 +164,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                                       if (singlePlist!.length === 0 ){           
                                         setSnack(true)         
                                           setTimeout (() => {
-                                            fetch(`https://playground.jmpeterson.dev/auth/users/playlist`, {
+                                            fetch(import.meta.env.VITE_URL + `/users/playlist`, {
                                               method: 'POST',
                                               headers: {"Content-Type":"application/json"},
                                               body: JSON.stringify({id: lastSegment,name: sessionStorage.getItem("playlist_name"), images: JSON.parse(sessionStorage.getItem("fullp_image")!)})                                        

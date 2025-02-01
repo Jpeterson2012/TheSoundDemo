@@ -4,6 +4,12 @@
 .homeButtons{
   animation: fadeIn 0.5s;
   position: relative;
+  border-radius: 20px;
+  color: black;
+  font-weight: bolder;
+  padding: 10px 13px;
+  background: #7a19e9;
+  outline: 0 !important;
 }
 @keyframes fadeIn {
   0%{
@@ -69,7 +75,7 @@
   position: absolute;
   /* left: 200px; */
   /* bottom: 15px; */
-  left: 18vw;
+  /* left: 8.5vw; */
   color: black;
   background: rgb(90, 210, 216);
   font-size: 13px;
@@ -113,9 +119,8 @@
   height: 35px; 
   width: 35px;
   font-size: 30px;
-  position: relative;
-  left: 10vw;
-  top: 5px;
+  position: absolute;
+  left: 37vw;  
   line-height: 28px;  
   padding: 3px 5px;     
   
@@ -184,12 +189,34 @@ form{
       box-shadow: 0 0 0 0 rgb(90, 210, 216);
   }
 }
+.homeContainer{
+  position: absolute;
+  top: 10vw; right: 40vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media(min-height: 1000px){
   .homeContainer{
     margin-top: 0px;
   }
   .removePlay{
-    left: 32vw;
+    /* left: 24vw; */
+  }
+}
+@media only screen and (max-width: 768px){
+  .homeContainer{
+    max-width: 350px;
+  }
+  .buttonContainer{
+    max-width: 350px;
+    top: 20vh;
+  }
+  .homeButtons{
+    width:50px;
+    font-size: 15px;
+    overflow: hidden;
+    
   }
 }

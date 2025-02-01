@@ -105,8 +105,8 @@ function playlistSort(setPSorted: any){
   )
 }
 function Podcasts(podcasts:any){
-  const listItems = podcasts?.items.map((a:any) =>
-    <a onClick={function handleClick(){
+  const listItems = podcasts?.items.map((a:any, i:any) =>
+    <a key={i} onClick={function handleClick(){
       var url =`https://api.spotify.com/v1/me/player/play?device_id=${sessionStorage.getItem("device_id")}`
       const headers = {
           "Content-Type": "application/json",
@@ -134,8 +134,8 @@ function Podcasts(podcasts:any){
   )
 }
 function Audiobooks(audiobooks:any){
-  const listItems = audiobooks?.items.map((a:any) =>
-      <a onClick={function handleClick(){        
+  const listItems = audiobooks?.items.map((a:any,i:any) =>
+      <a key={i} onClick={function handleClick(){        
 
         var url =`https://api.spotify.com/v1/me/player/play?device_id=${sessionStorage.getItem("device_id")}`
         const headers = {
@@ -203,7 +203,7 @@ export default function Home() {
           // console.log(desc.value)
           // console.log(opt1.checked)
           // console.log(opt2.checked)
-          fetch(`https://playground.jmpeterson.dev/auth/users/playlist`, {
+          fetch(import.meta.env.VITE_URL + `/users/playlist`, {
             method: 'POST',
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify({id: pID, name: name.value, description: desc.value === "" ? "null" : desc.value, public: opt1.checked})                                        
@@ -285,8 +285,8 @@ export default function Home() {
     
   }, [ready,isFetching, sorted,psorted,delsuccess]);
     
-  const listItems = sortedAlbums()?.map((a: any) =>
-    <div>
+  const listItems = sortedAlbums()?.map((a: any, i:any) =>
+    <div key={i}>
 
       <div className="removeContainer" style={{width: '20px'}}>
       <button className="removeAlbum" onClick={function handleClick(){
@@ -310,8 +310,8 @@ export default function Home() {
 
   
 
-  const listPlaylists = sortedPlaylists()?.map((a: any) =>
-    <div style={{display: 'flex', gap: '20px', alignItems: 'center'}}>
+  const listPlaylists = sortedPlaylists()?.map((a: any,i:any) =>
+    <div style={{display: 'flex', gap: '20px', alignItems: 'center'}} key={i}>
 
       <div className="removePContainer" style={{width: '20px'}}>
         <button className="removePlay" onClick={function handleClick(){
@@ -344,9 +344,10 @@ export default function Home() {
   )
   return (
     <>
-      {!ready && !loading ? Spin3() : (<>      
+      {!ready && !loading ? Spin3() : (
+        <>      
       <div className="homeContainer">
-          <div style={{position: 'absolute', top: '10vw', right: '40vw',display: 'flex',justifyContent: 'center',alignItems: 'center'}}>            
+          <div className="buttonContainer">            
             <button className="homeButtons" onClick={() => {setHtml(Albums(listItems)),sessionStorage.setItem('home','album')}}>Albums</button>
             <button className="homeButtons" onClick={() => {setHtml(Playlists(navigate, listPlaylists)), sessionStorage.setItem('home','playlist')}}>Playlists</button>
             <button className="homeButtons" onClick={() => {setHtml(Podcasts(podcasts)), sessionStorage.setItem('home', 'podcast') }}>Podcasts</button>

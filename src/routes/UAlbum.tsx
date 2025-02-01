@@ -68,7 +68,7 @@ export default function UAlbum({active, paused}: any) {
         
         const fetchArtists = async () => {
             try {
-                var temp = await fetch(`https://playground.jmpeterson.dev/auth/tracks/artists`,{
+                var temp = await fetch(import.meta.env.VITE_URL + `/tracks/artists`,{
                     method: 'POST',
                     headers: {"Content-Type":"application/json"},
                     body: JSON.stringify(artistss)
@@ -93,8 +93,8 @@ export default function UAlbum({active, paused}: any) {
     }, [sessionStorage.getItem("image"),asuccess]);
     
     
-    const listItems2 = talbum[0]?.tracks?.items.map((t: any) => 
-      <div>
+    const listItems2 = talbum[0]?.tracks?.items.map((t: any,i:any) => 
+      <div key={i}>
         {!paused ? <span style={{position: 'absolute', left: '8vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
       <Track 
         uri={`spotify:album:${talbum[0]?.album_id}`}
@@ -123,7 +123,7 @@ export default function UAlbum({active, paused}: any) {
 
               
               <h2 className="artistName">{zip.map((s: any,i: number,row: any) =>
-                <a  onClick={function handleClick() {
+                <a key={i}  onClick={function handleClick() {
                   navigate(`/app/artist/${s[1]}`)
                 }}>{row.length - 1 !== i ? s[0] + ", " : s[0]}</a>             
               )}</h2>
@@ -136,7 +136,7 @@ export default function UAlbum({active, paused}: any) {
 
                 {/* <img src={tracks.images?.map(b => b.find(b => b.height > 100).url)} style={{borderRadius: '50%', height: '40px'}} /> */}
 
-                {artists?.images?.map((a: any) => <img className="tinyArtist" src={a.find((b: any) => b.height > 160).url} />)}                
+                {artists?.images?.map((a: any,i:any) => <img key={i} className="tinyArtist" src={a.find((b: any) => b.height > 160).url} />)}                
                 <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
                   setSnack(true)
                   let temp2 = document.getElementById('addAlbum')!
@@ -174,7 +174,7 @@ export default function UAlbum({active, paused}: any) {
             </div>
             
             <div style={{display: 'flex', flexDirection: 'column', marginTop: '50px', marginBottom: '50px'}}>
-              {artists?.images?.map((a: any) => <img src={a.find((b: any) => b.height > 160).url} style={{width: '90px', height: '90px'}} />)}
+              {artists?.images?.map((a: any, i:any) => <img key={i} src={a.find((b: any) => b.height > 160).url} style={{width: '90px', height: '90px'}} />)}
             </div>
             
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>Release Date: {talbum[0]?.release_date}</h5>

@@ -45,7 +45,7 @@ export default function Discover() {
 
         else {
             const fetchCategories = async () => {
-                const resp = await fetch('https://playground.jmpeterson.dev/auth/categories')
+                const resp = await fetch(import.meta.env.VITE_URL + '/categories')
                 const data = await resp.json()
                 setCategories(data)
                 sessionStorage.setItem("categories", JSON.stringify(data))
@@ -55,7 +55,7 @@ export default function Discover() {
 
             const fetchDiscover = async () => {
                 try {
-                    var temp = await fetch('https://playground.jmpeterson.dev/auth/discover')
+                    var temp = await fetch(import.meta.env.VITE_URL + '/discover')
                 .then((res) => {
                     return res.json();
                 }).then((data) => {return data})
@@ -77,8 +77,8 @@ export default function Discover() {
 
     }, []);
 
-    const listCategories = categories?.map((a: any) =>
-        <a onClick={function handleClick() {
+    const listCategories = categories?.map((a: any, i: any) =>
+        <a key={i} onClick={function handleClick() {
             sessionStorage.setItem("c_icon", a.icons.map((s: any) => s.url))
             sessionStorage.setItem("c_name", a.name)
             // navigate(`/app/categories/${a.id}`)            
@@ -95,7 +95,7 @@ export default function Discover() {
 
     const listReleases = releases.albums?.items.map((a: any) => 
         <Card
-          // key={a.id}
+          key={a.id}
           id={a.id}
           uri={a.uri}
           image={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
@@ -104,8 +104,8 @@ export default function Discover() {
           a_id={a.artists.map((t: any) => t.id)}
         />
       )
-    const listPlaylists = fplaylists.playlists?.items.map((a: any) =>
-        <a onClick={function handleClick() {
+    const listPlaylists = fplaylists.playlists?.items.map((a: any, i: any) =>
+        <a key={i} onClick={function handleClick() {
             sessionStorage.setItem("p_image", a.images.map((s: any) => s.url))
             sessionStorage.setItem("playlist_name", a.name)
             navigate(`/app/playlist/${a.id}`)

@@ -25,10 +25,11 @@ export default function PollPlayer({setCurrentDev,currentDev,setTrack,duration,p
 
     useInterval(() => {            
         const poll = async () => {
-            const resp = await fetch('https://playground.jmpeterson.dev/auth/player')
+            const resp = await fetch(import.meta.env.VITE_URL + '/player')
             const data = await resp.json()
             if (currentDev.name !== data.device.name) {
-              setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})
+              if (data.device.name === "TheSound") setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})
+                else setCurrentDev({name: data.device.name, id: data.device.id})
               sessionStorage.setItem("currentContext", "null")
             }
             if (data.is_playing === false) paused(true)

@@ -1,5 +1,6 @@
+/* Song name container */
 .scrollbar1{
-    max-width: 260px;
+    max-width: 17vw;
     color: rgb(90, 210, 216);
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -7,8 +8,9 @@
     
       /* overflow: hidden; */
   }
+  /* Artist names container */
   .scrollbar2{
-    max-width: 260px;
+    max-width: 17vw;
     color: rgb(90, 210, 216);
     overflow: hidden;
   }
@@ -26,17 +28,18 @@
     position:  absolute;
     left: 90px;
   }
-  
+  /* Now playing album image, bottom left */
   .main-wrapper img {
       height: 60px;
   }
+  /* Main container */
   .wrapper {
       z-index: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 60px; 
-      width: 100%; 
+      width: 100vw; 
       background-image: none;
       background-repeat: repeat;
       background-attachment: scroll;
@@ -57,13 +60,43 @@
   .buttonWrapper{
       position: fixed;
   }
+  /* Container for add liked songs button and volume controls */
+  .volAddContainer{
+    display: flex;
+  }
+  #volumeIcon{
+    position: absolute;
+    right: 28.2vw;
+    bottom: 8px;
+    height: 30px;
+    cursor: pointer;
+  }
+  #volumeBar{
+    display: flex;
+    position: absolute;
+    bottom: 14px;
+    right: 18.5vw;
+    width: 8.8vw;
+  }
   .now_playing{
     position: fixed;
     bottom: 50px;
+    
   }
+  /* Container for 5 playback buttons */
+  .fiveButtonContainer{
+    display: flex;    
+    position: relative;   
+  }
+
   .btn-spotify {
-      color: rgb(90, 210, 216);
+      color: black;
+      background: #7a19e9;      
+      outline: 0 !important;
+      /* width: 60px; */
+      text-align: center;
   }
+  
   
   
     /* Music bar animation */
@@ -71,10 +104,10 @@
       display: inline-block;
       /* position: fixed; */
       margin-right: 1px;
-      width: 25px;
+      width: 26.5px;
       height: 1px;
       overflow: hidden;
-      background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+      background: linear-gradient(to top, #0066ff 0%, #cc33ff 100%);
       color: transparent;
       animation-name: pulse;
       animation-duration: 0.9s;
@@ -192,7 +225,11 @@ input[type=range]{
 
   @media(min-height: 1000px){
     .scrollbar1, .scrollbar2{
-      max-width: 770px;
+      max-width: 450px;
+    }
+    #volumeBar{
+      width: 16.5vw;
+      right: 11vw;
     }
   }
 
