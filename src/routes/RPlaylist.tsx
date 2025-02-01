@@ -91,7 +91,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                 if (!result?.done){
                   
                 let chunk = decoder.decode(result.value)
-                // console.log(chunk ? JSON.parse(chunk) : {})                
+                console.log(chunk ? JSON.parse(chunk) : {})                
                 total ? null : setTotal(JSON.parse(chunk).total),
                 temp = JSON.parse(chunk).items,
                 a.push(...temp),  
