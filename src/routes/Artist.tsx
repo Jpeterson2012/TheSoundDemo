@@ -19,7 +19,7 @@ export default function Artist({paused}: any) {
   const [url,setUrl] = useState(id)
   useEffect (() => {
     setUrl(id)
-    lastSegment! !== id ? setArtists2([]): null
+    lastSegment! !== id ? setArtists2([]) : null
     const fetchArtist = async () => {
         try {
             var temp = await fetch(import.meta.env.VITE_URL + `/artists/${lastSegment}`)

@@ -8,6 +8,7 @@ import musicBar from '../components/musicBar/musicBar.tsx';
 import MySnackbar from '../components/MySnackBar.tsx';
 import ButtonScroll from '../components/ButtonScroll/ButtonScroll.tsx';
 import { useGetPlaylistsQuery,useDeletePlaylistMutation } from '../App/ApiSlice.ts';
+import { useParams } from "react-router-dom";
 
 function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setmodal:any,settrack:any){
   let key = 0
@@ -60,7 +61,12 @@ export default function RPlaylist({lastSegment, active, paused}: any){
 
     var liked_uris: any = []
 
-    useEffect (() => {                 
+    var {id} = useParams()
+    const [url,setUrl] = useState(id)
+
+    useEffect (() => {       
+      setUrl(id) 
+      lastSegment! !== id ? setpTracks([]) : null         
           
         if (sessionStorage.getItem("ref_id") === lastSegment) {
           setpTracks(JSON.parse(sessionStorage.getItem("ref_items")!))

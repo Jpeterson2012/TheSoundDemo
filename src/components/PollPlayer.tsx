@@ -45,7 +45,7 @@ export default function PollPlayer({setCurrentDev,currentDev,setTrack,duration,p
         //Checks if current device is The Sound. If not uses spotify api to get current track
         (sessionStorage.getItem("currentContext") === null || sessionStorage.getItem("currentContext") === "null") ? null :  poll()
 
-    },3000)
+    },3250)
     return(
         <>
         </>
