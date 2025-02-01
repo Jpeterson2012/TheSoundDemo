@@ -60,7 +60,7 @@ export default function WebPlayback() {
             fetchToken()
             //Handles refresh token
             setInterval(() => {
-                fetch(import.meta.env.VITE_URL + "/refresh_token")
+                fetch(import.meta.env.VITE_URL + "/token/refresh_token")
                 .then(data => data.json()).then(a => sessionStorage.setItem("token", a.items))                
             },1000 * 60 * 59)
             
