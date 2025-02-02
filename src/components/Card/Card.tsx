@@ -33,7 +33,7 @@ export default function Card( {id, image, name, artist, a_id}: any ) {
             <div><b>{zip.map((s: any,i: any,row: any) =>
                 <div key={i}>
                 <a onClick={function handleClick() {
-                    navigate(`/app/artist/${s[1]}`)
+                    s[0] === 'Various Artists' ? null : navigate(`/app/artist/${s[1]}`)
                 }} style={{color: 'rgb(90, 210, 216)', fontWeight: 'bold'}}>{row.length - 1 !== i ? s[0] + ", " : s[0]}</a>
                 <span hidden>{key++}</span>
                 </div>

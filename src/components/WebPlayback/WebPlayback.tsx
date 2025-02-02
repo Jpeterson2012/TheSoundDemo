@@ -54,17 +54,23 @@ export default function WebPlayback() {
             script.async = true;
             var token = ''
             const fetchToken = async () => {
+                try{
                 const response = await fetch(import.meta.env.VITE_URL + "/token")
                 const data = await response.json()
                 token = data.items                
-                sessionStorage.setItem("token", data.items)                
+                sessionStorage.setItem("token", data.items)    
+                }
+                catch(e){console.log(`Error requesting access token: ${e}`)}            
             }
             fetchToken()
             //Handles refresh token
             setInterval(() => {
+                try{
                 fetch(import.meta.env.VITE_URL + "/token/refresh_token")
-                .then(data => data.json()).then(a => {sessionStorage.setItem("token", a.items), token = a.items,console.log(a.items)})                
-            },1000 * 60 * 55)    
+                .then(data => data.json()).then(a => {sessionStorage.setItem("token", a.items), token = a.items})
+                }
+                catch (e) {`Error requesting access token: ${e}`}                
+            },1000 * 59 * 59)    
             
             document.body.appendChild(script);
             
