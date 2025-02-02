@@ -34,25 +34,7 @@ const track: any = {
     ],
     uri: ""
 }
-async function getTokens(token: any){    
-    const response = await fetch(import.meta.env.VITE_URL + "/token")
-    const data = await response.json()        
-    sessionStorage.setItem("token", data.items)
-    token = data.items
 
-    useInterval(() => {
-        console.log(sessionStorage.getItem("token"))
-        const fetchRef = async () =>  {
-        const resp = await fetch(import.meta.env.VITE_URL + "/token/refresh_token")
-        const data = await resp.json()
-        sessionStorage.setItem("token", data.items)
-        token = data.items
-        console.log(sessionStorage.getItem("token"))
-        }
-        fetchRef()
-    },10000)
-    
-}
 export default function WebPlayback() {
 
     const [player, setPlayer] = useState<any>(undefined);
@@ -71,39 +53,28 @@ export default function WebPlayback() {
             script.src = "https://sdk.scdn.co/spotify-player.js";
             script.async = true;
             var token = ''
-            // const fetchToken = async () => {
-            //     const response = await fetch(import.meta.env.VITE_URL + "/token")
-            //     const data = await response.json()
-            //     token = data.items                
-            //     sessionStorage.setItem("token", data.items)                
-            // }
-            // fetchToken()
-            // //Handles refresh token
-            // setInterval(() => {
-            //     console.log(sessionStorage.getItem("token"))
-            //     const fetchRef = async () =>  {
-            //     const resp = await fetch(import.meta.env.VITE_URL + "/token/refresh_token")
-            //     const data = await resp.json()
-            //     sessionStorage.setItem("token", data.items)
-            //     console.log(sessionStorage.getItem("token"))
-            //     }
-            //     fetchRef()
-            // },1000 * 60 * 55)
+            const fetchToken = async () => {
+                const response = await fetch(import.meta.env.VITE_URL + "/token")
+                const data = await response.json()
+                token = data.items
+                import.meta.env.VITE_TOKEN = data.items
+                sessionStorage.setItem("token", data.items)                
+            }
+            fetchToken()
+            //Handles refresh token
+            setInterval(() => {
+                fetch(import.meta.env.VITE_URL + "/token/refresh_token")
+                .then(data => data.json()).then(a => {sessionStorage.setItem("token", a.items), token = a.items,console.log(a.items)})                
+            },1000 * 60 * 55)    
             
             document.body.appendChild(script);
             
             window.onSpotifyWebPlaybackSDKReady = () => {  
                 
                     const player = new window.Spotify.Player({ 
-                        // name: 'TheSound',
-                        // getOAuthToken: (cb: any) => { cb(token); },
-                        // volume: 1
                         name: 'TheSound',
-                        volume: 1,
-                        getOAuthToken: async (cb: any) => {
-                            await getTokens(token)                            
-                            cb(token)
-                        }
+                        getOAuthToken: (cb: any) => { cb(token); },
+                        volume: 1                        
                     });
                     setPlayer(player);                    
                     
