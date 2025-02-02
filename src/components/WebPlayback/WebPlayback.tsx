@@ -12,6 +12,7 @@ import Discover from '../../routes/Discover.tsx';
 import Categories from '../../routes/Categories.tsx';
 import BottomBar from '../BottomBar/BottomBar.tsx';
 import PollPlayer from '../PollPlayer.tsx';
+import { useInterval } from '../Seekbar/SeekBar.tsx';
 
 declare global {
     interface Window{
@@ -33,6 +34,25 @@ const track: any = {
     ],
     uri: ""
 }
+async function getTokens(token: any){    
+    const response = await fetch(import.meta.env.VITE_URL + "/token")
+    const data = await response.json()        
+    sessionStorage.setItem("token", data.items)
+    token = data.items
+
+    useInterval(() => {
+        console.log(sessionStorage.getItem("token"))
+        const fetchRef = async () =>  {
+        const resp = await fetch(import.meta.env.VITE_URL + "/token/refresh_token")
+        const data = await resp.json()
+        sessionStorage.setItem("token", data.items)
+        token = data.items
+        console.log(sessionStorage.getItem("token"))
+        }
+        fetchRef()
+    },10000)
+    
+}
 export default function WebPlayback() {
 
     const [player, setPlayer] = useState<any>(undefined);
@@ -43,7 +63,7 @@ export default function WebPlayback() {
     const [pos, setPos] = useState<any>(0)
     const [duration, setDuration] = useState<any>(0)
     //Used to keep track of current device. used in Track and Ptrack Component
-    const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)})             
+    const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)})         
 
     useEffect(() => {        
 ///////////////////////////Create Spotify web player client
@@ -51,33 +71,39 @@ export default function WebPlayback() {
             script.src = "https://sdk.scdn.co/spotify-player.js";
             script.async = true;
             var token = ''
-            const fetchToken = async () => {
-                const response = await fetch(import.meta.env.VITE_URL + "/token")
-                const data = await response.json()
-                token = data.items                
-                sessionStorage.setItem("token", data.items)                
-            }
-            fetchToken()
-            //Handles refresh token
-            setInterval(() => {
-                console.log(sessionStorage.getItem("token"))
-                const fetchRef = async () =>  {
-                const resp = await fetch(import.meta.env.VITE_URL + "/token/refresh_token")
-                const data = await resp.json()
-                sessionStorage.setItem("token", data.items)
-                console.log(sessionStorage.getItem("token"))
-                }
-                fetchRef()
-            },1000 * 60 * 55)
+            // const fetchToken = async () => {
+            //     const response = await fetch(import.meta.env.VITE_URL + "/token")
+            //     const data = await response.json()
+            //     token = data.items                
+            //     sessionStorage.setItem("token", data.items)                
+            // }
+            // fetchToken()
+            // //Handles refresh token
+            // setInterval(() => {
+            //     console.log(sessionStorage.getItem("token"))
+            //     const fetchRef = async () =>  {
+            //     const resp = await fetch(import.meta.env.VITE_URL + "/token/refresh_token")
+            //     const data = await resp.json()
+            //     sessionStorage.setItem("token", data.items)
+            //     console.log(sessionStorage.getItem("token"))
+            //     }
+            //     fetchRef()
+            // },1000 * 60 * 55)
             
             document.body.appendChild(script);
             
             window.onSpotifyWebPlaybackSDKReady = () => {  
                 
                     const player = new window.Spotify.Player({ 
+                        // name: 'TheSound',
+                        // getOAuthToken: (cb: any) => { cb(token); },
+                        // volume: 1
                         name: 'TheSound',
-                        getOAuthToken: (cb: any) => { cb(token); },
-                        volume: 1
+                        volume: 1,
+                        getOAuthToken: async (cb: any) => {
+                            await getTokens(token)                            
+                            cb(token)
+                        }
                     });
                     setPlayer(player);                    
                     
