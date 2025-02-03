@@ -4,8 +4,10 @@ import './PTrack.css'
 
 function timeCalc (ms: number) {
     const temp = Math.round(ms / 1000)
-    const mins = Math.floor(temp / 60)
-    const secs = temp - mins * 60
+    let mins = Math.floor(temp / 60)
+    let secs = temp - mins * 60
+    secs > 59 ? (mins += 1, secs -= 60) : null
+    secs.toString().length === 1 && secs > 5 ? (mins += 1, secs -= 6) : null
     if (secs.toString().length == 1) return `${mins}.${secs}0`
     else return `${mins}.${secs}`
 }

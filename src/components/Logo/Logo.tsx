@@ -15,7 +15,7 @@ function getTracks(ptracks: any) {
     return (
       ptracks.map((t:any, i:any) =>
   
-        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center'}} key={i}>
+        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center',fontSize: '20px'}} key={i}>
             
             <img src={t.images.filter((t:any) => t.height == 64).map((s:any) => s.url)} style={{height: '64px', width: '64px'}}/>
             <Track 
@@ -52,7 +52,7 @@ function getTracks(ptracks: any) {
             nav(`/app/album/${t.id}`)
             close()
         }}>
-            <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold'}}>
+            <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold',fontSize: '20px'}}>
                 <img src={t.images.filter((t:any) => t.height == 64).map((s:any) => s.url)} style={{height: '64px'}}/>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                 <div>{t.name}</div>
@@ -72,7 +72,7 @@ function getTracks(ptracks: any) {
           nav(`/app/artist/${a.id}`)
           close()
         }}>
-      <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold'}}>
+      <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold',fontSize: '20px'}}>
       {/* <img src={a.images?.length == 1 ? a.images?.map(s => s.url) : a.images?.filter(s => s.height == 160).map(s => s.url)} alt={a.name} style={{height: '64px', width: '64px'}}/> */}
       <img src={a.images?.length == 0 ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : a.images[2]?.url} alt={a.name} style={{height: '64px', width: '64px'}} />
         {a.name}
@@ -95,7 +95,7 @@ function getTracks(ptracks: any) {
         nav(`/app/playlist/${a.id}`)
         close()
       }}>
-        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold'}}>
+        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold',fontSize: '20px'}}>
         <img src={a.images?.length == 1 ? a.images?.map((s:any) => s.url) : a.images?.filter((s:any) => s.height == 60).map((s:any) => s.url)} alt={a.name} style={{height: '64px', width: '64px'}}/>
         {a.name}
         </div>
