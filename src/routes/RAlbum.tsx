@@ -72,10 +72,8 @@ export default function RAlbum({active, paused}: any) {
 
       <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
       
-      <button className="removeAlbum3" onClick={function handleClick(){     
-          console.log(tracks.albums)
-          let temp = {images: tracks?.albums?.images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}   
-          console.log(temp)                         
+      <button className="removeAlbum3" onClick={function handleClick(){               
+          let temp = {images: tracks?.albums?.images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}                                  
           setTrackData(temp)
           setModal(true)               
         }}>Edit Playlists</button>
