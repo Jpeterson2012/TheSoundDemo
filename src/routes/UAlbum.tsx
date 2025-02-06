@@ -14,6 +14,9 @@ import musicBar from "../components/musicBar/musicBar.tsx";
 
 import MySnackbar from "../components/MySnackBar.tsx";
 
+import dots from '../images/dots.png'
+import EditPlaylist from '../components/EditPlaylist/EditPlaylist.tsx';
+
 export default function UAlbum({active, paused}: any) {
     const navigate = useNavigate()
     var parts = window.location.href.split('/');
@@ -28,6 +31,8 @@ export default function UAlbum({active, paused}: any) {
     const [artists, setArtists] = useState<any>([])
     const [talbum, setTAlbum] = useState<any>([])
     const[snack, setSnack] = useState(false)
+    const [modal, setModal] = useState(false)
+    const[trackData, setTrackData] = useState<any>(null)
 
     
 
@@ -93,9 +98,20 @@ export default function UAlbum({active, paused}: any) {
     }, [sessionStorage.getItem("image"),asuccess]);
     
     
-    const listItems2 = talbum[0]?.tracks?.items.map((t: any,i:any) => 
-      <div key={i}>
+    const listItems2 = talbum[0]?.tracks?.items.map((t: any,i:any) =>     
+      <div style={{display: 'flex', alignItems: 'start'}} key={i}>        
         {!paused ? <span style={{position: 'absolute', left: '8vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+
+        <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
+
+          <button className="removeAlbum3" onClick={function handleClick(){     
+              let temp = {images: talbum![0].images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}                            
+              setTrackData(temp)
+              setModal(true)               
+            }}>Edit Playlists</button>
+            <img src={dots} className="removeImg2" style={{paddingTop: '10px',height: '27px', width: '27px', cursor: 'pointer'}} />            
+
+          </div>
       <Track 
         uri={`spotify:album:${talbum[0]?.album_id}`}
         name={t.name}
@@ -186,6 +202,7 @@ export default function UAlbum({active, paused}: any) {
 
         )}
         <ButtonScroll />
+        {modal ? <EditPlaylist track={trackData} boolVal={modal} setbool={setModal} setsnack={setSnack} /> : null}
         {snack ? <MySnackbar state={snack} setstate={setSnack} message="Changes Saved"/>  : null}
       </>
     )

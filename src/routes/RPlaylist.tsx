@@ -199,7 +199,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                     </>
                 )}
                 <ButtonScroll />
-                {modal ? <EditPlaylist track={trackData} boolVal={modal} setbool={setModal} /> : null}
+                {modal ? <EditPlaylist track={trackData} boolVal={modal} setbool={setModal} setsnack={setSnack} /> : null}
                 {snack ? <MySnackbar state={snack} setstate={setSnack} message="Changes Saved"/>  : null}
             </>
         )

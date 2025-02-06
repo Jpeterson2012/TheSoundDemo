@@ -11,6 +11,9 @@ import musicBar from "../components/musicBar/musicBar.tsx";
 import MySnackbar from "../components/MySnackBar.tsx";
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 
+import dots from '../images/dots.png'
+import EditPlaylist from '../components/EditPlaylist/EditPlaylist.tsx';
+
 export default function RAlbum({active, paused}: any) {
     const navigate = useNavigate()
     var parts = window.location.href.split('/');
@@ -25,6 +28,8 @@ export default function RAlbum({active, paused}: any) {
     const [deleteAlbum] = useDeleteAlbumMutation()
     const {data: albums = []} = useGetAlbumsQuery()
     const[snack, setSnack] = useState(false)
+    const [modal, setModal] = useState(false)
+    const[trackData, setTrackData] = useState<any>(null)
     //Check if album is already in library or not
     let found = albums?.find((e: any) => e?.album_id === lastSegment)
     
@@ -63,7 +68,21 @@ export default function RAlbum({active, paused}: any) {
     }, [sessionStorage.getItem("image")]);
     
     const listItems = tracks.albums?.tracks?.items.map((t: any, i:any) =>
-      <div key={i}>
+      <div style={{display: 'flex', alignItems: 'start'}} key={i}>
+
+      <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
+      
+      <button className="removeAlbum3" onClick={function handleClick(){     
+          console.log(tracks.albums)
+          let temp = {images: tracks?.albums?.images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}   
+          console.log(temp)                         
+          setTrackData(temp)
+          setModal(true)               
+        }}>Edit Playlists</button>
+        <img src={dots} className="removeImg2" style={{paddingTop: '10px',height: '27px', width: '27px', cursor: 'pointer'}} />            
+      
+      </div>
+
         {!paused ? <span style={{position: 'absolute', left: '8vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
         <Track 
         uri={tracks.albums.uri}
@@ -154,6 +173,7 @@ export default function RAlbum({active, paused}: any) {
 
         )}
         <ButtonScroll />
+        {modal ? <EditPlaylist track={trackData} boolVal={modal} setbool={setModal} setsnack={setSnack} /> : null}
         {snack ? <MySnackbar state={snack} setstate={setSnack} message="Changes Saved"/>  : null}
       </>
     )
