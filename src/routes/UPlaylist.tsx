@@ -76,8 +76,7 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
           duration={t.duration_ms}
           liked={liked_urls}
           artist={t.artists}
-          t_uri={t.uri}
-          pause={paused}
+          t_uri={t.uri}          
           />
         <p hidden>{key++}</p>
         {/* <h1 id="deleteSong" onClick={function handleClick(){          

@@ -119,7 +119,7 @@ export default function Logo () {
     const [plist, setPlist] = useState<any>([]);
     const [artist, setArtist] = useState<any>([])
     const {data: albumss = []} = useGetAlbumsQuery()
-    const {data: playlists = [], refetch} = useGetPlaylistsQuery()
+    const {data: playlists = []} = useGetPlaylistsQuery()
     
 
     const [open, setOpen] = useState(false);

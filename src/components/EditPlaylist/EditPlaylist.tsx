@@ -85,12 +85,14 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
                          {/* <button>{found === undefined ? "Add" : "Remove"}</button> */}
                         <input id='checkbox' type='checkbox' />
                         <p hidden>
-                        {open ? (
+                        {open ? (()=>{
                             setTimeout(()=>{
                                 found === undefined && found2 === undefined ? null : (document.getElementById('checkbox') as HTMLInputElement ).checked = true
                                 submit1.push((document.getElementById('checkbox') as HTMLInputElement).checked)
-                            },300)                                    
-                        ) : null}
+                            },300)        
+                            return ''
+                            }                            
+                        )() : null}
                         </p>
                         </div>
                     {playlists!.map((a: any,i: any) =>
@@ -99,13 +101,14 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
                         <h3 style={{maxWidth: '500px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', fontSize: '18px',color: 'white'}} >{a.name}</h3>
                         <input id={"checkbox" + i} type='checkbox'/>
                         <p hidden>
-                        {open ? (()=>
+                        {open ? (()=>{
                             setTimeout(()=>{
                                 // some track uris are from their single version which is diff from the album version so this checks track uri && (name and artist) together
                                 (a.tracks?.find((e: any)=>e.uri === track?.uri) === undefined && (a.tracks?.find((e:any)=>e.name === track?.name && e.artists[0].name === track?.artists[0].name) === undefined)) ? null : (document.getElementById(`checkbox${i}`) as HTMLInputElement ).checked = true
                                 submit1.push((document.getElementById(`checkbox${i}`) as HTMLInputElement).checked)
                             },300)
-                            
+                            return ''
+                        }
                         )() : null}
                         </p>
                 

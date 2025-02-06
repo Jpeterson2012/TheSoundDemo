@@ -1,6 +1,6 @@
 //session storage variable name set here
-import musicBar from "../musicBar/musicBar.tsx"
 import './PTrack.css'
+import SavedSong from '../SavedSong'
 
 function timeCalc (ms: number) {
     const temp = Math.round(ms / 1000)
@@ -12,7 +12,7 @@ function timeCalc (ms: number) {
     else return `${mins}.${secs}`
 }
 
-export default function PTrack ( {uri, name, number, duration, liked, artist, t_uri, pause}: any ) {
+export default function PTrack ( {uri, name, number, duration, liked, artist, t_uri, rplay}: any ) {
     
     const artists = JSON.parse(sessionStorage.getItem("currentTrack")!)
     return (
@@ -51,7 +51,7 @@ export default function PTrack ( {uri, name, number, duration, liked, artist, t_
             </div>
             
             </a>
-            <span className="ptrackDur">{timeCalc(duration)}</span>
+            <div style={{display: 'flex'}} >{rplay ? <SavedSong track={t_uri} /> : null}<span className="ptrackDur">{timeCalc(duration)}</span></div>
       </div>
     )
 }

@@ -1,5 +1,6 @@
 //session storage variable name set hereimport musicBar from "../musicBar/musicBar.tsx"
 import './Track.css'
+import SavedSong from '../SavedSong'
 
 function timeCalc (ms: number) {
     const temp = Math.round(ms / 1000)
@@ -12,7 +13,7 @@ function timeCalc (ms: number) {
     else return `${mins}.${secs}`
 }
 
-export default function Track ( {uri, name, number, duration, album_name, artist,show,customWidth}: any ) {
+export default function Track ( {uri, name, number, duration, album_name, artist,t_uri,show,customWidth}: any ) {
     return (
         <div className='trackContainer' style={customWidth ? {width: `${customWidth}%`} : {width: '100%'}}>
             <a onClick={function handleClick () {
@@ -49,7 +50,7 @@ export default function Track ( {uri, name, number, duration, album_name, artist
             </div>
             <br></br>            
             </a>
-            {show === false ? null : <span className="songLength">{timeCalc(duration)}</span>}
+            {show === false ? null : <div style={{display: 'flex'}}><SavedSong track={t_uri} /><span className="songLength">{timeCalc(duration)}</span></div>}
       </div>
     )
 }
