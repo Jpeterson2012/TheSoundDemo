@@ -242,7 +242,7 @@ export default function Logo () {
                       {tracks.length > 0 ? <button onClick={function handleSubmit(){
                         counter += 10
                         fetchSearch()
-                      }} style={{marginLeft: 'auto', marginRight: 'auto'}} >Load More</button> : null}
+                      }} style={{width: '100%', marginTop: '10px', height: '54px', fontSize: '25px', fontWeight: 'bolder'}} >Load More</button> : null}
                   </Modal>
               </div>
           </div>
