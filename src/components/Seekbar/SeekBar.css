@@ -41,9 +41,10 @@ input[type=range]{
 
 @media only screen and (max-width: 768px){
   #seeker{
-    left: -80px;
+    left: 12px;
     bottom: 47px;
     width: 90vw;    
+    position: fixed;
   }
   input[type=range]::-webkit-slider-runnable-track{
     height: 0.3rem;
