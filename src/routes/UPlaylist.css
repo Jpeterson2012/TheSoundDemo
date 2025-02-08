@@ -158,4 +158,12 @@ div .fade-in-imageP{
         width: 50px !important;
         height: 50px !important;
     }
+    .mainImage2{
+        height: auto;
+        width: 300px;
+    }
+    .subsubImage{
+        height:100px;
+        width: 100px;
+    }
 }
