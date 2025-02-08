@@ -1,4 +1,4 @@
-.fade-in-image{
+.fade-in-image, .fade-in-image2{
   animation: fadeIn 0.5s;
 }
 .homeButtons{
@@ -265,10 +265,22 @@ form{
   .addPlaylist{
     margin-top: 60px;
   }
-  .fade-in-image{
+  .fade-in-image, .fade-in-image2{
     height: 150px !important;
     width: 150px !important;
     margin-right: 5px !important;
+  }
+  .audioPodcast{    
+    align-items: start !important;
+    position: relative;
+    left: -20vw;
+    max-height: fit-content;
+  }
+  .audioPodcast h2{
+    margin-top: 100px;
+  }
+  .fade-in-image2{    
+    margin-bottom: 0px !important;
   }
   #modal4{
     max-height: 90vh !important;
