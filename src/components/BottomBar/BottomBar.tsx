@@ -264,17 +264,17 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         </button>
 
                         <div className='spotifyButtonContainer'>
-                        <button className="spotifyButtons1" onClick={() => { currentDev.name === "TheSound" ? (pos > 3000 ? player!.seek(0) : player!.previousTrack()) : playbackState('/previous', null, currentDev) }} >
+                        <p className="spotifyButtons1" onClick={() => { currentDev.name === "TheSound" ? (pos > 3000 ? player!.seek(0) : player!.previousTrack()) : playbackState('/previous', null, currentDev) }} >
                             &lt;&lt;
-                        </button>
+                        </p>
                         
-                        <button className="spotifyButtons2"  onClick={() => { currentDev.name === "TheSound" ? player!.togglePlay() : (is_paused ? playbackState('/play', setPaused, currentDev) : playbackState('/pause', setPaused, currentDev)) }} >
+                        <p className="spotifyButtons2"  onClick={() => { currentDev.name === "TheSound" ? player!.togglePlay() : (is_paused ? playbackState('/play', setPaused, currentDev) : playbackState('/pause', setPaused, currentDev)) }} >
                             { is_paused ? "PLAY" : "PAUSE" }
-                        </button>
+                        </p>
                         
-                        <button className="spotifyButtons3"onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
+                        <p className="spotifyButtons3"onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
                             &gt;&gt;
-                        </button>
+                        </p>
                         </div>
                         
                         <img id='toggle2' src={shuffle} style={{opacity: shuffled ? '0.5' : '1'}} onClick={function handleClick(){     
