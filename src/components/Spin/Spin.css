@@ -133,6 +133,8 @@
   @media only screen and (max-width: 768px){
     .svgContainer{
       min-width: fit-content;      
+      margin-right: 0ps;
+      margin-left: 5vw;
     }
     .svgImage{
       width: 200px;
