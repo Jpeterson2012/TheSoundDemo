@@ -1,6 +1,6 @@
 //session storage variable name set here
 import './PTrack.css'
-import SavedSong from '../SavedSong'
+import SavedSong from "../SavedSong/SavedSong.tsx"
 
 function timeCalc (ms: number) {
     const temp = Math.round(ms / 1000)
@@ -8,15 +8,15 @@ function timeCalc (ms: number) {
     let secs = temp - mins * 60
     secs > 59 ? (mins += 1, secs -= 60) : null
     secs.toString().length === 1 && secs > 5 ? (mins += 1, secs -= 6) : null
-    if (secs.toString().length == 1) return `${mins}.${secs}0`
-    else return `${mins}.${secs}`
+    if (secs.toString().length == 1) return `${mins}:${secs}0`
+    else return `${mins}:${secs}`
 }
 
 export default function PTrack ( {uri, name, number, duration, liked, artist, t_uri, rplay}: any ) {
     
     const artists = JSON.parse(sessionStorage.getItem("currentTrack")!)
     return (
-        <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+        <div className='pTrackContainer' style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
             <a onClick={function handleClick () {
                                                 
                 sessionStorage.setItem("name", sessionStorage.getItem("playlist_name")!)

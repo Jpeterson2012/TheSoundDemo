@@ -6,7 +6,7 @@ import MySnackbar from '../MySnackBar';
 import EditPlaylist from '../EditPlaylist/EditPlaylist';
 
 export default function AddLiked({active,trackUri: currentTrack,duration}: any){
-    const {data: liked, isSuccess: lsuccess} = useGetLikedQuery()    
+    const {data: liked} = useGetLikedQuery()    
         
     const [addNewsong] = useAddNewLikedMutation()    
     const[modal,setModal] = useState(false)

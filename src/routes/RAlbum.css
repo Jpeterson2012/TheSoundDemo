@@ -45,7 +45,7 @@
     background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
+    -webkit-background-clip: text;    
 }
 
 .fade-in-image2{
@@ -116,5 +116,26 @@
         font-size: 35px;
     }
   }
+
+  .listContainer{
+    display: flex;
+    align-items: start;
+  }
+  .tdContainer{
+    width: 80vw;
+  }
+  @media only screen and (max-width: 768px){
+    .desc1{
+        margin-left: 12vw;
+    }
+    .listContainer{
+        /* margin-left: 5vw; */
+        /* width: 100%; */
+    }
+    .tdContainer{        
+        width: 90%;
+        margin-left: 4vw;
+    }
+  }  
   
   

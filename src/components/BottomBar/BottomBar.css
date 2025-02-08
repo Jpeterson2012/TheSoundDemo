@@ -232,6 +232,82 @@ input[type=range]{
       right: 11vw;
     }
   }
+  .spotifyButtonContainer{
+    display: none;
+  }
+  #toggle1{
+    position: absolute;
+    right: 240px;
+    bottom: 12px;
+    height: 20px;
+    cursor: pointer;
+  }
+  #toggle2{
+    position: absolute;
+    left: 240px;
+    bottom: 12px;
+    height: 19px;
+    cursor: pointer;
+
+  }
+  .deviceImg{
+    position: absolute;
+    right: -42vw;
+    bottom: 0;
+    height: 42px;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 768px){
+    .wrapper{
+      width: 100vw;
+      height: 50px;
+    }
+    .now-playing__name p, .now-playing__artist p{
+      display: none;
+      font-size: 12px;
+    }
+    .main-wrapper img{
+      height: 50px;
+    }
+    .btn-spotify{
+      display: none;
+    }
+    .spotifyButtonContainer{
+      display: block;
+      position: relative;
+      left: 7vw;            
+    }
+    .now_playing{
+      left: 4vw;  
+    }
+    .bar{
+      width: 11vw;
+    }
+    .spotifyButtonContainer button{
+      background: none;
+      color: rgb(90, 210, 216);
+      width: 60px;
+      font-size: 15px;
+    }
+    .spotifyButtons2, .spotifyButtons3{
+      position: relative;
+      right: 7vw;      
+    }
+    .volAddContainer{
+      display: none;
+    }
+    #toggle1{
+      left: 0vw;
+    }
+    #toggle2{
+      left: 52vw;
+    }
+    .deviceImg{
+      height: 36px;
+      left: 62.5vw;
+    }
+  }
 
   
   

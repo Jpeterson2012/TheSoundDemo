@@ -66,7 +66,7 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
               </div>
               <img src={dots} className="removeImg2" style={{marginBottom: '20px', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
             </div>
-            <img src={t.images.filter((t: any)=>t.height == 64).map((s: any) => s.url)} style={{height: '64px', width: '64px'}}/>
+            <img className="uPlaylistImgs" src={t.images.filter((t: any)=>t.height == 64).map((s: any) => s.url)} style={{height: '64px', width: '64px'}}/>
           </div>
           
           <PTrack 
@@ -146,9 +146,9 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                         <div style={{marginBottom: '60px', marginTop: '40px'}}>
             
                             <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >{sessionStorage.getItem("playlist_name")}</h2>
-                            <div style={{display: 'flex', marginRight: '10px'}}>
+                            <div className="desc2" style={{display: 'flex', marginRight: '10px'}}>
                                 <h5 style={{marginRight: '5px',color: 'rgb(90, 210, 216)'}}>playlist &#8226;</h5>
-                                <h5 style={{color: 'rgb(90, 210, 216)'}}>{lastSegment == 'likedsongs' ? liked?.tracks?.length : tplaylist![0].tracks.length} Song(s)</h5>
+                                <h5  style={{color: 'rgb(90, 210, 216)'}}>{lastSegment == 'likedsongs' ? liked?.tracks?.length : tplaylist![0].tracks.length} Song(s)</h5>
 
                                {lastSegment === 'likedsongs' ? null : <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
                                       setSnack(true)
@@ -180,8 +180,8 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                 
                             </div>                            
 
-                            <div style={{width: '80vw'}} >
-                            <div style={{marginTop: '50px', width: '100%',display: 'flex', justifyContent: 'space-between'}}>
+                            <div className="tdContainer" style={{width: '80vw'}} >
+                            <div className="subTdContainer" style={{marginTop: '50px', width: '100%',display: 'flex', justifyContent: 'space-between'}}>
                               <span className="lolP2">Title</span>
                               <span className="lolP">Duration</span>
                               </div>

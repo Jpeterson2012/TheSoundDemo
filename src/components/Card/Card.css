@@ -33,8 +33,10 @@ a:hover{
 }
 
 
-img {
+.cardImg {
   border-radius: 10px;
+  width: 80%;
+  height: 190px;
 }
 p {
   color: rgb(90, 210, 216);
@@ -50,4 +52,45 @@ p {
   100%{
       opacity: 1;
   }
+}
+.cardArtist{
+  color: rgb(90, 210, 216);
+  font-weight: bold;
+}
+.mainArtistContainer2{
+  display: none;
+}
+@media only screen and (max-width: 768px){
+  .card{
+    width: 65vw;
+    height: 50px;
+    display: flex;    
+    justify-content: center;
+    align-items: center;        
+  }
+  .cardArtist{        
+  }
+  .cardImg{
+    position:absolute;
+    height: 120px;
+    width: 120px;
+        
+    top: 0;    
+    left: 0;
+  }
+  .cardName{        
+    width: 170px;
+    margin-left: 110px;      
+  }
+  .cardArtistContainer{           
+    margin-left: 100px;
+    overflow: hidden;
+  }
+  .mainArtistContainer{
+    display: none;
+  }
+  .mainArtistContainer2{
+    display: block;
+  }
+
 }

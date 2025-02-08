@@ -114,5 +114,24 @@
         font-size: 35px;
     }
   }
-  
-  
+
+  .listContainer{
+    display: flex;
+    align-items: start;
+  }
+  .tdContainer{
+    width: 80vw;
+  }
+  @media only screen and (max-width: 768px){
+    .desc1{
+        margin-left: 12vw;
+    }
+    .listContainer{
+        /* margin-left: 5vw; */
+        /* width: 100%; */
+    }
+    .tdContainer{        
+        width: 90%;
+        margin-left: 4vw;
+    }
+  }  

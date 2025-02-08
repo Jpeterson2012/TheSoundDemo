@@ -43,9 +43,12 @@
   width: fit-content;
  
 }
-.userName{  
+.userName,.userName2{  
   position:absolute;  
   top: 0;
+}
+.u2Container{
+  display: none;
 }
 
 .mainLogo{
@@ -55,7 +58,7 @@
   left: 0;
   right: 0;
   margin-inline: auto; 
-  width: 95vw;
+  width: 95vw;  
   
 }
 
@@ -109,15 +112,16 @@
   transform: translate(-50%, -50%);
 }
 
+
 #modal3{
   margin: 0px;
   padding: 0px;
-  min-width: 75vw;
-  min-height: 800px;
-  overflow: hidden;
+  min-width: 75vw;  
+  min-height: 800px;  
   margin-bottom: 150px;
   background: rgb(33, 33, 33);
 }
+
 .fade-in-image{
   animation: fadeIn 0.5s;
 }
@@ -136,6 +140,68 @@
 }
 @media only screen and (max-width: 768px){
   .mainLogo{
-    top: 0;
+    /* top: 0; */
+    
   }
+  .userName{
+    width: 20px;
+    overflow: none;
+    display: none;
+  }
+  .navIcon1,.navIcon2{
+    display: none;
+  }
+  
+  .searchimg{
+    width: 55px;
+    height: 55px;
+    right: 43vw;
+    top: -1.9vh;
+  }
+  .Discover{
+    font-size: 20px;
+    right: 25vw;
+  }
+  .logoIcon{
+    width: 60px;
+    height: 60px;
+    top: -20px;
+  }
+  .u2Container{
+    display: block;
+    margin-top: 4px;
+  }
+  .userName2{    
+    margin-left: 9px;    
+    font-size: 22px;    
+  }
+
+  #modal3{
+    max-height: 90vh !important;
+      max-width: 90vw !important;
+      min-width: 90vw !important;
+  }
+  .wrap{
+    width: 100%;
+    margin-top: 85px;
+  }
+  #searchTerm{
+    width: 100%;    
+  }
+  #modalbuttons{
+    margin-top: 15vh !important;
+  }
+  .fade-in-image img{
+    height: 50px;
+    width: 50px;
+  }
+  .fade-in-image{
+    font-size: 15px !important;
+    overflow: hidden !important;
+    width: 100vw !important;
+    height: fit-content !important;
 }
+  
+
+}
+

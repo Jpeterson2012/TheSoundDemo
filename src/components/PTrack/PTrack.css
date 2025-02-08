@@ -32,3 +32,18 @@
       left: 480px;
     }
   }
+
+  @media only screen and (max-width: 768px){
+    .pTrackContainer{
+        margin-bottom: 30px;
+    }
+    .ptrackName, .ptrackArtist, .ptrackDur{
+      font-size: 15px;
+    }
+    .trackContainer{
+      width: 100%;
+    }
+    h4{
+      max-width: 180px;
+    }      
+  }

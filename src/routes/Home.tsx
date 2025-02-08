@@ -30,13 +30,7 @@ function generatePassword() {
 
 function Albums(listItems: any){
   return(
-    <div style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
-      paddingTop: '15px',width: '90vw',position: 'absolute', left: '5vw', top: '16vw'
-    }}>
+    <div className="albumContainer">
       {listItems}
     </div>
   )
@@ -68,20 +62,14 @@ function albumSort(setSorted: any){
 }
 function Playlists(navigate: any, listPlaylists: any){
   return(
-    <div style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      flexDirection: 'column',
-      paddingTop: '5vw',
-      marginBottom: '90px'
-    }}>
+    <div className="playlistContainer">
       <a onClick={function handleClick() {
         sessionStorage.setItem("playlist_name", "Liked Songs")
         sessionStorage.setItem("uplist", "true")
         navigate('/app/playlist/likedsongs')
       }}>
       <div style={{display: 'flex', alignItems: 'center', animation: 'fadeIn 0.5s', marginLeft: '40px'}}>
-        <img src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" alt="Liked Songs"  style={{height: '300px', width: '300px', marginRight: '50px'}}/>
+        <img className="likedSongImg" src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" alt="Liked Songs"/>
         <h2>Liked Songs</h2>
       </div>
       </a>

@@ -15,7 +15,7 @@ function getTracks(ptracks: any) {
     return (
       ptracks.map((t:any, i:any) =>
   
-        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center',fontSize: '20px'}} key={i}>
+        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', fontSize: '20px'}} key={i}>
             
             <img src={t.images.filter((t:any) => t.height == 64).map((s:any) => s.url)} style={{height: '64px', width: '64px'}}/>
             <Track 
@@ -119,17 +119,15 @@ export default function Logo () {
     const [plist, setPlist] = useState<any>([]);
     const [artist, setArtist] = useState<any>([])
     const {data: albumss = []} = useGetAlbumsQuery()
-    const {data: playlists = []} = useGetPlaylistsQuery()
-    
+    const {data: playlists = []} = useGetPlaylistsQuery()    
 
-    const [open, setOpen] = useState(false);
-    const onOpenModal = () => setOpen(true);
+    const [open, setOpen] = useState(false);        
+    const onOpenModal = () => {setOpen(true)};
     const onCloseModal = () => {setOpen(false); setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); counter = 0};
 
-    const fetchSearch = async () => {
-
+    const fetchSearch = async () => {        
       try {
-        var temp = await fetch(import.meta.env.VITE_URL + `/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`)
+        var temp = fetch(import.meta.env.VITE_URL + `/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`)
       .then((res) => {
         // console.log(res.json())
         return res.json();
@@ -149,15 +147,15 @@ export default function Logo () {
       })
         return temp
       }
-      catch (err) {console.log(err)}
+      catch (err) {console.log(err)}               
     }
-    
+
     const closeIcon = (
         <img src={escape} style={{height: '44px', width: '44px'}}/>
       );
-    const {data: user,isSuccess} = useGetUserQuery()
+    const {data: user,isSuccess} = useGetUserQuery()    
     
-    useEffect(() => {
+    useEffect(() => {               
       switch(sessionStorage.getItem('searchHome')){
         case 'tracks':
           setHtml(getTracks(tracks))
@@ -184,6 +182,10 @@ export default function Logo () {
           {!isSuccess ? null :
           <div className='mainLogo'>
               <h2 className='userName'>{isSuccess ? user!.items : 'hi'}</h2>
+              <div className='u2Container' style={{backgroundColor: 'rgb(90, 210, 216)', width: '29px', height: '29px', borderRadius: '50%'}}>
+              <h2 className='userName2'>{isSuccess ? user!.items[0] : 'hi'}</h2>
+              </div>
+              
 
               <h2 className='navIcon1' onClick={function handleClick(){
                 if (window.history?.length && window.history.length > 1) navigate(-1, {replace: true})
@@ -206,13 +208,18 @@ export default function Logo () {
 
 
               <div>
+                <div>
+                  
+                </div>
 
                   <Modal modalId='modal3' open={open} onClose={onCloseModal} center closeIcon={closeIcon}>
+                  
 
                   <div className="wrap">
                   <div className="search">
                       <input type="text" className="searchTerm" id='searchTerm'  placeholder="What are you looking for?" />
                       <button type="button" className="searchButton" onClick={function handleSubmit(){
+                        
 
                         setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); counter = 0;
 
@@ -226,7 +233,7 @@ export default function Logo () {
                       }}><i className="fa fa-search" style={{position: 'absolute', bottom: '9px', right: '14px', color: 'black'}} ></i></button>
                       </div>
                       </div>
-                      <img src={space} style={{zIndex: '0', width: '100%', height: '180px', position: 'absolute', top: '0', opacity: '0.3', objectFit: 'cover', objectPosition: '20% 50%'}} />
+                      <img src={space} style={{zIndex: '0', width: '100%', height: '180px', position: 'fixed', top: '0', opacity: '0.3', objectFit: 'cover', objectPosition: '20% 50%'}} />
 
 
                       <div id='modalbuttons' style={{display: 'none', justifyContent: 'center', zIndex: '9', position: 'relative', marginTop: '8vw'}}>
@@ -242,7 +249,7 @@ export default function Logo () {
                       {tracks.length > 0 ? <button onClick={function handleSubmit(){
                         counter += 10
                         fetchSearch()
-                      }} style={{width: '100%', marginTop: '10px', height: '54px', fontSize: '25px', fontWeight: 'bolder'}} >Load More</button> : null}
+                      }} style={{width: '100%', marginTop: '10px', height: '54px', fontSize: '25px', fontWeight: 'bolder'}} >Load More</button> : null}                      
                   </Modal>
               </div>
           </div>

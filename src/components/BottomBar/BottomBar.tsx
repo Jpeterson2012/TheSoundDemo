@@ -221,7 +221,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                     </div>
 
                         <div className='fiveButtonContainer'>
-                        <img id='toggle1' src={repeated < 2 ? repeat : repeat1} style={{position: 'absolute', right: '240px', bottom: '12px', height: '20px', cursor: 'pointer', opacity: repeated === 0 ? '0.5' : 1}} onClick={function handleClick(){   
+                        <img id='toggle1' src={repeated < 2 ? repeat : repeat1} style={{opacity: repeated === 0 ? '0.5' : 1}} onClick={function handleClick(){   
                             let temp = document.getElementById('toggle1')!
                             temp.style.animation = 'hithere 1s ease'  
                         
@@ -262,8 +262,22 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         <button className="btn-spotify" style={{width: '70px'}} onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
                             &gt;&gt;
                         </button>
+
+                        <div className='spotifyButtonContainer'>
+                        <button className="spotifyButtons1" onClick={() => { currentDev.name === "TheSound" ? (pos > 3000 ? player!.seek(0) : player!.previousTrack()) : playbackState('/previous', null, currentDev) }} >
+                            &lt;&lt;
+                        </button>
                         
-                        <img id='toggle2' src={shuffle} style={{position: 'absolute', left: '240px', bottom: '12px', height: '19px', cursor: 'pointer', opacity: shuffled ? '0.5' : '1'}} onClick={function handleClick(){     
+                        <button className="spotifyButtons2"  onClick={() => { currentDev.name === "TheSound" ? player!.togglePlay() : (is_paused ? playbackState('/play', setPaused, currentDev) : playbackState('/pause', setPaused, currentDev)) }} >
+                            { is_paused ? "PLAY" : "PAUSE" }
+                        </button>
+                        
+                        <button className="spotifyButtons3"onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
+                            &gt;&gt;
+                        </button>
+                        </div>
+                        
+                        <img id='toggle2' src={shuffle} style={{opacity: shuffled ? '0.5' : '1'}} onClick={function handleClick(){     
                         
                             let temp = document.getElementById('toggle2')!
                             temp.style.animation = 'hithere 1s ease'
@@ -286,12 +300,12 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         {/* Replaced old music seek bar method here */}
                         <SeekBar duration={duration} player={player} paused={is_paused} />
                     
-                        <img src={device} onClick={function handleClick(){      
+                        <img className='deviceImg' src={device} onClick={function handleClick(){      
                             refetch()
                             onOpenModal()
                             console.log(devices)                                          
                             !isFetching ? console.log(devices) : null                                                
-                            }} style={{position: 'absolute', right: '-42vw', bottom: '0', height: '42px', cursor: 'pointer'}} />
+                            }} />
 
                         <Modal modalId='modal1' open={open} onClose={onCloseModal} closeIcon={closeIcon} >
                             <div style={{marginTop: '60px'}}>
@@ -309,7 +323,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                     }}>
                                        <p>TheSound</p> 
                                     </a> 
-                                {devices.map((a,i) =>
+                                {devices.map((a:any,i:any) =>
                                     a.name === "TheSound" ? null : <a key={i} onClick={function handleClick(){
                                         // console.log(a)
                                         setCurrentDev({name: a.name, id: a.id})

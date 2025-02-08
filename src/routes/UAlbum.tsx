@@ -99,8 +99,8 @@ export default function UAlbum({active, paused}: any) {
     
     
     const listItems2 = talbum[0]?.tracks?.items.map((t: any,i:any) =>     
-      <div style={{display: 'flex', alignItems: 'start'}} key={i}>        
-        {!paused ? <span style={{position: 'absolute', left: '8vw', marginTop:'10px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+      <div className="listContainer" key={i}>        
+        {!paused ? <span style={{position: 'absolute', left: '8vw', marginTop: '10px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
 
         <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
 
@@ -181,7 +181,7 @@ export default function UAlbum({active, paused}: any) {
               
             </div>
             
-            <div style={{width: '80vw'}}>
+            <div className="tdContainer">
               <div style={{marginTop: '50px', width: '100%',display: 'flex', justifyContent: 'space-between'}}>
                 <span className="uTitle">Title</span>
                 <span className="uTitle2">Duration</span>

@@ -83,7 +83,7 @@ export default function Discover() {
             sessionStorage.setItem("c_name", a.name)
             // navigate(`/app/categories/${a.id}`)            
         }}>
-            <div style={{width: '200px',height: '305px', marginBottom: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div className="categoryContainer" style={{width: '200px',height: '305px', marginBottom: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 
                 <img className="fade-in-image" src={a.icons.map((s: any) => s.url)} alt="Avatar" style={{width:'80%',height:'190px'}}/>
                 <h4 style={{marginTop: '200px'}} ><b>{a.name}</b></h4>
@@ -126,7 +126,7 @@ export default function Discover() {
     return (
         <>
         { loading ? null :
-        <div style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw'}}>    
+        <div className="discoverContainer" style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw'}}>    
             {customRender("Categories", listCategories)}
             {customRender("New Releases", listReleases)}
             {customRender("Popular Playlists", listPlaylists)}  

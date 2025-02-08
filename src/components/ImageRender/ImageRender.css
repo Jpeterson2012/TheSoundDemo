@@ -25,3 +25,19 @@
     width: 150px; */
     /* border-radius: 0; */
 }
+@media only screen and (max-width: 768px){
+    .mainRender{
+        height: 150px !important;
+        width: 150px !important;
+        margin-right: 5px !important;
+    }
+    .subsubRender{
+        height: 75px !important;
+        width: 75px !important;
+    }
+    .renderImage{
+        height: 150px !important;
+        width: 150px !important;
+        margin-right: 5px !important;
+    }
+}

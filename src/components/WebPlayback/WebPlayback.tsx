@@ -45,7 +45,7 @@ export default function WebPlayback() {
     const [pos, setPos] = useState<any>(0)
     const [duration, setDuration] = useState<any>(0)
     //Used to keep track of current device. used in Track and Ptrack Component
-    const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)})         
+    const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)})             
 
     useEffect(() => {        
 ///////////////////////////Create Spotify web player client
@@ -55,22 +55,22 @@ export default function WebPlayback() {
             var token = ''
             const fetchToken = async () => {
                 try{
-                const response = await fetch(import.meta.env.VITE_URL + "/token")
-                const data = await response.json()
-                token = data.items                
-                sessionStorage.setItem("token", data.items)    
-                }
-                catch(e){console.log(`Error requesting access token: ${e}`)}            
+                    const response = await fetch(import.meta.env.VITE_URL + "/token")
+                    const data = await response.json()
+                    token = data.items                
+                    sessionStorage.setItem("token", data.items)    
+                    }
+                    catch(e){console.log(`Error requesting access token: ${e}`)}                
             }
             fetchToken()
             //Handles refresh token
             setInterval(() => {
                 try{
-                fetch(import.meta.env.VITE_URL + "/token/refresh_token")
-                .then(data => data.json()).then(a => {sessionStorage.setItem("token", a.items), token = a.items})
-                }
-                catch (e) {`Error requesting access token: ${e}`}                
-            },1000 * 59 * 59)    
+                    fetch(import.meta.env.VITE_URL + "/token/refresh_token")
+                    .then(data => data.json()).then(a => {sessionStorage.setItem("token", a.items), token = a.items})
+                    }
+                    catch (e) {`Error requesting access token: ${e}`}              
+            },1000 * 59 * 59)            
             
             document.body.appendChild(script);
             
@@ -79,7 +79,7 @@ export default function WebPlayback() {
                     const player = new window.Spotify.Player({ 
                         name: 'TheSound',
                         getOAuthToken: (cb: any) => { cb(token); },
-                        volume: 1                        
+                        volume: 1,                              
                     });
                     setPlayer(player);                    
                     

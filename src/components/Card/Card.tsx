@@ -27,19 +27,32 @@ export default function Card( {id, image, name, artist, a_id}: any ) {
                 sessionStorage.setItem("artist_id", JSON.stringify(a_id))
                 
                 navigate(`/app/album/${id}`)
-            }}> <img src={image} alt="Avatar" style={{width:'80%',height:'190px'}}/>
+            }}> <img className='cardImg' src={image} alt="Avatar"/>
             </a>
 
-            <div><b>{zip.map((s: any,i: any,row: any) =>
-                <div key={i}>
+            <div>
+
+            <div className='mainArtistContainer' ><b>{zip.map((s: any,i: any,row: any) =>
+                <div className='cardArtistContainer' key={i}>
                 <a onClick={function handleClick() {
                     s[0] === 'Various Artists' ? null : navigate(`/app/artist/${s[1]}`)
-                }} style={{color: 'rgb(90, 210, 216)', fontWeight: 'bold'}}>{row.length - 1 !== i ? s[0] + ", " : s[0]}</a>
+                }} className='cardArtist'>{row.length - 1 !== i ? s[0] + ", " : s[0]}</a>
                 <span hidden>{key++}</span>
                 </div>
-            )}</b></div>                
+            )}</b></div>
+
+            <div className='mainArtistContainer2'><b>
+                <div className='cardArtistContainer' key={zip[1]}>
+                <a onClick={function handleClick() {
+                    zip[0][0] === 'Various Artists' ? null : navigate(`/app/artist/${zip[0][1]}`)
+                }} className='cardArtist'>{zip[0][0]}</a>
+                <span hidden>{key++}</span>
+                </div>
+            </b></div>                
                 
-            <p><b className='cardName'>{name}</b></p>
+            <p className='cardName'><b>{name}</b></p>
+
+            </div>
         
         </div>
     );

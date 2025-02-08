@@ -80,7 +80,7 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
         `  <div>                        
                 <Modal modalId='modalComp' open={open} onClose={onCloseModal} center closeIcon={closeIcon}>                            
                     <div style={{display: 'flex', alignItems: 'center'}}>
-                        <img src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" alt="Liked Songs"  style={{height: '80px', width: '80px', marginRight: '20px'}}/>
+                        <img className='modalCompImg' src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" alt="Liked Songs"  style={{height: '80px', width: '80px', marginRight: '20px'}}/>
                         <h3 style={{fontSize: '18px',color: 'white'}} >Liked Songs</h3>
                          {/* <button>{found === undefined ? "Add" : "Remove"}</button> */}
                         <input id='checkbox' type='checkbox' />
@@ -89,9 +89,9 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
                             setTimeout(()=>{
                                 found === undefined && found2 === undefined ? null : (document.getElementById('checkbox') as HTMLInputElement ).checked = true
                                 submit1.push((document.getElementById('checkbox') as HTMLInputElement).checked)
-                            },300)        
+                            },300)
                             return ''
-                            }                            
+                        }                                    
                         )() : null}
                         </p>
                         </div>

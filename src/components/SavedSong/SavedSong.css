@@ -1,0 +1,21 @@
+.savedContainer{
+    background-color: rgb(90, 210, 216);
+    margin-right: 20px;
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+}
+.subSaved{
+    color: #7a19e9;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 768px){
+    .savedContainer{
+        height: 20px;
+        width: 20px;
+    }
+    .subSaved{
+        font-size: 15px;
+    }
+}

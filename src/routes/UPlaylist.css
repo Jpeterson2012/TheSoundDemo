@@ -137,3 +137,25 @@ div .fade-in-imageP{
     }
     
 }
+
+@media only screen and (max-width: 768px){
+    .desc2{
+        margin-left: 12vw;
+        margin-right: 0px;
+    }
+    .tdContainer{        
+        width: 90% !important;
+        margin-left: 2vw !important;
+    }
+    .subTdContainer{
+        margin-right: 15px !important;
+    }
+    .lolP2{
+        margin-right: 0px;
+        margin-left: 4px;
+    }
+    .uPlaylistImgs{
+        width: 50px !important;
+        height: 50px !important;
+    }
+}

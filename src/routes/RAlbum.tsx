@@ -68,12 +68,12 @@ export default function RAlbum({active, paused}: any) {
     }, [sessionStorage.getItem("image")]);
     
     const listItems = tracks.albums?.tracks?.items.map((t: any, i:any) =>
-      <div style={{display: 'flex', alignItems: 'start'}} key={i}>
+      <div className="listContainer" key={i}>
 
       <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
       
       <button className="removeAlbum3" onClick={function handleClick(){               
-          let temp = {images: tracks?.albums?.images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}                                  
+          let temp = {images: tracks?.albums?.images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}                                   
           setTrackData(temp)
           setModal(true)               
         }}>Edit Playlists</button>
@@ -81,7 +81,7 @@ export default function RAlbum({active, paused}: any) {
       
       </div>
 
-        {!paused ? <span style={{position: 'absolute', left: '8vw',marginTop: '5px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+        {!paused ? <span style={{position: 'absolute', left: '8vw', marginTop: '5px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
         <Track 
         uri={tracks.albums.uri}
         name={t.name}
@@ -150,7 +150,7 @@ export default function RAlbum({active, paused}: any) {
               
             </div>
 
-            <div style={{width: '80vw'}}>
+            <div className="tdContainer" style={{width: '80vw'}}>
             <div style={{marginTop: '50px', width: '100%',display: 'flex', justifyContent: 'space-between'}}>
               <span className="rTitle">Title</span>
               <span className="rTitle2">Duration</span>
