@@ -17,10 +17,10 @@ function MySnackbar({state,setstate,message}: any){
     return (
       <div>           
         <Snackbar 
-        anchorOrigin={{vertical: 'bottom',horizontal: 'center'}}
+        anchorOrigin={{vertical: document.documentElement.clientWidth < 750 ? 'top' : 'bottom',horizontal: 'center'}}
          open={open} 
          onClose={handleClose} 
-         autoHideDuration={2000}
+         autoHideDuration={1750}
          message={message}
          ContentProps={{
             sx:{
