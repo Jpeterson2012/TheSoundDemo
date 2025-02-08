@@ -134,4 +134,8 @@
         width: 90%;
         margin-left: 4vw;
     }
+    .musicBars{
+        left: 215px !important;
+        margin-top: 1px !important;
+    }
   }  

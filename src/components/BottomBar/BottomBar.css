@@ -293,6 +293,7 @@ input[type=range]{
       position: fixed;
       /* left: 40vw; */
       bottom: 1px;
+      cursor: pointer;
     }
     .spotifyButtons1{
       left: 35vw !important;

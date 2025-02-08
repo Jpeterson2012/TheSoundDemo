@@ -81,7 +81,7 @@ export default function RAlbum({active, paused}: any) {
       
       </div>
 
-        {!paused ? <span style={{position: 'absolute', left: '8vw', marginTop: '5px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+        {!paused ? <span className="musicBars" style={{position: 'absolute', left: '8vw', marginTop: '5px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
         <Track 
         uri={tracks.albums.uri}
         name={t.name}

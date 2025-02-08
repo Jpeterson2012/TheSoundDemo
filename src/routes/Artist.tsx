@@ -102,8 +102,8 @@ export default function Artist({paused}: any) {
 
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}} key={i}>
       
-    {!paused ? <span style={{position: 'absolute', left: '7.5vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
-    <p style={{marginLeft: '16px',overflow: 'visible'}}>{count < 10 ? '0' + count : count}</p> 
+    {!paused ? <span className="musicBars" style={{position: 'absolute', left: '7.5vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+    <p className="topTrackNum" style={{marginLeft: '16px',overflow: 'visible'}}>{count < 10 ? '0' + count : count}</p> 
     <img src={t.album?.images.filter((t: any) => t.height == 64).map((s: any) => s.url)} style={{marginLeft: '20px'}} />
     <Track 
       uri={t.album.uri}
@@ -119,7 +119,7 @@ export default function Artist({paused}: any) {
     </div>
   )
   const listItems = artists2.albums?.items?.filter((a: any) => a.album_group === 'album').map((a: any, i:any) =>
-    <div key={i}> 
+    <div className="artistLists" key={i}> 
       <h5>{a.release_date}</h5>
     <Card
       // key={a.id}
@@ -134,7 +134,7 @@ export default function Artist({paused}: any) {
   )
   
   const listItems2 = artists2.albums?.items?.filter((a: any) => a.album_group === 'single').map((a: any, i:any) =>
-    <div key={i}>
+    <div className="artistLists" key={i}>
       <h5>{a.release_date}</h5>
     <Card
       // key={a.id}
@@ -149,7 +149,7 @@ export default function Artist({paused}: any) {
   )
 
   const listItems3 = artists2.albums?.items?.filter((a: any) => a.album_group === 'compilation').map((a: any, i: any) =>
-    <div key={i}>
+    <div className="artistLists" key={i}>
       <h5>{a.release_date}</h5> 
     <Card
       // key={a.id}
@@ -184,10 +184,10 @@ export default function Artist({paused}: any) {
     <div style={{marginTop: '40px',marginBottom: '80px'}}>
       <h1>{artists.artists?.name}</h1>
         {/* <img src={artists.artists?.images.filter(t=>t.height == 320).map(s => s.url)} /> */}
-        <img className="fade-in-image" src={artists.artists?.images.length == 0 ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : artists.artists?.images[1]?.url} alt={artists.artists?.name} style={{height: '320px', width: '320px'}} />
+        <img className="artistImage" src={artists.artists?.images.length == 0 ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : artists.artists?.images[1]?.url} alt={artists.artists?.name} style={{height: '320px', width: '320px'}} />
         <p style={{margin: '20px auto'}} >{artists.artists?.followers.total.toLocaleString()} followers</p>
         <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-            <p className="headers">Genre(s):</p>
+            <p className="headers2">Genre(s):</p>
             {artists?.artists?.genres.length > 0 ? artists.artists?.genres.map((s: any, i: any) => <p key={i}>{s}</p>) : <p>Music I guess. Idk</p>}
         </div>
         
@@ -197,7 +197,7 @@ export default function Artist({paused}: any) {
             </div>
             { loading2 ? Spin3() : (
               <>
-            <div>
+            <div className="appearsOn">
             {listItems4?.length !== 0 ? <p className="headers" >Appears On</p> : null}
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
                 {listItems4}
@@ -207,7 +207,7 @@ export default function Artist({paused}: any) {
 
             <div>
             {listItems?.length !== 0 ? <p className="headers" >Albums</p> : null}
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
+            <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
                 {listItems}
             </div>
             </div>
@@ -215,13 +215,13 @@ export default function Artist({paused}: any) {
 
             <div >
             {listItems2?.length !== 0 ? <p className="headers" >Singles</p> : null}
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center'}}>
+            <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center'}}>
                 {listItems2}
             </div>
             </div>
             
             {listItems3?.length !== 0 ? <p className="headers">Compilations</p> : null}
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
+            <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
                 {listItems3}
             </div>
             </>

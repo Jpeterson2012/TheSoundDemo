@@ -1,4 +1,4 @@
-.fade-in-image{
+.artistImage{
     animation: fadeIn 0.5s;
 }
 @keyframes fadeIn {
@@ -12,4 +12,29 @@
 .headers{
     font-weight: bold;
     font-size: 30px;
+}
+h5{
+    color: rgb(90, 210, 216);
+}
+@media only screen and (max-width: 768px){
+    .artistImage{
+        width: 90vw !important;
+        height: 90vw !important;
+    }
+    .topTrackNum{
+        display: none;
+    }
+    .headers2{
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+    .appearsOn{
+        display: none;
+    }
+    .artistContent{        
+        align-items: center !important;        
+    }
+    .artistLists{
+        max-height: 160px !important;
+    }
 }

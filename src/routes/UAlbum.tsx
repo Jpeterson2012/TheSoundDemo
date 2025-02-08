@@ -100,7 +100,7 @@ export default function UAlbum({active, paused}: any) {
     
     const listItems2 = talbum[0]?.tracks?.items.map((t: any,i:any) =>     
       <div className="listContainer" key={i}>        
-        {!paused ? <span style={{position: 'absolute', left: '8vw', marginTop: '10px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+        {!paused ? <span className="musicBars" style={{position: 'absolute', left: '8vw', marginTop: '10px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
 
         <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
 
@@ -196,7 +196,7 @@ export default function UAlbum({active, paused}: any) {
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>Release Date: {talbum[0]?.release_date}</h5>
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>{ talbum[0]?.copyrights[0]?.text} </h5>
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>(R) {talbum[0]?.label_name}</h5>
-            <p style={{marginBottom: '50px'}}></p>
+            <p style={{marginBottom: '100px'}}></p>
 
           </>
 
