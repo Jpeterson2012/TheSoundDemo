@@ -62,11 +62,12 @@ p {
 }
 @media only screen and (max-width: 768px){
   .card{
-    width: 65vw;
-    height: 50px;
+    width: 60vw;
+    height: 30px;
     display: flex;    
     justify-content: center;
     align-items: center;        
+    margin-bottom: 30px;
   }
   .cardArtist{        
   }

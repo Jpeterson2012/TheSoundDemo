@@ -248,6 +248,7 @@ form{
   }
   .albumContainer{
     top: 35vw;
+    padding-top: 25px;
   }
   .likedSongImg{
     height: 150px;

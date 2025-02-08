@@ -269,6 +269,7 @@ input[type=range]{
     }
     .main-wrapper img{
       height: 50px;
+      position: fixed;
     }
     .btn-spotify{
       display: none;
@@ -284,28 +285,47 @@ input[type=range]{
     .bar{
       width: 11vw;
     }
-    .spotifyButtonContainer button{
+    .spotifyButtonContainer p{
       background: none;
       color: rgb(90, 210, 216);
-      width: 60px;
+      /* width: 20px; */
       font-size: 15px;
+      position: fixed;
+      /* left: 40vw; */
+      bottom: 1px;
     }
-    .spotifyButtons2, .spotifyButtons3{
-      position: relative;
-      right: 7vw;      
+    .spotifyButtons1{
+      left: 35vw !important;
+      width: fit-content !important;
+      /* width: 10px !important; */
     }
+    .spotifyButtons2{
+      left:47vw !important;
+      width: fit-content !important;
+    }
+    .spotifyButtons3{
+      left: 65vw !important;
+      width: fit-content !important;
+      /* width: 10px !important; */
+    }    
     .volAddContainer{
       display: none;
     }
     #toggle1{
-      left: 0vw;
+      left: 23.5vw;
+      bottom: 15px;
+      position: fixed;
     }
     #toggle2{
-      left: 52vw;
+      left: 77vw;
+      bottom: 17px;
+      position: fixed;
     }
     .deviceImg{
       height: 36px;
-      left: 62.5vw;
+      left: 87.5vw;
+      bottom: 5px;
+      position: fixed;
     }
   }
 
