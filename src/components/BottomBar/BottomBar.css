@@ -294,6 +294,14 @@ input[type=range]{
       /* left: 40vw; */
       bottom: 1px;
       cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
     .spotifyButtons1{
       left: 35vw !important;
@@ -309,7 +317,7 @@ input[type=range]{
       width: fit-content !important;
       /* width: 10px !important; */
     }    
-    .volAddContainer{
+    #volumeBar, #volumeIcon{
       display: none;
     }
     #toggle1{

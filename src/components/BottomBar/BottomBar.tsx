@@ -268,9 +268,11 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                             &lt;&lt;
                         </p>
                         
-                        <p className="spotifyButtons2"  onClick={() => { currentDev.name === "TheSound" ? player!.togglePlay() : (is_paused ? playbackState('/play', setPaused, currentDev) : playbackState('/pause', setPaused, currentDev)) }} >
+                        <a onClick={() => { currentDev.name === "TheSound" ? player!.togglePlay() : (is_paused ? playbackState('/play', setPaused, currentDev) : playbackState('/pause', setPaused, currentDev)) }}>
+                        <p className="spotifyButtons2" >
                             { is_paused ? "PLAY" : "PAUSE" }
                         </p>
+                        </a>
                         
                         <p className="spotifyButtons3"onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
                             &gt;&gt;

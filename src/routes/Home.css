@@ -281,4 +281,9 @@ form{
     font-size: 9px;
     margin: 2px;
   }  
+  .dropdown-content{
+    position: absolute;
+    top: 5px;
+    left: 65px;
+  }
 }
