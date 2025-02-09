@@ -82,8 +82,8 @@
   @media only screen and (max-width: 768px){
     #modalComp{
       max-height: 90vh !important;
-      max-width: 90vw !important;
-      min-width: 90vw !important;
+      min-width: 85vw !important;
+      max-width: 85vw !important;
       margin-bottom: 0px !important;
     }
     #modalComp h3{
