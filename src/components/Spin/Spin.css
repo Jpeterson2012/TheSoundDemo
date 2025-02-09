@@ -34,7 +34,7 @@
   #svg2{
     z-index: 0;
     position: absolute;
-    left: 29px;
+    left: 22px;
     bottom: 0;
     width: 70px;
     height: 60px;
@@ -149,6 +149,7 @@
     #svg2{
       width: 55px;
       height: 50px;
+      left: 20px;
     }
     #svg3{
       width: 300px;
