@@ -48,7 +48,7 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
           <p hidden>{liked_urls.push(t.uri)}</p>
           <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
             {/* Music bar animation here */}
-            {!paused ? <span className="musicBars" style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+            {!paused ? <span className="musicBars2" style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
             <div className="removeContainer2" style={{width: '20px'}}>
               <div className="removeAlbum2">
 
@@ -135,7 +135,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
         <>        
             {loading ? null : (
                 <>
-                <div style={{marginBottom: '100px'}} >                    
+                <div style={{marginBottom: '150px'}} >                    
 
                     {(lastSegment! === 'likedsongs' ? Spin(active,paused,"https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg",null) 
                     : (tplaylist[0]?.images.length === 0 && tplaylist[0]?.tracks.length > 3) ? Spin(active,paused,"",customImage(tplaylist[0])) 

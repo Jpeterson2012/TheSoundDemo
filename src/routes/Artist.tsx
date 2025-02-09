@@ -102,7 +102,7 @@ export default function Artist({paused}: any) {
 
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}} key={i}>
       
-    {!paused ? <span className="musicBars" style={{position: 'absolute', left: '7.5vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+    {!paused ? <span className="musicBars4" style={{position: 'absolute', left: '7.5vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
     <p className="topTrackNum" style={{marginLeft: '16px',overflow: 'visible'}}>{count < 10 ? '0' + count : count}</p> 
     <img src={t.album?.images.filter((t: any) => t.height == 64).map((s: any) => s.url)} style={{marginLeft: '20px'}} />
     <Track 

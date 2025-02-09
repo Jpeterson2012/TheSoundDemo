@@ -196,10 +196,15 @@
     width: 50px;
   }
   .fade-in-image{
-    font-size: 15px !important;
-    overflow: hidden !important;
-    width: 100vw !important;
+    font-size: 15px !important;     
     height: fit-content !important;
+    flex-wrap: nowrap !important;
+}
+.logoModal{
+  max-width: 85vw !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
 }
   
 

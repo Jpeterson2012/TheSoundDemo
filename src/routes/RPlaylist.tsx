@@ -18,7 +18,7 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
       <div style={{display: 'flex', alignItems: 'center'}} key={t.uri.split(':').pop()}>
 
           <p hidden>{liked_urls.push(t.uri)}</p>  
-          {!paused ? <span className="musicBars" style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0]?.name === t.artist[0]?.name)) ? musicBar() : null}</span> : null}
+          {!paused ? <span className="musicBars3" style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0]?.name === t.artist[0]?.name)) ? musicBar() : null}</span> : null}
           <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
 
           <button className="removeAlbum3" onClick={function handleClick(){        
@@ -137,7 +137,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
             <>        
                 {loading ? Spin3() : (
                     <>
-                    <div>
+                    <div style={{marginBottom: '150px'}}>
                         
                         {/* Spin Component import now instead of prop */}
                         {Spin(active,paused,sessionStorage.getItem("p_image")!,null)} 

@@ -63,7 +63,7 @@ p {
 @media only screen and (max-width: 768px){
   .card{
     width: 60vw;
-    height: 30px;
+    height: 0px;
     display: flex;    
     justify-content: center;
     align-items: center;        
@@ -72,8 +72,8 @@ p {
   
   .cardImg{
     position:absolute;
-    height: 120px;
-    width: 120px;
+    height: auto;
+    width: 65px;
         
     top: 0;    
     left: 0;
@@ -91,6 +91,7 @@ p {
   }
   .mainArtistContainer2{
     display: block;
+    margin-top: 15px;
   }
 
 }

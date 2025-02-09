@@ -15,7 +15,7 @@ function getTracks(ptracks: any) {
     return (
       ptracks.map((t:any, i:any) =>
   
-        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', fontSize: '20px'}} key={i}>
+        <div className='logoTracks' style={{display: 'flex', alignItems: 'center', fontSize: '20px'}} key={i}>
             
             <img src={t.images.filter((t:any) => t.height == 64).map((s:any) => s.url)} style={{height: '64px', width: '64px'}}/>
             <Track 
@@ -243,7 +243,7 @@ export default function Logo () {
                           <button onClick={() => {setHtml(getPlaylists(playlists,plist, navigate, onCloseModal)), sessionStorage.setItem('searchHome', 'playlists')}}>Playlists</button>
                       </div>
 
-                      <div style={{maxWidth: '55vw', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', marginTop: '40px'}}>{html ? html : getTracks(tracks)}</div>
+                      <div className='logoModal' style={{maxWidth: '55vw', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', marginTop: '40px'}}>{html ? html : getTracks(tracks)}</div>
 
 
                       {tracks.length > 0 ? <button onClick={function handleSubmit(){

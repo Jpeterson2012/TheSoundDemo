@@ -166,4 +166,8 @@ div .fade-in-imageP{
         height:100px;
         width: 100px;
     }
+    .musicBars2{
+        left: 75vw !important;
+        margin-bottom: 20px !important;
+    }
 }

@@ -38,7 +38,7 @@
 @media only screen and (max-width: 768px){
   #addSong{
     position: fixed;
-    bottom: 35px;
+    bottom: 40px;
     left: 86vw;
     z-index: 2;
     border: 3px solid white;

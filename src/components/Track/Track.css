@@ -49,11 +49,9 @@ h4{
   }
   .trackContainer{
     width: 100%;
-  }
-  h4{
-    max-width: 180px;
   }  
   h2,h4{
+    max-width: 51vw;
     -webkit-tap-highlight-color: transparent;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
