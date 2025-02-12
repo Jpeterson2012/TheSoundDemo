@@ -90,6 +90,38 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
   )
 }
 
+function playlistSort(tplaylist: any, setTPlaylist: any){
+  let temp: any
+  return(
+    <>
+    <button className="theme" onClick={function handleClick(){   
+      console.log(tplaylist)   
+      temp = tplaylist.tracks.slice()                  
+      temp.sort((a:any,b:any) => a.name.localeCompare(b.name))      
+      setTPlaylist({...tplaylist, tracks: temp})
+    }}>A-Z</button>
+
+    <button className="theme" onClick={function handleClick(){ 
+      temp = tplaylist.tracks.slice()     
+      temp.sort((a:any,b:any) => b.name.localeCompare(a.name))
+      setTPlaylist({...tplaylist, tracks: temp})
+    }}>Z-A</button>
+
+    <button className="theme" onClick={function handleClick(){  
+      temp = tplaylist.tracks.slice()    
+      temp.sort((a:any,b:any) => a.artists[0].name.localeCompare(b.artists[0].name))
+      setTPlaylist({...tplaylist, tracks: temp})
+    }}>Artist A-Z</button>
+
+    <button className="theme" onClick={function handleClick(){   
+      temp = tplaylist.tracks.slice()   
+      temp.sort((a:any,b:any) => b.artists[0].name.localeCompare(a.artists[0].name))
+      setTPlaylist({...tplaylist, tracks: temp})
+    }}>Artist Z-A</button>
+    </>
+  )
+}
+
 export default function UPlaylist({lastSegment, active, paused}: any){
     const [loading, setLoading] = useState(true)
     var liked_uris: any = []
@@ -125,7 +157,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
     useEffect(()=>{                
         if(truth) setLoading(false)     
           if (psuccess){
-          singlePlist!.length > 0 ? (sessionStorage.setItem("u_playlist",JSON.stringify(singlePlist!)), setTplaylist(singlePlist!)) : setTplaylist(JSON.parse(sessionStorage.getItem("u_playlist")!))
+            lastSegment! === 'likedsongs' ? setTplaylist(liked) : ( singlePlist!.length > 0 ? (sessionStorage.setItem("u_playlist",JSON.stringify(singlePlist!)), setTplaylist(singlePlist![0])) : setTplaylist(JSON.parse(sessionStorage.getItem("u_playlist")!)[0]) )
           }
     },[lsuccess,liked,pStorm])
 
@@ -138,17 +170,17 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                 <div style={{marginBottom: '150px'}} >                    
 
                     {(lastSegment! === 'likedsongs' ? Spin(active,paused,"https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg",null) 
-                    : (tplaylist[0]?.images.length === 0 && tplaylist[0]?.tracks.length > 3) ? Spin(active,paused,"",customImage(tplaylist[0])) 
-                    : Spin(active,paused,returnUrl(tplaylist![0]),null) )}
+                    : (tplaylist?.images.length === 0 && tplaylist?.tracks.length > 3) ? Spin(active,paused,"",customImage(tplaylist)) 
+                    : Spin(active,paused,returnUrl(tplaylist!),null) )}
 
                     <div>
                     
                         <div style={{marginBottom: '60px', marginTop: '40px'}}>
             
                             <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >{sessionStorage.getItem("playlist_name")}</h2>
-                            <div className="desc2" style={{display: 'flex', marginRight: '10px'}}>
+                            <div className="desc2" style={{display: 'flex', marginRight: '10px', alignItems: 'center'}}>
                                 <h5 style={{marginRight: '5px',color: 'rgb(90, 210, 216)'}}>playlist &#8226;</h5>
-                                <h5  style={{color: 'rgb(90, 210, 216)'}}>{lastSegment == 'likedsongs' ? liked?.tracks?.length : tplaylist![0].tracks.length} Song(s)</h5>
+                                <h5  style={{color: 'rgb(90, 210, 216)'}}>{tplaylist!.tracks.length} Song(s)</h5>
 
                                {lastSegment === 'likedsongs' ? null : <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
                                       setSnack(true)
@@ -177,6 +209,14 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                                     
                                     }}>{singlePlist!.length === 0 ? "+" : "✓"}</p>}
 
+                              <div className="dropdown" id="dropdown">
+
+                                <button className="dropbtn" style={{marginLeft: '100%'}} >Sort</button>
+                                <div className="dropdown-content">
+                                      {playlistSort(tplaylist!, setTplaylist)}
+                                </div>
+                              </div>
+
                 
                             </div>                            
 
@@ -185,7 +225,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                               <span className="lolP2">Title</span>
                               <span className="lolP">Duration</span>
                               </div>
-                            {userPlaylists(lastSegment == 'likedsongs' ? liked : tplaylist![0], liked_uris, paused,removeSong, removePTrack, lastSegment,setModal,setTrackData,setSnack) }
+                            {userPlaylists(tplaylist!, liked_uris, paused,removeSong, removePTrack, lastSegment,setModal,setTrackData,setSnack) }
                             </div>
                             
             

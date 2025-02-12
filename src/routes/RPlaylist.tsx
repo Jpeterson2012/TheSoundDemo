@@ -46,6 +46,37 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
   )
 }
 
+function playlistSort(tplaylist: any, setTPlaylist: any){
+  let temp: any
+  return(
+    <>
+    <button className="theme" onClick={function handleClick(){      
+      temp = tplaylist                        
+      temp.sort((a:any,b:any) => a.name.localeCompare(b.name))      
+      setTPlaylist([...temp])
+    }}>A-Z</button>
+
+    <button className="theme" onClick={function handleClick(){ 
+      temp = tplaylist     
+      temp.sort((a:any,b:any) => b.name.localeCompare(a.name))
+      setTPlaylist([...temp])
+    }}>Z-A</button>
+
+    <button className="theme" onClick={function handleClick(){  
+      temp = tplaylist  
+      temp.sort((a:any,b:any) => a.artists[0].name.localeCompare(b.artists[0].name))
+      setTPlaylist([...temp])
+    }}>Artist A-Z</button>
+
+    <button className="theme" onClick={function handleClick(){   
+      temp = tplaylist   
+      temp.sort((a:any,b:any) => b.artists[0].name.localeCompare(a.artists[0].name))
+      setTPlaylist([...temp])
+    }}>Artist Z-A</button>
+    </>
+  )
+}
+
 export default function RPlaylist({lastSegment, active, paused}: any){
     const [ptracks, setpTracks] = useState<any>([]);
     const [total, setTotal] = useState(null)
@@ -180,6 +211,14 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                       }                  
                                     
                                     }}>{found === undefined ? "+" : "✓"}</p>
+
+                                    <div className="dropdown" id="dropdown">
+                                                                      
+                                      <button className="dropbtn" style={{marginLeft: '100%'}}>Sort</button>
+                                      <div className="dropdown-content">
+                                            {playlistSort(ptracks, setpTracks)}
+                                      </div>
+                                    </div>
     
                     
                                 </div>

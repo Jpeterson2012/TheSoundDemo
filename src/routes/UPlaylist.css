@@ -86,27 +86,53 @@ div .fade-in-imageP{
 }
 .removeContainer2:hover .removeAlbum2 {display: flex; flex-direction: column; gap: 10px}
 
-#mybtn{
-    display: none; /* Hidden by default */
-  position: fixed; /* Fixed/sticky position */
-  bottom: 10vh; /* Place the button at the bottom of the page */
-  right: 2vw; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
-  border: none; /* Remove borders */
-  outline: none; /* Remove outline */
-  background-color: rgb(90, 210, 216); /* Set a background color */
-  color: black; /* Text color */
-  cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 15px; /* Some padding */
-  border-radius: 10px; /* Rounded corners */
-  font-size: 18px; /* Increase font size */
-  width: 80px;
-  height: 40px;
-  line-height: 0px;
-}
-#mybtn:hover{
-    background-color: #555;
-}
+
+.dropbtn {
+    background-color: rgb(90, 210, 216);
+    color: black;
+    /* padding: 16px; */
+    font-size: 16px;
+    border: none;
+    position: relative;
+    /* left: 200px; */
+    animation: fadeIn 0.5s;
+    
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .theme{
+    height: 40px;
+    width: 65px;
+    margin: 5px;
+    font-size: 12px;
+    background-color: rgb(90, 210, 216);
+    color: black;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    /* left: 200px; */
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 16px;
+    z-index: 2;
+    top: 5px;
+    left: 65px;
+  }
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown-content, a:hover {background-color: #ddd;}
+.dropdown:hover .dropbtn {background-color: #7a19e9;}
+
 
 @media(min-height: 1000px){
     #deleteSong{
