@@ -180,7 +180,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                             <div style={{marginBottom: '60px', marginTop: '40px'}}>
                 
                                 <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >{sessionStorage.getItem("playlist_name")}</h2>
-                                <div className="desc2" style={{display: 'flex', marginRight: '10px'}}>
+                                <div className="desc2" style={{display: 'flex', marginRight: '10px', alignItems: 'center'}}>
                                     <h5 style={{marginRight: '5px',color: 'rgb(90, 210, 216)'}}>playlist &#8226;</h5>
                                     <h5 style={{color: 'rgb(90, 210, 216)'}}>{ptracks?.length} Song(s)</h5>
                                     <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
