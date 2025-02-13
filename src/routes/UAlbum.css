@@ -9,7 +9,7 @@
     position: absolute;
     right: 440px;
     top: 18px;
-    z-index: 1;
+    z-index: 0;
 }
 .topDiv h2{
     margin-left: auto;
@@ -133,6 +133,9 @@
     .tdContainer{        
         width: 90%;
         margin-left: 4vw;
+    }
+    .topDiv{
+        max-height: 105vh;        
     }
     .musicBars{
         left: 65vw !important;

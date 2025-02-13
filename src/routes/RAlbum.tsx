@@ -142,16 +142,16 @@ export default function RAlbum({active, paused}: any) {
 
                 }}>{found === undefined ? "+" : "✓"}</p>
 
-                <div>
+                
+              </div>
+
+              <div>
                     {/* Working on filter function */}
-                  <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+                  <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginRight: '100%', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
                     let temp = e.target.value
                     setFilter_val(temp)
                   }} />                                    
                 </div>
-              </div>
-
-            
 
 
 

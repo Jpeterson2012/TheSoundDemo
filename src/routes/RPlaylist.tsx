@@ -219,18 +219,22 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                       <div className="dropdown-content">
                                             {playlistSort(ptracks, setpTracks)}
                                       </div>
-                                    </div>
+                                    </div>                                    
+    
+                    
+                                </div>
 
-                                    <div>
+
+                                <div>
                                       {/* Working on filter function */}
-                                    <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+                                    <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginRight: '100%', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
                                       let temp = e.target.value
                                       setFilter_val(temp)
                                     }} />                                    
                                     </div>
-    
-                    
-                                </div>
+
+
+
                                 <div className="tdContainer" style={{width: '80vw'}} >
                                   <div className="subTdContainer" style={{marginTop: '50px', width: '100%',display: 'flex', justifyContent: 'space-between'}}>
                                     <span className="lol">Title</span>
