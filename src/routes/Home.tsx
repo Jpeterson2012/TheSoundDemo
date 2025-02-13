@@ -338,10 +338,10 @@ export default function Home() {
       <div className="homeContainer">
         <div>
             {/* Working on filter function */}
-          {sessionStorage.getItem('home') !== "album" ? null : <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+          {(sessionStorage.getItem('home') === null || sessionStorage.getItem('home') === 'album') ? <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
             let temp = e.target.value
             setFilter_val(temp)
-          }} />}                                    
+          }} /> : null}                                    
         </div>
           <div className="buttonContainer">            
             <button className="homeButtons" onClick={() => {setHtml(Albums(listItems)),sessionStorage.setItem('home','album')}}>Albums</button>
