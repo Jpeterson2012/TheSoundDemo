@@ -196,9 +196,8 @@ form{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}#filterTrack{
-  margin-bottom: 15px;
 }
+
 .albumContainer{
   display: flex;
   flex-wrap: wrap;
@@ -214,7 +213,7 @@ form{
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding-top: 5vw;
+  padding-top: 10vw;
   margin-bottom: 90px;
 }
 .likedSongImg{
@@ -251,8 +250,8 @@ form{
     flex-direction: column;
   }
   #filterTrack{
-    margin-bottom: 10px;
-    margin-right: 100px;    
+    /* margin-bottom: 10px; */
+    /* margin-right: 100px;     */
   }
   .buttonContainer{
     width: 90vw;
@@ -281,7 +280,10 @@ form{
     max-width: 100px;
   }
   .playlistContainer{
-    margin-top: 60px;
+    margin-top: 90px;
+  }
+  .filterHome button{
+    margin-right: 10vw;
   }
   .addPlaylist{
     margin-top: 60px;

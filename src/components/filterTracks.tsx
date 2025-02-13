@@ -7,7 +7,7 @@ function filterTracks(setFilter_val: any){
               setFilter_val(temp)
             }} />
             <button style={{backgroundColor: '#7a19e9', color: 'rgb(90, 210, 216)', width: '60px', height: '40px', padding: '0px 5px'}} onClick={function handleClick(){
-                setFilter_val('')          
+                setFilter_val('');          
                 (document.getElementById('filter') as HTMLInputElement)!.value = ''
             }} >Clear</button>                                    
         </div>

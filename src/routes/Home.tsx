@@ -299,7 +299,7 @@ export default function Home() {
 
   
 
-  const listPlaylists = sortedPlaylists()?.map((a: any,i:any) =>
+  const listPlaylists = sortedPlaylists()?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((a: any,i:any) =>
     <div style={{display: 'flex', gap: '20px', alignItems: 'center'}} key={i}>
 
       <div className="removePContainer" style={{width: '20px'}}>
@@ -336,12 +336,16 @@ export default function Home() {
       {!ready && !loading ? Spin3() : (
         <>      
       <div className="homeContainer">
-        <div>
+      <div className="filterHome" style={{display: 'flex', alignItems: 'center', marginBottom: '15px'}} >
             {/* Working on filter function */}
-          {(sessionStorage.getItem('home') === null || sessionStorage.getItem('home') === 'album') ? <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+          <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
             let temp = e.target.value
             setFilter_val(temp)
-          }} /> : null}                                    
+          }} />
+          <button style={{backgroundColor: '#7a19e9', color: 'rgb(90, 210, 216)', width: '60px', height: '40px', padding: '0px 5px'}} onClick={function handleClick(){
+                setFilter_val('');          
+                (document.getElementById('filterTrack') as HTMLInputElement)!.value = ''
+            }} >Clear</button>                                    
         </div>
           <div className="buttonContainer">            
             <button className="homeButtons" onClick={() => {setHtml(Albums(listItems)),sessionStorage.setItem('home','album')}}>Albums</button>
