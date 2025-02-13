@@ -13,6 +13,7 @@ import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 
 import dots from '../images/dots.png'
 import EditPlaylist from '../components/EditPlaylist/EditPlaylist.tsx';
+import { filterTracks } from "../components/filterTracks.tsx";
 
 export default function RAlbum({active, paused}: any) {
     const navigate = useNavigate()
@@ -145,13 +146,7 @@ export default function RAlbum({active, paused}: any) {
                 
               </div>
 
-              <div>
-                    {/* Working on filter function */}
-                  <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginRight: '100%', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
-                    let temp = e.target.value
-                    setFilter_val(temp)
-                  }} />                                    
-                </div>
+              {filterTracks(setFilter_val)}
 
 
 
