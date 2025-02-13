@@ -107,7 +107,7 @@ function Podcasts(podcasts:any){
           body: JSON.stringify({context_uri: a.show.uri})
       })
     }}>
-      <div className="audioPodcast" style={{display: 'flex', alignItems: 'center'}}>
+      <div className="audioPodcast">
       < img className="fade-in-image2" src={a.show.images.length == 1 ? a.show.images.map((s: any) => s.url) : a.show.images.filter((s: any) => s.height == 300).map((s: any) => s.url)} alt={a.show.name} style={{height: '300px', width: '300px', marginRight: '50px'}}/>
         <h2>{a.show.name}</h2>
       </div>
@@ -115,7 +115,7 @@ function Podcasts(podcasts:any){
       )
   
   return(
-    <div style={{marginTop: '10vw'}}>
+    <div style={{marginTop: '10vw', paddingBottom: '100px'}}>
       {listItems}
     </div>
     
@@ -137,7 +137,7 @@ function Audiobooks(audiobooks:any){
             body: JSON.stringify({context_uri: a.uri})
         })
       }}>
-      <div className="audioPodcast" style={{display: 'flex', alignItems: 'center'}}>
+      <div className="audioPodcast">
       < img className="fade-in-image2" src={a.images.length == 1 ? a.images.map((s: any) => s.url) : a.images.filter((s: any) => s.height == 300).map((s: any) => s.url)} alt={a.name} style={{height: '300px', width: '300px', marginRight: '50px'}}/>
         <h2>{a.name}</h2>
       </div>
@@ -145,7 +145,7 @@ function Audiobooks(audiobooks:any){
       )
   
   return(
-    <div style={{marginTop: '10vw'}}>      
+    <div style={{marginTop: '10vw', paddingBottom: '100px'}}>      
       {listItems}
     </div>
     
