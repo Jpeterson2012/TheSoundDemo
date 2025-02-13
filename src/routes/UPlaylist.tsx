@@ -38,10 +38,10 @@ function returnUrl(ptracks: any){
 }
 {/* Old method of playling playlist using playlist uri. doesnt work with sorting */}
 {/* {last == 'likedsongs' ? liked_urls.push(t.uri) : liked_urls = null } */}
-function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: any, removePTrack: any, lastSegment: any,setmodal:any,settrack: any,setsnack:any) {
+function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: any, removePTrack: any, lastSegment: any,setmodal:any,settrack: any,setsnack:any,filter_val:any) {
   let key = 0  
   return (
-    userLists?.tracks?.map((t: any) =>
+    userLists?.tracks?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any) =>
 
       <div key={t.uri.split(':').pop()} style={{display: 'flex', alignItems: 'center'}}>
 
@@ -94,8 +94,7 @@ function playlistSort(tplaylist: any, setTPlaylist: any){
   let temp: any
   return(
     <>
-    <button className="theme" onClick={function handleClick(){   
-      console.log(tplaylist)   
+    <button className="theme" onClick={function handleClick(){            
       temp = tplaylist.tracks.slice()                  
       temp.sort((a:any,b:any) => a.name.localeCompare(b.name))      
       setTPlaylist({...tplaylist, tracks: temp})
@@ -134,6 +133,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
     const[snack, setSnack] = useState(false)
     const [deletePlaylist] = useDeletePlaylistMutation()
     const [tplaylist, setTplaylist] = useState<any>([])
+    const [filter_val, setFilter_val] = useState<string>('')
 
     const {data: pStorm = []} = useGetPlaylistsQuery()
   
@@ -158,7 +158,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
         if(truth) setLoading(false)     
           if (psuccess){
             lastSegment! === 'likedsongs' ? setTplaylist(liked) : ( singlePlist!.length > 0 ? (sessionStorage.setItem("u_playlist",JSON.stringify(singlePlist!)), setTplaylist(singlePlist![0])) : setTplaylist(JSON.parse(sessionStorage.getItem("u_playlist")!)[0]) )
-          }
+          }          
     },[lsuccess,liked,pStorm])
 
     
@@ -180,7 +180,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                             <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >{sessionStorage.getItem("playlist_name")}</h2>
                             <div className="desc2" style={{display: 'flex', marginRight: '10px', alignItems: 'center'}}>
                                 <h5 style={{marginRight: '5px',color: 'rgb(90, 210, 216)'}}>playlist &#8226;</h5>
-                                <h5  style={{color: 'rgb(90, 210, 216)'}}>{tplaylist!.tracks.length} Song(s)</h5>
+                                <h5  style={{color: 'rgb(90, 210, 216)'}}>{tplaylist!.tracks.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length} Song(s)</h5>
 
                                {lastSegment === 'likedsongs' ? null : <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
                                       setSnack(true)
@@ -217,6 +217,14 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                                 </div>
                               </div>
 
+                              <div>
+                                      {/* Working on filter function */}
+                                    <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+                                      let temp = e.target.value
+                                      setFilter_val(temp)
+                                    }} />                                    
+                                    </div>
+
                 
                             </div>                            
 
@@ -225,7 +233,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                               <span className="lolP2">Title</span>
                               <span className="lolP">Duration</span>
                               </div>
-                            {userPlaylists(tplaylist!, liked_uris, paused,removeSong, removePTrack, lastSegment,setModal,setTrackData,setSnack) }
+                            {userPlaylists(tplaylist!, liked_uris, paused,removeSong, removePTrack, lastSegment,setModal,setTrackData,setSnack,filter_val) }
                             </div>
                             
             

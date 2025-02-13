@@ -30,6 +30,7 @@ export default function RAlbum({active, paused}: any) {
     const[snack, setSnack] = useState(false)
     const [modal, setModal] = useState(false)
     const[trackData, setTrackData] = useState<any>(null)
+    const [filter_val, setFilter_val] = useState<string>('')
     //Check if album is already in library or not
     let found = albums?.find((e: any) => e?.album_id === lastSegment)
     
@@ -67,7 +68,7 @@ export default function RAlbum({active, paused}: any) {
       //This fixes render bug where fetch doesn't activate when clicking on currently playing album
     }, [sessionStorage.getItem("image")]);
     
-    const listItems = tracks.albums?.tracks?.items.map((t: any, i:any) =>
+    const listItems = tracks.albums?.tracks?.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any, i:any) =>
       <div className="listContainer" key={i}>
 
       <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
@@ -117,7 +118,7 @@ export default function RAlbum({active, paused}: any) {
               <div className="albumDescription">
                 <div className="innerDescription">
                   <h5 className="desc1">{tracks.albums?.album_type === 'single' && tracks.albums?.total_tracks > 1 ? 'EP' : tracks.albums?.album_type } &#8226;</h5>
-                  <h5>{tracks.albums?.total_tracks === 1 ? tracks.albums?.total_tracks + " Song" : tracks.albums?.total_tracks + " Songs" }</h5>              
+                  <h5>{tracks.albums?.tracks.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length + " Song(s)" }</h5>              
                 </div>
 
                 {/* <img src={tracks.images?.map(b => b.find(b => b.height > 100).url)} style={{borderRadius: '50%', height: '40px'}} /> */}
@@ -140,6 +141,14 @@ export default function RAlbum({active, paused}: any) {
                   }                  
 
                 }}>{found === undefined ? "+" : "✓"}</p>
+
+                <div>
+                    {/* Working on filter function */}
+                  <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+                    let temp = e.target.value
+                    setFilter_val(temp)
+                  }} />                                    
+                </div>
               </div>
 
             

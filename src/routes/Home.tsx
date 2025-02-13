@@ -161,7 +161,8 @@ export default function Home() {
     const navigate = useNavigate()
     const [html, setHtml] = useState<any>(null)
     const [sorted, setSorted] = useState(+sessionStorage.getItem('sortVal')!)
-    const [psorted, setPSorted] = useState(+sessionStorage.getItem('psortVal')!)        
+    const [psorted, setPSorted] = useState(+sessionStorage.getItem('psortVal')!)
+    const [filter_val, setFilter_val] = useState<string>('')        
       
     const {data: albums = [],isSuccess: albumSuccess} = useGetAlbumsQuery()    
     const {data: podcasts, isSuccess: podSuccess} = useGetPodcastsQuery()
@@ -271,9 +272,9 @@ export default function Home() {
       }
       setLoading(false)                  
     
-  }, [ready,isFetching, sorted,psorted,delsuccess]);
+  }, [ready,isFetching, sorted,psorted,delsuccess,filter_val]);
     
-  const listItems = sortedAlbums()?.map((a: any, i:any) =>
+  const listItems = sortedAlbums()?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase()) || a.artists[0].name.toLowerCase().includes(filter_val.toLowerCase()) ).map((a: any, i:any) =>
     <div key={i}>
 
       <div className="removeContainer" style={{width: '20px'}}>
@@ -335,6 +336,13 @@ export default function Home() {
       {!ready && !loading ? Spin3() : (
         <>      
       <div className="homeContainer">
+        <div>
+            {/* Working on filter function */}
+          {sessionStorage.getItem('home') !== "album" ? null : <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+            let temp = e.target.value
+            setFilter_val(temp)
+          }} />}                                    
+        </div>
           <div className="buttonContainer">            
             <button className="homeButtons" onClick={() => {setHtml(Albums(listItems)),sessionStorage.setItem('home','album')}}>Albums</button>
             <button className="homeButtons" onClick={() => {setHtml(Playlists(navigate, listPlaylists)), sessionStorage.setItem('home','playlist')}}>Playlists</button>

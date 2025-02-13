@@ -10,10 +10,10 @@ import ButtonScroll from '../components/ButtonScroll/ButtonScroll.tsx';
 import { useGetPlaylistsQuery,useDeletePlaylistMutation } from '../App/ApiSlice.ts';
 import { useParams } from "react-router-dom";
 
-function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setmodal:any,settrack:any,rplay:any){
+function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setmodal:any,settrack:any,rplay:any,filter_val:any){
   let key = 0
   return (
-    ptracks?.map((t: any) => 
+    ptracks?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any) => 
 
       <div style={{display: 'flex', alignItems: 'center'}} key={t.uri.split(':').pop()}>
 
@@ -38,7 +38,7 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
           liked={liked_urls}
           artist={t.artists}
           t_uri={t.uri}
-          rplay={rplay}
+          rplay={rplay}          
           />
         <p hidden>{key++}</p>
       </div>
@@ -86,6 +86,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
     const[trackData, setTrackData] = useState(null)
     const[snack, setSnack] = useState(false)
     const [rplay, setRplay] = useState(true)
+    const [filter_val, setFilter_val] = useState<string>('')
 
     const {data: playlists = [], refetch} = useGetPlaylistsQuery()
     let found = playlists?.find((e: any) => e?.playlist_id === lastSegment)
@@ -182,7 +183,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                 <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >{sessionStorage.getItem("playlist_name")}</h2>
                                 <div className="desc2" style={{display: 'flex', marginRight: '10px', alignItems: 'center'}}>
                                     <h5 style={{marginRight: '5px',color: 'rgb(90, 210, 216)'}}>playlist &#8226;</h5>
-                                    <h5 style={{color: 'rgb(90, 210, 216)'}}>{ptracks?.length} Song(s)</h5>
+                                    <h5 style={{color: 'rgb(90, 210, 216)'}}>{ptracks?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length} Song(s)</h5>
                                     <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
                                       setSnack(true)
                                       let temp2 = document.getElementById('addAlbum')!
@@ -219,6 +220,14 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                             {playlistSort(ptracks, setpTracks)}
                                       </div>
                                     </div>
+
+                                    <div>
+                                      {/* Working on filter function */}
+                                    <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+                                      let temp = e.target.value
+                                      setFilter_val(temp)
+                                    }} />                                    
+                                    </div>
     
                     
                                 </div>
@@ -227,7 +236,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                     <span className="lol">Title</span>
                                     <span className="lolP">Duration</span>
                                     </div>
-                                  {regPlaylists(ptracks, lastSegment, liked_uris, paused,setModal,setTrackData,rplay) }
+                                  {regPlaylists(ptracks, lastSegment, liked_uris, paused,setModal,setTrackData,rplay,filter_val) }
                                 </div>
                                 
                 

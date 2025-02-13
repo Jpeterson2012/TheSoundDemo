@@ -33,6 +33,7 @@ export default function UAlbum({active, paused}: any) {
     const[snack, setSnack] = useState(false)
     const [modal, setModal] = useState(false)
     const[trackData, setTrackData] = useState<any>(null)
+    const [filter_val, setFilter_val] = useState<string>('')
 
     
 
@@ -98,7 +99,7 @@ export default function UAlbum({active, paused}: any) {
     }, [sessionStorage.getItem("image"),asuccess]);
     
     
-    const listItems2 = talbum[0]?.tracks?.items.map((t: any,i:any) =>     
+    const listItems2 = talbum[0]?.tracks?.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any,i:any) =>     
       <div className="listContainer" key={i}>        
         {!paused ? <span className="musicBars" style={{position: 'absolute', left: '8vw', marginTop: '10px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
 
@@ -147,7 +148,7 @@ export default function UAlbum({active, paused}: any) {
               <div className="albumDescription">
                 <div className="innerDescription">
                   <h5 className="desc1">{talbum[0]?.album_type === 'single' && talbum[0]?.total_tracks > 1 ? 'EP' :talbum[0]?.album_type } &#8226;</h5>
-                  <h5>{talbum[0]?.total_tracks === 1 ? talbum[0]?.total_tracks + " Song" : talbum[0]?.total_tracks + " Songs" }</h5>              
+                  <h5>{talbum[0]?.tracks.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length + " Song(s)" }</h5>              
                 </div>
 
                 {/* <img src={tracks.images?.map(b => b.find(b => b.height > 100).url)} style={{borderRadius: '50%', height: '40px'}} /> */}
@@ -171,13 +172,17 @@ export default function UAlbum({active, paused}: any) {
                   }                  
 
                 }}>{singleAlbum!.length === 0 ? "+" : "✓"}</p>
+
+                <div>
+                    {/* Working on filter function */}
+                  <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
+                    let temp = e.target.value
+                    setFilter_val(temp)
+                  }} />                                    
+                </div>
               </div>
 
-            
-
-
-
-
+                
               
             </div>
             
