@@ -39,7 +39,6 @@ function getTracks(ptracks: any) {
     return (
       palbums.map((t:any) =>
         <a key={t.id} onClick={function handleClick() {
-          
           //Check if album is already in library or not
           let found = albumss?.find((e: any) => e?.album_id === t.id)
           found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : sessionStorage.setItem("albumStatus","user")
@@ -87,6 +86,7 @@ function getTracks(ptracks: any) {
       <div key={a.id}>
 
       <a onClick={function handleClick() {
+        sessionStorage.removeItem("cplaylist")
         let found = plistss?.find((e: any) => e?.playlist_id === a.id)
         found === undefined ? sessionStorage.setItem("uplist", "false") : sessionStorage.setItem("uplist", "true")
         sessionStorage.setItem("playlist_name", a.name)

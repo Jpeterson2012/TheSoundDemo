@@ -66,10 +66,11 @@ p {
     height: 0px;
     display: flex;    
     justify-content: center;
-    align-items: center;        
-    margin-bottom: 30px;
+    align-items: center; 
+    margin-bottom: 30px;       
   }
-  
+  .cardArtist{        
+  }
   .cardImg{
     position:absolute;
     height: auto;

@@ -336,7 +336,7 @@ export default function Home() {
       {!ready && !loading ? Spin3() : (
         <>      
       <div className="homeContainer">
-      <div className="filterHome" style={{display: 'flex', alignItems: 'center', marginBottom: '15px'}} >
+        <div className="filterHome" style={{display: 'flex', alignItems: 'center', marginBottom: '15px'}} >
             {/* Working on filter function */}
           <input type='text' className='filterTrack' id='filterTrack' placeholder='Looking for something?' style={{borderRadius: '13px',width: '170px', height: '40px', marginLeft: '100px', backgroundColor: 'rgb(90, 210, 216)', color: 'black', fontWeight: 'bolder'}}  onChange={function handleChange(e){
             let temp = e.target.value

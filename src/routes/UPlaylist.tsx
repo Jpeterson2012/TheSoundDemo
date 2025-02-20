@@ -68,7 +68,7 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
               </div>
               <img src={dots} className="removeImg2" style={{marginBottom: '20px', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
             </div>
-            </a>
+          </a>
             <img className="uPlaylistImgs" src={t.images.filter((t: any)=>t.height == 64).map((s: any) => s.url)} style={{height: '64px', width: '64px'}}/>
           </div>
           
@@ -224,8 +224,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                             </div>
 
 
-                            {filterTracks(setFilter_val)}
-
+                            {filterTracks(setFilter_val)}                            
 
                             <div className="tdContainer" style={{width: '80vw'}} >
                             <div className="subTdContainer" style={{marginTop: '50px', width: '100%',display: 'flex', justifyContent: 'space-between'}}>

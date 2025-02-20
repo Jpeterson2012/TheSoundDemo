@@ -264,6 +264,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         </button>
 
                         <div className='spotifyButtonContainer'>
+                        
                         <p className="spotifyButtons1" onClick={() => { currentDev.name === "TheSound" ? (pos > 3000 ? player!.seek(0) : player!.previousTrack()) : playbackState('/previous', null, currentDev) }} >
                             &lt;&lt;
                         </p>
@@ -272,7 +273,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         <p className="spotifyButtons2" >
                             { is_paused ? "PLAY" : "PAUSE" }
                         </p>
-                        </a>
+                        </a>                        
                         
                         <p className="spotifyButtons3"onClick={() => { currentDev.name === "TheSound" ? player!.nextTrack() : playbackState('/next', null, currentDev) }} >
                             &gt;&gt;

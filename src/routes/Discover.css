@@ -82,3 +82,50 @@
         width: 90px !important;
     }
 }
+
+.scroll-container{
+    margin-top: 20px;
+    margin-bottom: 25px;
+    height: fit-content;
+    max-width: 90vw;
+    overflow: hidden;
+    
+    -webikit-mask: linear-gradient(90deg, transparent, white 20% 80%, transparent);
+    mask: linear-gradient(90deg, transparent, white 20% 80%, transparent);
+    
+}
+.carousel-primary{
+    /* top: 26%; */
+    /* left: 100%; */
+    display: flex;
+    justify-content: space-around;
+    animation: scrollText 30s linear infinite;
+    width: fit-content;
+    overflow: hidden;
+    
+    white-space: nowrap;
+}
+.carousel-primary:hover{
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+@keyframes scroll-horizontal{
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: -100%;
+    }
+}
+
+@keyframes scrollText {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
