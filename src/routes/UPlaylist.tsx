@@ -50,10 +50,11 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
           <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
             {/* Music bar animation here */}
             {!paused ? <span className="musicBars2" style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+            <a>
             <div className="removeContainer2" style={{width: '20px'}}>
               <div className="removeAlbum2">
 
-              <button style={{color: 'black',background: 'rgb(90, 210, 216)', fontSize: '13px',width: '130px', height: '60px'}} onClick={function handleClick(){  
+              <button type="button" tabIndex={0} style={{color: 'black',background: 'rgb(90, 210, 216)', fontSize: '13px',width: '130px', height: '60px'}} onClick={function handleClick(){  
                  settrack(t)
                 setmodal(true)                                     
               }}>Edit Playlists</button>
@@ -67,6 +68,7 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
               </div>
               <img src={dots} className="removeImg2" style={{marginBottom: '20px', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
             </div>
+            </a>
             <img className="uPlaylistImgs" src={t.images.filter((t: any)=>t.height == 64).map((s: any) => s.url)} style={{height: '64px', width: '64px'}}/>
           </div>
           
