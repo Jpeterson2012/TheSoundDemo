@@ -8,7 +8,6 @@ import musicBar from '../components/musicBar/musicBar.tsx';
 import MySnackbar from '../components/MySnackBar.tsx';
 import ButtonScroll from '../components/ButtonScroll/ButtonScroll.tsx';
 import { useGetPlaylistsQuery,useDeletePlaylistMutation } from '../App/ApiSlice.ts';
-import { useParams } from "react-router-dom";
 import { filterTracks } from "../components/filterTracks.tsx";
 
 function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setmodal:any,settrack:any,rplay:any,filter_val:any){
@@ -95,16 +94,16 @@ export default function RPlaylist({lastSegment, active, paused}: any){
 
     var liked_uris: any = []
 
-    var {id} = useParams()
-    const [url,setUrl] = useState(id)
-
-    useEffect (() => {       
-      setUrl(id) 
-      lastSegment! !== id ? setpTracks([]) : null         
+    useEffect (() => {                 
           
-        if (sessionStorage.getItem("ref_id") === lastSegment) {
-          setpTracks(JSON.parse(sessionStorage.getItem("ref_items")!))
-          setTotal(JSON.parse(sessionStorage.getItem("ref_items")!).length)
+        // if (sessionStorage.getItem("ref_id") === lastSegment) {
+        //   setpTracks(JSON.parse(sessionStorage.getItem("ref_items")!))
+        //   setTotal(JSON.parse(sessionStorage.getItem("ref_items")!).length)
+        //   setLoading(false)
+        // }
+        if (sessionStorage.getItem("cplaylist") !== undefined && sessionStorage.getItem("cplaylist") !== null) {
+          console.log(JSON.parse(sessionStorage.getItem("cplaylist")!))
+          setpTracks(JSON.parse(sessionStorage.getItem("cplaylist")!))
           setLoading(false)
         }
         else{
@@ -125,7 +124,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
           //       if (!result?.done){
                   
           //       let chunk = decoder.decode(result.value)
-          //       console.log(chunk ? JSON.parse(chunk) : {})                
+          //       // console.log(chunk ? JSON.parse(chunk) : {})                
           //       total ? null : setTotal(JSON.parse(chunk).total),
           //       temp = JSON.parse(chunk).items,
           //       a.push(...temp),  
@@ -162,7 +161,8 @@ export default function RPlaylist({lastSegment, active, paused}: any){
         }
         assignTracks()
 
-        }            
+        }       
+            
         
       }, [sessionStorage.getItem("playlist_name")!]);
 
@@ -208,7 +208,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                           setTimeout(() => {refetch()},800)                 
                                       }
                                       else{                                        
-                                        setSnack(true)        
+                                        setSnack(true)                                                
                                         setTimeout(() => { deletePlaylist({pID: lastSegment!}), setRplay(true) },300)                                                                           
                                       }                  
                                     
@@ -221,13 +221,12 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                             {playlistSort(ptracks, setpTracks)}
                                       </div>
                                     </div>                                    
+                                    
     
                     
                                 </div>
 
-
                                 {filterTracks(setFilter_val)}
-
 
 
                                 <div className="tdContainer" style={{width: '80vw'}} >
