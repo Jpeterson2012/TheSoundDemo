@@ -84,8 +84,12 @@ div .fade-in-imageP{
     /* border-radius: 16px; */
     z-index: 2;
 }
-.removeContainer2:hover .removeAlbum2,.removeContainer:focus .removeAlbum2,.removeContainer2:active .removeAlbum2 {display: flex; flex-direction: column; gap: 10px;}
-
+.removeContainer:focus .removeAlbum2,.removeContainer2:active .removeAlbum2 {display: flex; flex-direction: column; gap: 10px;}
+@media (pointer: fine){
+    .removeContainer2:hover .removeAlbum2{
+        display: flex; flex-direction: column; gap: 10px;
+    }
+}
 
 .dropbtn {
     background-color: rgb(90, 210, 216);
