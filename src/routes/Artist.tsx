@@ -3,7 +3,6 @@ import Track from "../components/Track/Track";
 import Card from "../components/Card/Card";
 import './Artist.css'
 import { Spin2, Spin3 } from "../components/Spin/Spin.tsx";
-import musicBar from "../components/musicBar/musicBar.tsx";
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 import { useParams } from "react-router-dom";
 
@@ -101,8 +100,7 @@ export default function Artist({paused}: any) {
   const listTTracks = artists.tracks?.tracks.map((t: any, i:any) =>
 
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}} key={i}>
-      
-    {!paused ? <span className="musicBars4" style={{position: 'absolute', left: '7.5vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+          
     <p className="topTrackNum" style={{marginLeft: '16px',overflow: 'visible'}}>{count < 10 ? '0' + count : count}</p> 
     <img src={t.album?.images.filter((t: any) => t.height == 64).map((s: any) => s.url)} style={{marginLeft: '20px'}} />
     <Track 
@@ -114,6 +112,7 @@ export default function Artist({paused}: any) {
       artist={t.artists}
       t_uri={t.uri}   
       customWidth={80}   
+      paused={paused}
     />
     <p hidden>{count++}</p>
     </div>

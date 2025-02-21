@@ -7,7 +7,6 @@ import Track from "../components/Track/Track.tsx";
 import { useGetAlbumsQuery, useAddAlbumMutation,useDeleteAlbumMutation } from "../App/ApiSlice.ts";
 
 import { Spin,Spin3 } from "../components/Spin/Spin.tsx";
-import musicBar from "../components/musicBar/musicBar.tsx";
 import MySnackbar from "../components/MySnackBar.tsx";
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 
@@ -82,8 +81,7 @@ export default function RAlbum({active, paused}: any) {
         <img src={dots} className="removeImg2" style={{paddingTop: '10px',height: '27px', width: '27px', cursor: 'pointer'}} />            
       
       </div>
-
-        {!paused ? <span className="musicBars" style={{position: 'absolute', left: '8vw', marginTop: '5px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+        
         <Track 
         uri={tracks.albums.uri}
         name={t.name}
@@ -92,7 +90,7 @@ export default function RAlbum({active, paused}: any) {
         album_name={null}
         artist={t.artists}
         t_uri={t.uri}
-        pause={paused}
+        paused={paused}
       />
       </div>       
     )

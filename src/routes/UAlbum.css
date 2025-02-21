@@ -136,9 +136,5 @@
     }
     .topDiv{
         max-height: 105vh;        
-    }
-    .musicBars{
-        left: 65vw !important;
-        margin-top: 1px !important;
-    }
+    }    
   }  

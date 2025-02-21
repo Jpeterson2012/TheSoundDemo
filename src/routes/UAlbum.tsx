@@ -10,7 +10,6 @@ import type { TypedUseQueryStateResult} from '@reduxjs/toolkit/query/react'
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 
 import { Spin } from "../components/Spin/Spin.tsx";
-import musicBar from "../components/musicBar/musicBar.tsx";
 
 import MySnackbar from "../components/MySnackBar.tsx";
 
@@ -101,8 +100,7 @@ export default function UAlbum({active, paused}: any) {
     
     
     const listItems2 = talbum[0]?.tracks?.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any,i:any) =>     
-      <div className="listContainer" key={i}>        
-        {!paused ? <span className="musicBars" style={{position: 'absolute', left: '8vw', marginTop: '10px'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0].name === t.artist[0].name)) ? musicBar() : null}</span> : null}
+      <div className="listContainer" key={i}>                
 
         <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
 
@@ -122,6 +120,7 @@ export default function UAlbum({active, paused}: any) {
         album_name={null}
         artist={t.artists}
         t_uri={t.uri}        
+        paused={paused}
       />
       </div>
     )

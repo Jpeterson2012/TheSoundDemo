@@ -1,6 +1,7 @@
 //session storage variable name set here
 import './PTrack.css'
 import SavedSong from "../SavedSong/SavedSong.tsx"
+import musicBar from '../musicBar/musicBar.tsx';
 
 function timeCalc (ms: number) {
     const temp = Math.round(ms / 1000)
@@ -12,7 +13,7 @@ function timeCalc (ms: number) {
     else return `${mins}:${secs}`
 }
 
-export default function PTrack ( {uri, name, number, duration, liked, artist, t_uri, rplay}: any ) {
+export default function PTrack ( {uri, name, number, duration, liked, artist, t_uri, rplay,paused}: any ) {
     
     const artists = JSON.parse(sessionStorage.getItem("currentTrack")!)
     return (
@@ -45,7 +46,10 @@ export default function PTrack ( {uri, name, number, duration, liked, artist, t_
             }}>
             <div>            
                 <div className="ptrackInfo">
-                    <h2 className="ptrackName">{name}</h2>
+                <div style={{display: 'flex'}} >
+                        {!paused ? <span className="pMusic">{(sessionStorage.getItem('current') === t_uri) ? musicBar() : null}</span> : null}
+                        <h2 className="ptrackName">{name}</h2>
+                    </div>
                     <h4 className="ptrackArtist">{artist?.map((a: any,i: number,row: any) => row.length - 1 !== i ? a.name + ", " : a.name)}</h4>
                 </div>
             </div>

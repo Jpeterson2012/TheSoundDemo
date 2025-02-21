@@ -4,7 +4,6 @@ import PTrack from "../components/PTrack/PTrack.tsx";
 import { Spin, Spin3 } from '../components/Spin/Spin.tsx';
 import dots from '../images/dots.png'
 import EditPlaylist from '../components/EditPlaylist/EditPlaylist.tsx';
-import musicBar from '../components/musicBar/musicBar.tsx';
 import MySnackbar from '../components/MySnackBar.tsx';
 import ButtonScroll from '../components/ButtonScroll/ButtonScroll.tsx';
 import { useGetPlaylistsQuery,useDeletePlaylistMutation } from '../App/ApiSlice.ts';
@@ -17,8 +16,7 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
 
       <div style={{display: 'flex', alignItems: 'center'}} key={t.uri.split(':').pop()}>
 
-          <p hidden>{liked_urls.push(t.uri)}</p>  
-          {!paused ? <span className="musicBars3" style={{position: 'absolute', left: '9vw'}}>{(sessionStorage.getItem('current') === t.uri || (t.artists?.name === t.name && t.artists?.artists[0]?.name === t.artist[0]?.name)) ? musicBar() : null}</span> : null}
+          <p hidden>{liked_urls.push(t.uri)}</p>            
           <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
 
           <button className="removeAlbum3" onClick={function handleClick(){        
@@ -38,7 +36,8 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
           liked={liked_urls}
           artist={t.artists}
           t_uri={t.uri}
-          rplay={rplay}          
+          rplay={rplay} 
+          paused={paused}         
           />
         <p hidden>{key++}</p>
       </div>
