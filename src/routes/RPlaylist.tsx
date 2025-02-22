@@ -184,7 +184,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                 <div className="desc2" style={{display: 'flex', marginRight: '10px', alignItems: 'center'}}>
                                     <h5 style={{marginRight: '5px',color: 'rgb(90, 210, 216)'}}>playlist &#8226;</h5>
                                     <h5 style={{color: 'rgb(90, 210, 216)'}}>{ptracks?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length} Song(s)</h5>
-                                    <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
+                                    {(sessionStorage.getItem("cplaylist") !== undefined && sessionStorage.getItem("cplaylist") !== null) ? null : <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
                                       setSnack(true)
                                       let temp2 = document.getElementById('addAlbum')!
                                       temp2.style.transform = 'scale(1)'
@@ -211,7 +211,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                         setTimeout(() => { deletePlaylist({pID: lastSegment!}), setRplay(true) },300)                                                                           
                                       }                  
                                     
-                                    }}>{found === undefined ? "+" : "✓"}</p>
+                                    }}>{found === undefined ? "+" : "✓"}</p>}
 
                                     <div className="dropdown" id="dropdown">
                                                                       
