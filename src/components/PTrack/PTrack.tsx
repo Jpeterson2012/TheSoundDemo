@@ -35,7 +35,7 @@ export default function PTrack ( {uri, name, number, duration, liked, artist, t_
                     try{
                     fetch(url, {
                         method: 'PUT',
-                        headers: headers,
+                        headers: headers,                        
                         /* Old method of playling playlist using playlist uri. doesnt work with sorting */
                         // body: liked !== null ? JSON.stringify({uris: liked, offset: {position: number}}) : JSON.stringify({context_uri: uri, offset: {position: number}})
                         body: JSON.stringify({uris: liked, offset: {position: number}})
@@ -46,10 +46,10 @@ export default function PTrack ( {uri, name, number, duration, liked, artist, t_
             }}>
             <div>            
                 <div className="ptrackInfo">
-                <div style={{display: 'flex'}} >
+                    <div style={{display: 'flex'}} >
                         {!paused ? <span className="pMusic">{(sessionStorage.getItem('current') === t_uri) ? musicBar() : null}</span> : null}
                         <h2 className="ptrackName">{name}</h2>
-                    </div>
+                    </div>                    
                     <h4 className="ptrackArtist">{artist?.map((a: any,i: number,row: any) => row.length - 1 !== i ? a.name + ", " : a.name)}</h4>
                 </div>
             </div>

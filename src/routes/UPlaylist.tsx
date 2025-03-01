@@ -10,6 +10,7 @@ import './UPlaylist.css'
 import { Spin } from "../components/Spin/Spin.tsx";
 import dots from "../images/dots.png"
 import EditPlaylist from "../components/EditPlaylist/EditPlaylist.tsx";
+import musicBar from "../components/musicBar/musicBar.tsx";
 import MySnackbar from "../components/MySnackBar.tsx";
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 import { filterTracks } from "../components/filterTracks.tsx";
@@ -77,8 +78,8 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
           duration={t.duration_ms}
           liked={liked_urls}
           artist={t.artists}
-          t_uri={t.uri}       
-          paused={paused}   
+          t_uri={t.uri}          
+          paused={paused}
           />
         <p hidden>{key++}</p>
         {/* <h1 id="deleteSong" onClick={function handleClick(){          
@@ -200,6 +201,7 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                                             fetch(import.meta.env.VITE_URL + `/users/playlist`, {
                                               method: 'POST',
                                               headers: {"Content-Type":"application/json"},
+                                              credentials: "include",
                                               body: JSON.stringify({id: lastSegment,name: sessionStorage.getItem("playlist_name"), images: JSON.parse(sessionStorage.getItem("fullp_image")!)})                                        
                                             })
                                           },500)                                                           

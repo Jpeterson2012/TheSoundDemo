@@ -79,12 +79,16 @@ export const apiSlice = createApi({
     keepUnusedDataFor: 60 * 60,
     endpoints: builder => ({
         getAlbums: builder.query<Albums[], void>({
-            query: () => '/homepage2/albums'
+            query: () => ({
+                url: '/homepage2/albums',
+                credentials: "include"
+            })
         }),
         addAlbum: builder.mutation<Albums, Albums>({
             query: initalAlbum => ({
                 url: '/update/album',
                 method: 'POST',
+                credentials: "include",
                 body: initalAlbum
             }),
             async onQueryStarted(initialAlbum, lifecycleApi){
@@ -106,6 +110,7 @@ export const apiSlice = createApi({
             query: ({aID}) => ({
                 url: '/update/album',
                 method: 'DELETE',
+                credentials: "include",
                 body: {aID}
             }),
             async onQueryStarted({aID}, lifecycleApi){
@@ -125,15 +130,22 @@ export const apiSlice = createApi({
             }
         }),
         getPlaylists: builder.query<Playlists[], void>({
-            query: () => '/homepage2/playlists'
+            query: () => ({
+                url: '/homepage2/playlists',
+                credentials: "include",
+            })
         }),
         getPlaylist: builder.query<Playlists, string>({
-            query: playId => `/homepage2/playlists/${playId}`
+            query: playId => ({
+                url: `/homepage2/playlists/${playId}`,
+                credentials: "include",
+            })
         }),
         addPTrack: builder.mutation<Playlists, {pID: any, initialP: pTrack}>({
             query: ({pID, initialP}) => ({
                 url: `/update/playlist/${pID}`,
                 method: 'POST',
+                credentials: "include",
                 body: initialP
             }),
             async onQueryStarted({pID, initialP}, lifecycleApi){
@@ -156,6 +168,7 @@ export const apiSlice = createApi({
             query: ({pID}) => ({
                 url: '/update/playlist',
                 method: 'DELETE',
+                credentials: "include",
                 body: {pID}
             }),
             async onQueryStarted({pID}, lifecycleApi){
@@ -175,12 +188,16 @@ export const apiSlice = createApi({
             }
         }),
         getLiked: builder.query<Liked, void>({
-            query: () => '/homepage2/liked'
+            query: () => ({
+                url: '/homepage2/liked',
+                credentials: "include",
+            })
         }),
         addNewLiked: builder.mutation<Liked, likedSong>({
             query: initialSong => ({
                 url: '/update/liked',
                 method: 'POST',
+                credentials: "include",
                 body: initialSong
             }),
             async onQueryStarted(initialSong, lifecycleApi){
@@ -201,6 +218,7 @@ export const apiSlice = createApi({
             query: ({pID, name}) => ({
                 url: `/update/playlist/${pID}`,
                 method: 'DELETE',
+                credentials: "include",
                 body: {name}
             }),
             async onQueryStarted({pID, name}, lifecycleApi){
@@ -224,6 +242,7 @@ export const apiSlice = createApi({
             query: ({name}) => ({
                 url: '/update/liked',
                 method: 'DELETE',
+                credentials: "include",
                 body: {name}
             }),
             async onQueryStarted({name}, lifecycleApi){
@@ -243,17 +262,29 @@ export const apiSlice = createApi({
             }
         }),
         getUser: builder.query<User, void>({
-            query: () => '/users'
+            query: () => ({
+                url: '/users',
+                credentials: "include",
+            })
         }),
         getDevices: builder.query<Devices[], void>({
             keepUnusedDataFor:  10,
-            query: () => '/player/devices'
+            query: () => ({
+                url: '/player/devices',
+                credentials: "include",
+            })
         }),
         getPodcasts: builder.query<Podcasts, void>({
-            query: () => '/homepage2/podcasts'
+            query: () => ({
+                url: '/homepage2/podcasts',
+                credentials: "include",
+            })
         }),
         getAudiobooks: builder.query<Audiobooks, void>({
-            query: () => '/homepage2/audiobooks'
+            query: () => ({
+                url: '/homepage2/audiobooks',
+                credentials: "include",
+            })
         }),
     })
 })

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Track from "../components/Track/Track";
 import Card from "../components/Card/Card";
 import './Artist.css'
-import { Spin2, Spin3 } from "../components/Spin/Spin.tsx";
+import { Spin3 } from "../components/Spin/Spin.tsx";
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 import { useParams } from "react-router-dom";
 
@@ -18,10 +18,10 @@ export default function Artist({paused}: any) {
   const [url,setUrl] = useState(id)
   useEffect (() => {
     setUrl(id)
-    lastSegment! !== id ? setArtists2([]) : null
+    lastSegment! !== id ? setArtists2([]): null
     const fetchArtist = async () => {
         try {
-            var temp = await fetch(import.meta.env.VITE_URL + `/artists/${lastSegment}`)
+            var temp = await fetch(import.meta.env.VITE_URL + `/artists/${lastSegment}`,{credentials: "include"})
           .then((res) => {
             // console.log(res.json())
             return res.json();
@@ -40,7 +40,7 @@ export default function Artist({paused}: any) {
 
     const fetchArtist2 = async () => {
       try {
-          var temp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`)
+          var temp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{credentials: "include"})
         .then((res) => {
           // console.log(res.json())
           return res.json();
@@ -63,6 +63,7 @@ export default function Artist({paused}: any) {
   // const fetchArtist2 = async () => {
   //   const resp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{
   //     method: 'GET',
+  //     credentials: "include",
   //     headers: {"Content-Type":"application/json"},
   //   })
   //   setLoading2(false)

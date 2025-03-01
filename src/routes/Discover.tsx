@@ -47,7 +47,7 @@ export default function Discover() {
 
         else {
             const fetchCategories = async () => {
-                const resp = await fetch(import.meta.env.VITE_URL + '/categories')
+                const resp = await fetch(import.meta.env.VITE_URL + '/categories', {credentials: "include"})
                 const data = await resp.json()
                 setAlbums(data.hipster)
                 setCategories(data.categories)
@@ -59,7 +59,7 @@ export default function Discover() {
 
             const fetchDiscover = async () => {
                 try {
-                    var temp = await fetch(import.meta.env.VITE_URL + '/discover')
+                    var temp = await fetch(import.meta.env.VITE_URL + '/discover', {credentials: "include"})
                 .then((res) => {
                     return res.json();
                 }).then((data) => {return data})

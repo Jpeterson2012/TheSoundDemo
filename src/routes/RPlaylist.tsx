@@ -36,8 +36,8 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
           liked={liked_urls}
           artist={t.artists}
           t_uri={t.uri}
-          rplay={rplay} 
-          paused={paused}         
+          rplay={rplay}
+          paused={paused}          
           />
         <p hidden>{key++}</p>
       </div>
@@ -110,6 +110,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
           //     // setLoading(true)
           //     const resp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`,{
           //       method: 'GET',
+          //       credentials: "include",
           //       headers: {"Content-Type":"application/json"},
           //     })
           //     setLoading(false)
@@ -123,7 +124,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
           //       if (!result?.done){
                   
           //       let chunk = decoder.decode(result.value)
-          //       // console.log(chunk ? JSON.parse(chunk) : {})                
+          //       console.log(chunk ? JSON.parse(chunk) : {})                
           //       total ? null : setTotal(JSON.parse(chunk).total),
           //       temp = JSON.parse(chunk).items,
           //       a.push(...temp),  
@@ -139,7 +140,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
 
           const fetchTracks = async () => {
             try {
-                var temp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`)
+                var temp = await fetch(import.meta.env.VITE_URL + `/ptracks/${lastSegment}`,{credentials: "include"})
               .then((res) => {
                 // console.log(res.json())
                 return res.json();
@@ -184,7 +185,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                 <div className="desc2" style={{display: 'flex', marginRight: '10px', alignItems: 'center'}}>
                                     <h5 style={{marginRight: '5px',color: 'rgb(90, 210, 216)'}}>playlist &#8226;</h5>
                                     <h5 style={{color: 'rgb(90, 210, 216)'}}>{ptracks?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length} Song(s)</h5>
-                                    {(sessionStorage.getItem("cplaylist") !== undefined && sessionStorage.getItem("cplaylist") !== null) ? null : <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
+                                    <p id="addAlbum" style={{height: '35px', width: '35px',fontSize: '20px', marginLeft: '15px', cursor: 'pointer', border: '1px solid #7a19e9', color: 'rgb(90, 210, 216)'}} onClick={function handleClick(){
                                       setSnack(true)
                                       let temp2 = document.getElementById('addAlbum')!
                                       temp2.style.transform = 'scale(1)'
@@ -201,6 +202,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                             fetch(import.meta.env.VITE_URL + `/users/playlist`, {
                                               method: 'POST',
                                               headers: {"Content-Type":"application/json"},
+                                              credentials: "include",
                                               body: JSON.stringify({id: lastSegment,name: sessionStorage.getItem("playlist_name"), images: JSON.parse(sessionStorage.getItem("fullp_image")!)})                                        
                                             })
                                           },500)
@@ -211,7 +213,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                         setTimeout(() => { deletePlaylist({pID: lastSegment!}), setRplay(true) },300)                                                                           
                                       }                  
                                     
-                                    }}>{found === undefined ? "+" : "✓"}</p>}
+                                    }}>{found === undefined ? "+" : "✓"}</p>
 
                                     <div className="dropdown" id="dropdown">
                                                                       

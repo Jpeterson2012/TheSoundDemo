@@ -25,7 +25,7 @@ export default function PollPlayer({setCurrentDev,currentDev,setTrack,duration,p
 
     useInterval(() => {            
         const poll = async () => {
-            const resp = await fetch(import.meta.env.VITE_URL + '/player')
+            const resp = await fetch(import.meta.env.VITE_URL + '/player',{credentials: "include"})
             const data = await resp.json()
             if (currentDev.name !== data.device.name) {
               if (data.device.name === "TheSound") setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})

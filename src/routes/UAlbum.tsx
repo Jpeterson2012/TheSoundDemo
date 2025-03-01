@@ -10,6 +10,7 @@ import type { TypedUseQueryStateResult} from '@reduxjs/toolkit/query/react'
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 
 import { Spin } from "../components/Spin/Spin.tsx";
+import musicBar from "../components/musicBar/musicBar.tsx";
 
 import MySnackbar from "../components/MySnackBar.tsx";
 
@@ -77,6 +78,7 @@ export default function UAlbum({active, paused}: any) {
                 var temp = await fetch(import.meta.env.VITE_URL + `/tracks/artists`,{
                     method: 'POST',
                     headers: {"Content-Type":"application/json"},
+                    credentials: "include",
                     body: JSON.stringify(artistss)
                 })
               .then((res) => {                
@@ -190,7 +192,7 @@ export default function UAlbum({active, paused}: any) {
             </div>
             
             <div style={{display: 'flex', flexDirection: 'column', marginTop: '50px', marginBottom: '50px'}}>
-              {artists?.images?.map((a: any, i:any) => <img key={i} src={a.find((b: any) => b.height > 160).url} style={{width: '90px', height: '90px',borderRadius: '10px'}} />)}
+              {artists?.images?.map((a: any, i:any) => <img key={i} src={a.find((b: any) => b.height > 160).url} style={{width: '90px', height: '90px', borderRadius: '10px'}} />)}
             </div>
             
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>Release Date: {talbum[0]?.release_date}</h5>

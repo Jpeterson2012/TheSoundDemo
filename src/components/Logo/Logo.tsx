@@ -127,7 +127,7 @@ export default function Logo () {
 
     const fetchSearch = async () => {        
       try {
-        var temp = fetch(import.meta.env.VITE_URL + `/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`)
+        var temp = fetch(import.meta.env.VITE_URL + `/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`,{credentials: "include"})
       .then((res) => {
         // console.log(res.json())
         return res.json();
@@ -155,7 +155,8 @@ export default function Logo () {
       );
     const {data: user,isSuccess} = useGetUserQuery()    
     
-    useEffect(() => {               
+    useEffect(() => {         
+      isSuccess && sessionStorage.setItem("username", user.items)      
       switch(sessionStorage.getItem('searchHome')){
         case 'tracks':
           setHtml(getTracks(tracks))

@@ -36,9 +36,5 @@ h5{
     }
     .artistLists{
         max-height: 160px !important;
-    }
-    .musicBars4{
-        left: 77vw !important;
-        margin-bottom: 10px !important;
-    }
+    }    
 }

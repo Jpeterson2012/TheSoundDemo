@@ -25,27 +25,31 @@ function playbackState(uri: string, setPaused: any, currentDev: any){
         case '/pause':
             fetch(url + uri + `/${currentDev.id}`, {
                 method: 'POST',
-                headers: {"Content-Type":"application/json"}                
+                headers: {"Content-Type":"application/json"},
+                credentials: "include"                
             })
             setPaused(true)
             break
         case '/play':
             fetch(url + uri + `/${currentDev.id}`, {
                 method: 'POST',
-                headers: {"Content-Type":"application/json"},                
+                headers: {"Content-Type":"application/json"},
+                credentials: "include"                
             })
             setPaused(false)
             break
         case '/previous':
             fetch(url + uri + `/${currentDev.id}`, {
                 method: 'POST',
-                headers: {"Content-Type":"application/json"},                
+                headers: {"Content-Type":"application/json"},
+                credentials: "include"                
             })
             break
         case '/next':
             fetch(url + uri + `/${currentDev.id}`, {
                 method: 'POST',
-                headers: {"Content-Type":"application/json"},                
+                headers: {"Content-Type":"application/json"},
+                credentials: "include"                
             })
             break
         default:
@@ -172,7 +176,8 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                 temp.value = pVol
                                 fetch(import.meta.env.VITE_URL + `/player/volume/${sessionStorage.getItem("currentContext")},${+pVol * 100}`, {
                                     method: 'POST',
-                                    headers: {"Content-Type":"application/json"},                                        
+                                    headers: {"Content-Type":"application/json"},
+                                    credentials: "include"                                        
                                 })
                                 }
                             
@@ -190,7 +195,8 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                 temp.value = "0"
                                 fetch(import.meta.env.VITE_URL + `/player/volume/${sessionStorage.getItem("currentContext")},${0}`, {
                                     method: 'POST',
-                                    headers: {"Content-Type":"application/json"}                                        
+                                    headers: {"Content-Type":"application/json"},
+                                    credentials: "include"                                        
                                 })
                                 }
                             
@@ -212,7 +218,8 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                 setTimeout(() => { 
                                 fetch(import.meta.env.VITE_URL + `/player/volume/${sessionStorage.getItem("currentContext")},${+e.target.value * 100}`, {
                                     method: 'POST',
-                                    headers: {"Content-Type":"application/json"}                                
+                                    headers: {"Content-Type":"application/json"},
+                                    credentials: "include"                                
                                 })
                                 },150)                                
                             }
@@ -231,6 +238,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                             fetch(import.meta.env.VITE_URL + `/shuffle`, {
                                 method: 'POST',
                                 headers: {"Content-Type":"application/json"},
+                                credentials: "include",
                                 body: JSON.stringify({state: repeated === 0 ? 'context' : (repeated === 1 ? 'track' : 'off')})
                             })                        
                             setTimeout(()=>{
@@ -290,6 +298,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                             fetch(import.meta.env.VITE_URL + `/shuffle`, {
                                 method: 'POST',
                                 headers: {"Content-Type":"application/json"},
+                                credentials: "include",
                                 body: JSON.stringify({state: shuffled})
                             })
                             setTimeout(()=>{
@@ -321,6 +330,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                         sessionStorage.setItem("currentContext", "null")
                                         fetch(import.meta.env.VITE_URL + `/player/${sessionStorage.getItem("device_id")}`, {
                                             method: 'POST',
+                                            credentials: "include",
                                             headers: {"Content-Type":"application/json"},                                        
                                         })
                                     }}>
@@ -333,6 +343,7 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                                         sessionStorage.setItem("currentContext", a.id)
                                         fetch(import.meta.env.VITE_URL + `/player/${a.id}`, {
                                             method: 'POST',
+                                            credentials: "include",
                                             headers: {"Content-Type":"application/json"},                                        
                                         })
                                     }}>

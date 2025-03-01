@@ -104,6 +104,7 @@ function Podcasts(podcasts:any){
       fetch(url, {
           method: 'PUT',
           headers: headers,
+          credentials: "include",
           body: JSON.stringify({context_uri: a.show.uri})
       })
     }}>
@@ -134,6 +135,7 @@ function Audiobooks(audiobooks:any){
         fetch(url, {
             method: 'PUT',
             headers: headers,
+            credentials: "include",
             body: JSON.stringify({context_uri: a.uri})
         })
       }}>
@@ -195,6 +197,7 @@ export default function Home() {
           fetch(import.meta.env.VITE_URL + `/users/playlist`, {
             method: 'POST',
             headers: {"Content-Type":"application/json"},
+            credentials: "include",
             body: JSON.stringify({id: pID, name: name.value, description: desc.value === "" ? "null" : desc.value, public: opt1.checked})                                        
           }).then(a => {refetch()})
         }

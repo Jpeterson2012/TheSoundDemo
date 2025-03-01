@@ -3,6 +3,7 @@ import './Track.css'
 import SavedSong from '../SavedSong/SavedSong'
 import musicBar from '../musicBar/musicBar.tsx';
 
+
 function timeCalc (ms: number) {
     const temp = Math.round(ms / 1000)
     let mins = Math.floor(temp / 60)
@@ -38,17 +39,17 @@ export default function Track ( {uri, name, number, duration, album_name, artist
                     
                     fetch(url, {
                         method: 'PUT',
-                        headers: headers,
+                        headers: headers,                        
                         body: JSON.stringify({context_uri: uri, offset: {position: number - 1}})
                     })
                 
             }}>            
                 
                 <div className="innerMain">
-                <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex'}}>
                         {!paused ? <span className="tMusic">{(sessionStorage.getItem('current') === t_uri) ? musicBar() : null}</span> : null}
                         <h2>{name}</h2>
-                    </div>
+                    </div>                    
                     <h4>{artist.map((a: any,i: number,row: any) => row.length - 1 !== i ? a.name + ", " : a.name)}</h4>                
             
             </div>

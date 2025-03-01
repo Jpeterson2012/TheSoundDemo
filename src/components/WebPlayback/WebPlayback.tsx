@@ -55,7 +55,7 @@ export default function WebPlayback() {
             var token = ''
             const fetchToken = async () => {
                 try{
-                    const response = await fetch(import.meta.env.VITE_URL + "/token")
+                    const response = await fetch(import.meta.env.VITE_URL + "/token", {credentials: "include"})
                     const data = await response.json()
                     token = data.items                
                     sessionStorage.setItem("token", data.items)    
@@ -66,7 +66,7 @@ export default function WebPlayback() {
             //Handles refresh token
             setInterval(() => {
                 try{
-                    fetch(import.meta.env.VITE_URL + "/token/refresh_token")
+                    fetch(import.meta.env.VITE_URL + "/token/refresh_token", {credentials: "include"})
                     .then(data => data.json()).then(a => {sessionStorage.setItem("token", a.items), token = a.items})
                     }
                     catch (e) {`Error requesting access token: ${e}`}              

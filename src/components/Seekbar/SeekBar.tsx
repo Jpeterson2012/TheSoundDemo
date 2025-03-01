@@ -53,6 +53,7 @@ export default function SeekBar({duration, player, paused}: any){
               setTimeout(() => {                
                 fetch(import.meta.env.VITE_URL + `/player/seek/${sessionStorage.getItem("currentContext")},${+e.target.value}`, {
                   method: 'POST',
+                  credentials: "include",
                   headers: {"Content-Type":"application/json"},                                        
                 })
               },150)
