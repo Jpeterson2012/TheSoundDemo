@@ -85,9 +85,9 @@ export default function Categories({active, paused}: any) {
             sessionStorage.setItem("cplaylist", JSON.stringify(a.tracks))
             navigate(`/app/playlist/${lastSegment}`)
         }}>
-            <div className="card" style={{width: '200px',height: '305px', marginBottom: '50px', background: randColor()}}>
+            <div className="card" style={{background: randColor()}}>
 
-            <img src={a.images.map((s: any) => s.uri)} alt="Avatar" style={{width:'80%',height:'190px'}}/>
+            <img className="cCardImg" src={a.images.map((s: any) => s.uri)} alt="Avatar"/>
             <div className="container" style={{display: 'flex', justifyContent: 'center'}}>
                 <h4 style={isLight(randColor()) ? {color: 'black'} : {color: 'white'}} ><b>{a.name}</b></h4>
                 {/* <p><b>{a.description}</b></p> */}
@@ -101,7 +101,7 @@ export default function Categories({active, paused}: any) {
       <>
       {Spin(active,paused,sessionStorage.getItem("c_icon")!,null)}
       {/* <img className="fade-in-image" src={sessionStorage.getItem("c_icon")!} style={{height: '300px'}}/> */}
-      <h2 style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: '20px', fontSize: '40px'}}  >{sessionStorage.getItem("c_name")}</h2>
+      <h2 className="catHeader" >{sessionStorage.getItem("c_name")}</h2>
       {loading ? <Loading2 yes={true} /> : (
         <>
         

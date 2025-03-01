@@ -220,6 +220,7 @@ form{
   height: 300px;
   width: 300px;
   margin-right: 50px;
+  border-radius: 10px;
 }
 
 .audioPodcast{    

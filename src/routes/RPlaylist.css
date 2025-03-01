@@ -56,6 +56,10 @@ div .fade-in-imageP{
 }
 .removeContainer3:hover .removeAlbum3 {display: block;}
 
+.uPlaylistImgs{
+    border-radius: 10px;
+}
+
 @media(min-height: 1000px){
     #deleteSong{
         left: 600px;

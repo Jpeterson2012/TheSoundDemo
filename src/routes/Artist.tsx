@@ -102,7 +102,7 @@ export default function Artist({paused}: any) {
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}} key={i}>
           
     <p className="topTrackNum" style={{marginLeft: '16px',overflow: 'visible'}}>{count < 10 ? '0' + count : count}</p> 
-    <img src={t.album?.images.filter((t: any) => t.height == 64).map((s: any) => s.url)} style={{marginLeft: '20px'}} />
+    <img src={t.album?.images.filter((t: any) => t.height == 64).map((s: any) => s.url)} style={{marginLeft: '20px',borderRadius: '10px'}} />
     <Track 
       uri={t.album.uri}
       name={t.name}
@@ -183,7 +183,7 @@ export default function Artist({paused}: any) {
     <div style={{marginTop: '40px',marginBottom: '80px'}}>
       <h1>{artists.artists?.name}</h1>
         {/* <img src={artists.artists?.images.filter(t=>t.height == 320).map(s => s.url)} /> */}
-        <img className="artistImage" src={artists.artists?.images.length == 0 ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : artists.artists?.images[1]?.url} alt={artists.artists?.name} style={{height: '320px', width: '320px'}} />
+        <img className="artistImage" src={artists.artists?.images.length == 0 ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : artists.artists?.images[1]?.url} alt={artists.artists?.name} style={{height: '320px', width: '320px',borderRadius: '10px'}} />
         <p style={{margin: '20px auto'}} >{artists.artists?.followers.total.toLocaleString()} followers</p>
         <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
             <p className="headers2">Genre(s):</p>

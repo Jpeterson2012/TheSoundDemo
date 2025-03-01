@@ -3,6 +3,7 @@
     width: 300px;
     margin-right: 50px; */    
     animation: fadeIn 0.5s;
+    border-radius: 10px;
 }
 @keyframes fadeIn {
     0%{

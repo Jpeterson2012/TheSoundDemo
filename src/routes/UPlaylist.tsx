@@ -67,7 +67,7 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
               <img src={dots} className="removeImg2" style={{marginBottom: '20px', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
             </div>
           </a>
-            <img className="uPlaylistImgs" src={t.images.filter((t: any)=>t.height == 64).map((s: any) => s.url)} style={{height: '64px', width: '64px'}}/>
+            <img className="uPlaylistImgs" src={t.images.filter((t: any)=>t.height == 64).map((s: any) => s.url)} style={{height: '64px', width: '64px',borderRadius: '10px'}}/>
           </div>
           
           <PTrack 
