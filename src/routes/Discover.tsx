@@ -95,7 +95,7 @@ export default function Discover() {
             <div className="categoryContainer" style={{width: '200px',height: '305px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 
                 <img className="fade-in-image" src={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)} alt="Avatar" style={{width:'80%',height:'190px',borderRadius: '10px'}}/>
-                <h4 style={{marginTop: '200px', maxWidth: '150px'}} ><b>{a.name}</b></h4>
+                <h4 className="discoverCHeader"><b>{a.name}</b></h4>
                 
             </div>
         </a>

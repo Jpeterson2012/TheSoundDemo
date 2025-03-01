@@ -15,7 +15,7 @@
     margin-bottom: 20px;
     font-size: 40px;
 }
-.card{
+.catCard{
     width: 200px;
     height: 305px;
     margin-bottom: 50px;
@@ -25,18 +25,20 @@
     height: 190px;
     border-radius: 10px;
 }
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
     .catHeader{
         font-size: 30px;
     }
-    .card{
+    .catCard{
         width: 80px;
         height: 135px;
         display: flex;
         flex-direction: column;
+        align-items: center;
         margin-bottom: 30px;
     }
     .cCardImg{
         height: 80px;
+        margin-top: 5px;
     }    
 }

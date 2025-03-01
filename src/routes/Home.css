@@ -243,7 +243,7 @@ form{
     /* left: 24vw; */
   }
 }
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
   .homeContainer{
     /* max-width: 350px; */
     margin-top: 60px;

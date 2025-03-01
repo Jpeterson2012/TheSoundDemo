@@ -85,7 +85,7 @@ export default function Categories({active, paused}: any) {
             sessionStorage.setItem("cplaylist", JSON.stringify(a.tracks))
             navigate(`/app/playlist/${lastSegment}`)
         }}>
-            <div className="card" style={{background: randColor()}}>
+            <div className="catCard" style={{background: randColor()}}>
 
             <img className="cCardImg" src={a.images.map((s: any) => s.uri)} alt="Avatar"/>
             <div className="container" style={{display: 'flex', justifyContent: 'center'}}>
@@ -111,6 +111,7 @@ export default function Categories({active, paused}: any) {
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
                 paddingTop: '15px',
+                paddingBottom: '75px'
         }}>
             {listPlaylists}
         </div>
