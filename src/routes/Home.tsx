@@ -288,6 +288,7 @@ export default function Home({setIsLoading2}: any) {
       <img src={dots} className="removeImg" onClick={function handleClick(){
         let temp = document.getElementById('removeAlbum' + i)!
         if (temp.style.display === 'block') temp.style.display = 'none'
+        else temp.style.display = 'block'
       }} style={{marginBottom: '20px', transform: 'rotate(90deg)', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
       </div>
 
