@@ -96,7 +96,7 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
                         </p>
                         </div>
                     {playlists!.map((a: any,i: any) =>
-                        <div style={{display: 'flex', alignItems: 'center'}}>
+                        <div style={{display: 'flex', alignItems: 'center'}} key={i}>
                         {imageRender(a,80,80,20)}
                         <h3 style={{maxWidth: '500px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', fontSize: '18px',color: 'white'}} >{a.name}</h3>
                         <input id={"checkbox" + i} type='checkbox'/>

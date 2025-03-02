@@ -285,7 +285,10 @@ export default function Home({setIsLoading2}: any) {
         setOpensnack(true)        
         setTimeout(() => { deleteAlbum({aID: a.album_id}) },300)
       }}>Remove From Library</button>
-      <img src={dots} className="removeImg" style={{marginBottom: '20px', transform: 'rotate(90deg)', height: '20px', width: '20px', margin: '0px', cursor: 'pointer'}} />      
+      <img src={dots} className="removeImg" onClick={function handleClick(){
+        let temp = document.getElementById('removeAlbum' + i)!
+        if (temp.style.display === 'block') temp.style.display = 'none'
+      }} style={{marginBottom: '20px', transform: 'rotate(90deg)', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
       </div>
 
     <Card      
@@ -306,12 +309,16 @@ export default function Home({setIsLoading2}: any) {
     <div style={{display: 'flex', gap: '20px', alignItems: 'center'}} key={i}>
 
       <div className="removePContainer" style={{width: '20px'}}>
-        <button className="removePlay" onClick={function handleClick(){
+        <button className="removePlay" id={"removePlay" + i} onClick={function handleClick(){
           setOpensnack(true)        
           setTimeout(() => { deletePlaylist({pID: a.playlist_id}) },300)
           setTimeout(()=>{refetch() },400)
         }}>Remove From Library</button>
-        <img src={dots} className="removeImg" />      
+        <img src={dots} className="removeImg" onClick={function handleClick(){
+          let temp = document.getElementById('removePlay' + i)!
+          if (temp.style.display === 'block') temp.style.display = 'none'
+          else temp.style.display = 'block'
+        }} />      
       </div>
 
       <a onClick={function handleClick() {
@@ -402,8 +409,13 @@ export default function Home({setIsLoading2}: any) {
 
               </Modal>
 
-              <button className="dropbtn">Sort</button>
-              <div className="dropdown-content">
+              <button className="dropbtn" onClick={function handleClick(){
+                let temp = document.getElementById('dropdown-content')!
+                // console.log(temp.style.display)
+                if (temp.style.display === 'block') temp.style.display = 'none'
+                else temp.style.display = 'block'
+              }}>Sort</button>
+              <div className="dropdown-content" id="dropdown-content">
                 {(sessionStorage.getItem('home') === null || sessionStorage.getItem('home') === 'album') && albumSort(setSorted)}
                 {sessionStorage.getItem('home') === 'playlist' && playlistSort(setPSorted)}
               </div>

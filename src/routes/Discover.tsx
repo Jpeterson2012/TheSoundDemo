@@ -52,7 +52,7 @@ export default function Discover() {
                 const data = await resp.json()
                 setAlbums(data.hipster)
                 setCategories(data.categories)
-                console.log(data)
+                // console.log(data)
                 sessionStorage.setItem("categories", JSON.stringify(data))
                 setLoading(false)
             }

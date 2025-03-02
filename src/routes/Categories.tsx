@@ -62,7 +62,7 @@ export default function Categories({active, paused}: any) {
             //     : (sessionStorage.setItem("ref_id", lastSegment!),  sessionStorage.setItem("ref_items", JSON.stringify(a)))
                 
             // }
-            console.log(data)
+            // console.log(data)
             setClists(data)
             
         }
@@ -70,8 +70,8 @@ export default function Categories({active, paused}: any) {
     }
     }, []);
 
-    const listPlaylists = clists?.map((a: any) =>
-        <a onClick={function handleClick() {            
+    const listPlaylists = clists?.map((a: any, i: any) =>
+        <a key={i} onClick={function handleClick() {            
             var parts = a.uri.split(':');
             var lastSegment = parts.pop() || parts.pop();
 

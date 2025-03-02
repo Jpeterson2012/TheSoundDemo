@@ -220,8 +220,12 @@ export default function RPlaylist({lastSegment, active, paused}: any){
 
                                     <div className="dropdown" id="dropdown">
                                                                       
-                                      <button className="dropbtn" style={{marginLeft: '100%'}}>Sort</button>
-                                      <div className="dropdown-content">
+                                    <button className="dropbtn" style={{marginLeft: '100%'}} onClick={function handleClick(){
+                                      let temp = document.getElementById('dropdown-content')!
+                                      if (temp.style.display === 'block') temp.style.display = 'none'
+                                      else temp.style.display = 'block'
+                                      }} >Sort</button>
+                                      <div className="dropdown-content" id='dropdown-content'>
                                             {playlistSort(ptracks, setpTracks)}
                                       </div>
                                     </div>                                    

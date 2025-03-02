@@ -72,10 +72,12 @@
 }
 .removePlay{
   display: none;
-  position: absolute;
+  position: relative;
   /* left: 200px; */
   /* bottom: 15px; */
   /* left: 8.5vw; */
+  margin-top: 20px;
+  margin-left: -110px;
   color: black;
   background: rgb(90, 210, 216);
   font-size: 13px;
@@ -98,9 +100,12 @@
 .dropdown-content, a:hover {background-color: #ddd;}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
-.removeContainer:hover .removeAlbum {display: block;}
-/* .removePContainer:hover .removePlay {display: block;} */
+@media (hover:hover){
+  .removePContainer:hover .removePlay {display: block;}
+  .removeContainer:hover .removeAlbum {display: block;}
+}
+/* .dropdown:hover .dropdown-content {display: block;} */
+
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #7a19e9;}
@@ -259,6 +264,13 @@ form{
 }
 @media only screen and (max-width: 768px),
 (max-height: 400px) {
+  .removePlay{
+    width: 90px;
+    height: 30px;
+    font-size: 8px;
+    margin-left: -60px;
+    margin-top: 30px;
+  }
   .removeImg{
     height: 30px;
     width: 30px;

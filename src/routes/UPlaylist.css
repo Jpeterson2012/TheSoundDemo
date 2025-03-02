@@ -129,10 +129,10 @@ div .fade-in-imageP{
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     border-radius: 16px;
     z-index: 2;
-    top: 5px;
+    top: 35px;
     left: 65px;
   }
-.dropdown:hover .dropdown-content {display: block;}
+/* .dropdown:hover .dropdown-content {display: block;} */
 .dropdown-content, a:hover {background-color: #ddd;}
 .dropdown:hover .dropbtn {background-color: #7a19e9;}
 
