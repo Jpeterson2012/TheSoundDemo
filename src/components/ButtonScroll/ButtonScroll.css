@@ -19,3 +19,8 @@
 #scrollButton:hover{
     background: #7a19e9;
 }
+@media only screen and (max-height: 400px){
+  #scrollButton{
+    bottom: 20vh;
+  }
+}
