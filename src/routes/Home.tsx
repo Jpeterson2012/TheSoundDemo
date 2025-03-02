@@ -281,7 +281,7 @@ export default function Home({setIsLoading2}: any) {
     <div key={i}>
 
       <div className="removeContainer" style={{width: '20px'}}>
-      <button className="removeAlbum" onClick={function handleClick(){
+      <button className="removeAlbum" id={"removeAlbum" + i} onClick={function handleClick(){
         setOpensnack(true)        
         setTimeout(() => { deleteAlbum({aID: a.album_id}) },300)
       }}>Remove From Library</button>
