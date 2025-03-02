@@ -96,7 +96,9 @@
     .discoverCHeader{
         max-width: 85px;
     }
-    .carousel-primary{
-        pointer-events: none;
+    @media (pointer: coarse){
+        .carousel-primary:hover{
+            all: revert-layer;
+        }
     }
 }
