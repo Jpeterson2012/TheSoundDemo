@@ -258,7 +258,8 @@ input[type=range]{
     cursor: pointer;
   }
 
-  @media only screen and (max-width: 768px){
+  @media only screen and (max-width: 768px),
+  (max-height: 400px){
     .wrapper{
       width: 100vw;
       height: 50px;

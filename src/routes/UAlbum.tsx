@@ -104,14 +104,18 @@ export default function UAlbum({active, paused}: any) {
     const listItems2 = talbum[0]?.tracks?.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any,i:any) =>     
       <div className="listContainer" key={i}>                
 
-        <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
+        <div className="removeContainer3" id="removeContainer3">
 
           <button className="removeAlbum3" onClick={function handleClick(){     
               let temp = {images: talbum![0].images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}                            
               setTrackData(temp)
               setModal(true)               
             }}>Edit Playlists</button>
-            <img src={dots} className="removeImg2" style={{paddingTop: '10px',height: '27px', width: '27px', cursor: 'pointer'}} />            
+            <img src={dots} className="removeImg2" onClick={function handleClick(){
+              let temp = {images: talbum![0].images, uri: t.uri, name: t.name, track_number: 0, duration_ms: t.duration_ms, artists: t.artists}                            
+              setTrackData(temp)
+              setModal(true)
+            }}/>            
 
           </div>
       <Track 

@@ -138,6 +138,75 @@
 @media(min-height: 1000px){
   
 }
+@media only screen and (max-height: 400px){
+  .mainLogo{
+    /* top: 0; */
+    
+  }
+  .userName{
+    width: 20px;
+    overflow: none;
+    display: none;
+  }
+  .navIcon1,.navIcon2{
+    display: none;
+  }
+  
+  .searchimg{
+    width: 55px;
+    height: 55px;
+    right: 43vw;
+    top: -1.9vh;
+  }
+  .Discover{
+    font-size: 20px;
+    right: 25vw;
+  }
+  .logoIcon{
+    width: 60px;
+    height: 60px;
+    top: -20px;
+  }
+  .u2Container{
+    display: block;
+    margin-top: 4px;
+  }
+  .userName2{    
+    margin-left: 9px;    
+    font-size: 22px;    
+  }
+
+  #modal3{
+    max-height: 90vh !important;
+      max-width: 90vw !important;
+      min-width: 90vw !important;
+  }
+  .wrap{
+    width: 100%;
+    margin-top: 85px;
+  }
+  #searchTerm{
+    width: 100%;    
+  }
+  #modalbuttons{
+    margin-top: 37vh !important;
+  }
+  .fade-in-image img{
+    height: 50px;
+    width: 50px;
+  }
+  .fade-in-image{
+    font-size: 15px !important;    
+    max-height: fit-content !important;    
+    flex-wrap: nowrap !important;
+  }
+  .logoModal{
+    max-width: 85vw !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+}
 @media only screen and (max-width: 768px){
   .mainLogo{
     /* top: 0; */

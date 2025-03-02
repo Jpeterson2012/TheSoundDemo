@@ -100,7 +100,7 @@
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 .removeContainer:hover .removeAlbum {display: block;}
-.removePContainer:hover .removePlay {display: block;}
+/* .removePContainer:hover .removePlay {display: block;} */
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #7a19e9;}
@@ -243,7 +243,23 @@ form{
     /* left: 24vw; */
   }
 }
-@media only screen and (max-width: 768px) {
+.removeImg{  
+  height: 40px;
+  width: 40px;
+  margin: 0px 0px 20px 0px;
+  cursor: pointer;
+}
+@media only screen and (max-height: 400px){
+  .playlistContainer{
+    margin-top: 190px !important;
+  }
+}
+@media only screen and (max-width: 768px),
+(max-height: 400px) {
+  .removeImg{
+    height: 30px;
+    width: 30px;
+  }
   .homeContainer{
     /* max-width: 350px; */
     margin-top: 60px;

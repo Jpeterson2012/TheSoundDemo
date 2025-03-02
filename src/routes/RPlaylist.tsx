@@ -17,13 +17,16 @@ function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setm
       <div style={{display: 'flex', alignItems: 'center'}} key={t.uri.split(':').pop()}>
 
           <p hidden>{liked_urls.push(t.uri)}</p>            
-          <div className="removeContainer3" style={{display: 'flex', alignItems: 'center'}}>
+          <div className="removeContainer3" id='removeContainer3'>
 
           <button className="removeAlbum3" onClick={function handleClick(){        
               settrack(t)
               setmodal(true) 
             }}>Edit Playlists</button>
-            <img src={dots} className="removeImg2" style={{marginBottom: '20px', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />
+            <img src={dots} onClick={function handleClick(){
+              settrack(t)
+              setmodal(true)
+            }} className="removeImg2"/>
             <img className="uPlaylistImgs" src={t.images?.filter((t: any)=>t.height == 64).map((s: any) => s.url)} />
 
           </div>

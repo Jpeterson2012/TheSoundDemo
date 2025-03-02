@@ -159,7 +159,7 @@ function Audiobooks(audiobooks:any){
 //   )
 // }
 
-export default function Home() {
+export default function Home({setIsLoading2}: any) {
     const navigate = useNavigate()
     const [html, setHtml] = useState<any>(null)
     const [sorted, setSorted] = useState(+sessionStorage.getItem('sortVal')!)
@@ -253,7 +253,7 @@ export default function Home() {
     })
 
     useEffect(() => {    
-      
+      (ready && !loading) ? setIsLoading2(false) : null            
       switch(sessionStorage.getItem('home')){
         case 'album':
           setHtml(Albums(listItems))
@@ -311,7 +311,7 @@ export default function Home() {
           setTimeout(() => { deletePlaylist({pID: a.playlist_id}) },300)
           setTimeout(()=>{refetch() },400)
         }}>Remove From Library</button>
-        <img src={dots} className="removeImg" style={{marginBottom: '20px', height: '40px', width: '40px', margin: '0px', cursor: 'pointer'}} />      
+        <img src={dots} className="removeImg" />      
       </div>
 
       <a onClick={function handleClick() {

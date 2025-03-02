@@ -10,7 +10,6 @@ import './UPlaylist.css'
 import { Spin } from "../components/Spin/Spin.tsx";
 import dots from "../images/dots.png"
 import EditPlaylist from "../components/EditPlaylist/EditPlaylist.tsx";
-import musicBar from "../components/musicBar/musicBar.tsx";
 import MySnackbar from "../components/MySnackBar.tsx";
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 import { filterTracks } from "../components/filterTracks.tsx";
@@ -50,8 +49,8 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
           <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
                         
             <a>
-            <div className="removeContainer2" style={{width: '20px'}}>
-              <div className="removeAlbum2">
+            <div className="removeContainer2" id="removeContainer2">
+              <div className="removeAlbum2" id="removeAlbum2">
 
               <button type="button" tabIndex={0} style={{color: 'black',background: 'rgb(90, 210, 216)', fontSize: '13px',width: '130px', height: '60px'}} onClick={function handleClick(){  
                  settrack(t)
@@ -65,7 +64,10 @@ function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: 
               }}>Remove From Liked Songs</button>}
 
               </div>
-              <img src={dots} className="removeImg2" style={{marginBottom: '20px', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
+              <img src={dots} onClick={function handleClick(){
+                settrack(t)
+                setmodal(true)
+              }} className="removeImg2" />      
             </div>
           </a>
             <img className="uPlaylistImgs" src={t.images.filter((t: any)=>t.height == 64).map((s: any) => s.url)} style={{height: '64px', width: '64px',borderRadius: '10px'}}/>
