@@ -96,4 +96,7 @@
     .discoverCHeader{
         max-width: 85px;
     }
+    .carousel-primary{
+        pointer-events: none;
+    }
 }
