@@ -60,11 +60,13 @@
     
     white-space: nowrap;
 }
-.carousel-primary:hover{
-    -webkit-animation-play-state: paused;
-    -moz-animation-play-state: paused;
-    -o-animation-play-state: paused;
-    animation-play-state: paused;
+@media (hover:hover){
+    .carousel-primary:hover{
+        -webkit-animation-play-state: paused;
+        -moz-animation-play-state: paused;
+        -o-animation-play-state: paused;
+        animation-play-state: paused;
+    }
 }
 
 @keyframes scroll-horizontal{
@@ -95,10 +97,5 @@
     }
     .discoverCHeader{
         max-width: 85px;
-    }
-    @media (pointer: coarse){
-        .carousel-primary:hover{
-            all: revert-layer;
-        }
     }
 }
