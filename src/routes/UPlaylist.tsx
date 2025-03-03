@@ -218,11 +218,11 @@ export default function UPlaylist({lastSegment, active, paused}: any){
                               <div className="dropdown" id="dropdown">
 
                               <button className="dropbtn" style={{marginLeft: '100%'}} onClick={function handleClick(){
-                                  let temp = document.getElementById('dropdown-content')!
+                                  let temp = document.getElementById('dropdown-content2')!
                                   if (temp.style.display === 'block') temp.style.display = 'none'
                                   else temp.style.display = 'block'
                                 }} >Sort</button>
-                                <div className="dropdown-content" id="dropdown-content">
+                                <div className="dropdown-content2" id="dropdown-content2">
                                       {playlistSort(tplaylist!, setTplaylist)}
                                 </div>
                               </div>                              

@@ -414,8 +414,11 @@ export default function Home({setIsLoading2}: any) {
               <button className="dropbtn" onClick={function handleClick(){
                 let temp = document.getElementById('dropdown-content')!
                 // console.log(temp.style.display)
-                if (temp.style.display === 'block') temp.style.display = 'none'
-                else temp.style.display = 'block'
+                if (temp.style.display === 'flex') temp.style.display = 'none'
+                else {
+                  temp.style.display = 'flex'
+                  temp.style.flexDirection = 'column'
+                }
               }}>Sort</button>
               <div className="dropdown-content" id="dropdown-content">
                 {(sessionStorage.getItem('home') === null || sessionStorage.getItem('home') === 'album') && albumSort(setSorted)}
