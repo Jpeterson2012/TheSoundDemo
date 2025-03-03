@@ -280,8 +280,8 @@ input[type=range]{
       z-index: 5;      
       overflow-x: auto;
       /* white-space: nowrap;       */
-      -webikit-mask: linear-gradient(90deg, transparent, white 10% 90%, transparent);
-      mask: linear-gradient(90deg, transparent, white 10% 90%, transparent);
+      -webikit-mask: linear-gradient(180deg, transparent, white 15% 85%, transparent);
+      mask: linear-gradient(180deg, transparent, white 15% 85%, transparent);
       
     }
     .now-playing__artist2 p, .now-playing__name2 p{      
