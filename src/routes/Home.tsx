@@ -311,6 +311,7 @@ export default function Home({setIsLoading2}: any) {
       <div className="removePContainer" style={{width: '20px'}}>
         <button className="removePlay" id={"removePlay" + i} onClick={function handleClick(){
           setOpensnack(true)        
+          document.getElementById('removePlay' + i)!.style.display = 'none'
           setTimeout(() => { deletePlaylist({pID: a.playlist_id}) },300)
           setTimeout(()=>{refetch() },400)
         }}>Remove From Library</button>
