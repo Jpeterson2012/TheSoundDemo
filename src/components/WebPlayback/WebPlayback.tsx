@@ -131,6 +131,7 @@ export default function WebPlayback() {
                     player.connect();
                     setIsLoading(false)                        
             };            
+            sessionStorage.setItem("windowWidth", window.innerWidth.toString())
     }, []);
 
     return (

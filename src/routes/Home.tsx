@@ -103,8 +103,7 @@ function Podcasts(podcasts:any){
       
       fetch(url, {
           method: 'PUT',
-          headers: headers,
-          credentials: "include",
+          headers: headers,          
           body: JSON.stringify({context_uri: a.show.uri})
       })
     }}>
@@ -134,8 +133,7 @@ function Audiobooks(audiobooks:any){
         
         fetch(url, {
             method: 'PUT',
-            headers: headers,
-            credentials: "include",
+            headers: headers,            
             body: JSON.stringify({context_uri: a.uri})
         })
       }}>

@@ -152,7 +152,7 @@ export default function Discover() {
     return (
         <>
         { loading ? Spin3() :
-        <div className="discoverContainer" style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw'}}>   
+        <div className="discoverContainer" style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw',paddingBottom: '200px'}}>   
             {/* {customRender("Check These Out", listAlbums)}  */}
             <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >Check These Out</h2>
             <div className="scroll-container" >

@@ -111,7 +111,7 @@ export default function Categories({active, paused}: any) {
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
                 paddingTop: '15px',
-                paddingBottom: '75px'
+                paddingBottom: '175px'
         }}>
             {listPlaylists}
         </div>

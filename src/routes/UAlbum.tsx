@@ -202,7 +202,7 @@ export default function UAlbum({active, paused}: any) {
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>Release Date: {talbum[0]?.release_date}</h5>
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>{ talbum[0]?.copyrights[0]?.text} </h5>
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>(R) {talbum[0]?.label_name}</h5>
-            <p style={{marginBottom: '100px'}}></p>
+            <p style={{marginBottom: '150px'}}></p>
 
           </>
 

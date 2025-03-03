@@ -299,10 +299,12 @@ form{
     /* overflow-x: scroll; */
     white-space: nowrap;
     top: 20vh;
-    left: 10vw;
+    margin-left: 10%;
+    /* left: 10vw; */
   }
   .homeButtons{
     width: fit-content;
+    padding: 10px 5px;
     font-size: 12px;
     /* overflow: hidden;     */
   }

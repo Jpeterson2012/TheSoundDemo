@@ -172,7 +172,7 @@ export default function RAlbum({active, paused}: any) {
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>Release Date: {tracks.albums?.release_date}</h5>
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>{ tracks.albums?.copyrights[0]?.text} </h5>
             <h5 style={{textAlign: 'left',color: 'rgb(90, 210, 216)'}}>(R) {tracks.albums?.label}</h5>
-            <p style={{marginBottom: '100px'}}></p>
+            <p style={{marginBottom: '150px'}}></p>
 
           </>
 
