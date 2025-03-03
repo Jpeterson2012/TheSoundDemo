@@ -216,7 +216,7 @@ export default function RPlaylist({lastSegment, active, paused}: any){
                                         setTimeout(() => { deletePlaylist({pID: lastSegment!}), setRplay(true) },300)                                                                           
                                       }                  
                                     
-                                    }}>{found === undefined ? "+" : "✓"}</p>)
+                                    }}>{found === undefined ? "+" : "✓"}</p>}
 
                                     <div className="dropdown" id="dropdown">
                                                                       
