@@ -83,6 +83,41 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
             <div className='wrapper'>
             
                 <div className="main-wrapper">
+
+                    <div className="now-playing__side2">                        
+                        <div className="now-playing__name2" style={{fontWeight: 'bold',margin: '0px', padding: '0px'}}><p style={{margin: '0px', padding: '0px', gap: '1rem', color: 'black'}}>{
+                            current_track?.name
+                            }</p>                                                                                    
+                        </div>
+                        
+                            
+                        
+                        <div className="now-playing__artist2" data-direction="right" style={{display: 'flex', flexDirection: 'row', overflowX: 'hidden',whiteSpace: 'nowrap', alignItems: 'center'}}>
+                            {current_track?.artists.map((s:any,i:number,row:any) => <p key={i} 
+                            style={{color: 'black'}}>{row.length - 1 !== i ? s.name + ", " : s.name}</p>)}                                                    
+                        </div>
+                        
+                                
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <a onClick={function handleClick() {
                         var parts = current_track.album.uri.split(':');
                         var lastSegment = parts.pop() || parts.pop();

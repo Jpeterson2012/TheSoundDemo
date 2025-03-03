@@ -257,9 +257,39 @@ input[type=range]{
     height: 42px;
     cursor: pointer;
   }
+  @media only screen and (max-height: 400px){
+    .now-playing__side2{
+      min-width: 100vw;
+      max-width: 100vw;
+    }
+  }
 
   @media only screen and (max-width: 768px),
   (max-height: 400px){
+    .now-playing__side2{
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      margin-bottom: 250px;
+      background: rgb(90, 210, 216);      
+      color: black;
+      min-width: 100vw;
+      max-width: 100vw;
+      max-height: 100px;
+      opacity: 0.6;
+      z-index: 5;      
+      overflow-x: auto;
+      /* white-space: nowrap;       */
+      -webikit-mask: linear-gradient(90deg, transparent, white 10% 90%, transparent);
+      mask: linear-gradient(90deg, transparent, white 10% 90%, transparent);
+      
+    }
+    .now-playing__artist2 p, .now-playing__name2 p{      
+      font-weight: 900;
+      font-size: 20px;
+      margin: 0px;
+      /* animation: scrollText 10s reverse linear infinite; */
+    }
     .wrapper{
       width: 100vw;
       height: 50px;
