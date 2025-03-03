@@ -348,6 +348,7 @@ form{
     width: 55px;
     font-size: 9px;
     margin: 2px;
+    padding: 5px 0px;
   }  
   .dropdown-content{
     position: absolute;
