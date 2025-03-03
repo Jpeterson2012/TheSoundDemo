@@ -315,6 +315,7 @@ input[type=range]{
     }
     .bar{
       width: 9.7vw;
+      opacity: 0.8;
     }
     .spotifyButtonContainer p{
       background: none;
