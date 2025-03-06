@@ -70,7 +70,7 @@ export default function UAlbum({active, paused}: any) {
       }
 
         
-        singleAlbum![0].artists?.map((a:any) => artistss.push(a.id))
+      singleAlbum !== undefined ? singleAlbum![0].artists?.map((a:any) => artistss.push(a.id)) : null
         
         
         const fetchArtists = async () => {
@@ -153,7 +153,7 @@ export default function UAlbum({active, paused}: any) {
 
               <div className="albumDescription">
                 <div className="innerDescription">
-                  <h5 className="desc1">{talbum[0]?.album_type === 'single' && talbum[0]?.total_tracks > 1 ? 'EP' :talbum[0]?.album_type } &#8226;</h5>
+                  <h5 className="desc1">{talbum[0]?.album_type === 'single' && talbum[0]?.total_tracks > 1 ? 'EP' :talbum[0]?.album_type.toUpperCase() } &#8226;</h5>
                   <h5>{talbum[0]?.tracks.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length + " Song(s)" }</h5>              
                 </div>
 

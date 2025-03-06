@@ -79,9 +79,9 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
         <>
         `  <div>                        
                 <Modal modalId='modalComp' open={open} onClose={onCloseModal} center closeIcon={closeIcon}>                            
-                    <div style={{display: 'flex', alignItems: 'center'}}>
-                        <img className='modalCompImg' src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" alt="Liked Songs"  style={{height: '80px', width: '80px', marginRight: '20px'}}/>
-                        <h3 style={{fontSize: '18px',color: 'white'}} >Liked Songs</h3>
+                    <div style={{display: 'flex', alignItems: 'center', marginTop: '45px'}}>
+                        <img className='modalCompImg' src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" alt="Liked Songs"  style={{height: '80px', width: '80px', marginRight: '20px',borderRadius: '10px'}}/>
+                        <h3 style={{fontSize: '18px',color: 'white',marginRight: 'auto'}} >Liked Songs</h3>
                          {/* <button>{found === undefined ? "Add" : "Remove"}</button> */}
                         <input id='checkbox' type='checkbox' />
                         <p hidden>
@@ -98,7 +98,7 @@ export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
                     {playlists!.map((a: any,i: any) =>
                         <div style={{display: 'flex', alignItems: 'center'}} key={i}>
                         {imageRender(a,80,80,20)}
-                        <h3 style={{maxWidth: '500px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', fontSize: '18px',color: 'white'}} >{a.name}</h3>
+                        <h3 style={{maxWidth: '500px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', fontSize: '18px',color: 'white',marginRight: 'auto'}} >{a.name}</h3>
                         <input id={"checkbox" + i} type='checkbox'/>
                         <p hidden>
                         {open ? (()=>{

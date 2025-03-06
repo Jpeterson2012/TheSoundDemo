@@ -13,7 +13,7 @@ export default function SavedSong({track}:any){
 
     if (liked?.tracks.find((e:any)=>e.uri === track) !== undefined) found = true
 
-    if (!found)
+    if (!found && playlists !== undefined)
         for (let i = 0; i < playlists!.length; i++){            
             playlists![i].tracks?.find((e:any)=>e.uri === track) !== undefined ? 
             found = true : null

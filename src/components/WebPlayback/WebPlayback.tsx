@@ -12,7 +12,7 @@ import Discover from '../../routes/Discover.tsx';
 import Categories from '../../routes/Categories.tsx';
 import BottomBar from '../BottomBar/BottomBar.tsx';
 import PollPlayer from '../PollPlayer.tsx';
-import { useInterval } from '../Seekbar/SeekBar.tsx';
+import { useNavigate } from 'react-router-dom';
 
 declare global {
     interface Window{
@@ -46,7 +46,8 @@ export default function WebPlayback() {
     const [pos, setPos] = useState<any>(0)
     const [duration, setDuration] = useState<any>(0)
     //Used to keep track of current device. used in Track and Ptrack Component
-    const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)})             
+    const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)}) 
+    const navigate = useNavigate()                
 
     useEffect(() => {        
 ///////////////////////////Create Spotify web player client
@@ -132,6 +133,17 @@ export default function WebPlayback() {
                     setIsLoading(false)                        
             };            
             sessionStorage.setItem("windowWidth", window.innerWidth.toString())
+            sessionStorage.setItem("reload", "false")
+
+            let pageAccessedByReload = (
+                (window.performance.navigation && window.performance.navigation.type === 1) ||
+                  window.performance
+                    .getEntriesByType('navigation')
+                    .map((nav:any) => nav.type)
+                    .includes('reload')
+              );
+            pageAccessedByReload && sessionStorage.setItem("reload", "true")
+            pageAccessedByReload && sessionStorage.getItem("reload") === "true" ? (navigate("/app/"), sessionStorage.setItem("reload", "false")) : null
     }, []);
 
     return (

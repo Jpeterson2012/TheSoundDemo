@@ -121,7 +121,7 @@ export default function RAlbum({active, paused}: any) {
 
               <div className="albumDescription">
                 <div className="innerDescription">
-                  <h5 className="desc1">{tracks.albums?.album_type === 'single' && tracks.albums?.total_tracks > 1 ? 'EP' : tracks.albums?.album_type } &#8226;</h5>
+                  <h5 className="desc1">{tracks.albums?.album_type === 'single' && tracks.albums?.total_tracks > 1 ? 'EP' : tracks.albums?.album_type.toUpperCase() } &#8226;</h5>
                   <h5>{tracks.albums?.tracks.items.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).length + " Song(s)" }</h5>              
                 </div>
 

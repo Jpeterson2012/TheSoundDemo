@@ -4,7 +4,7 @@
 .homeButtons{
   animation: fadeIn 0.5s;
   position: relative;
-  border-radius: 20px;
+  border-radius: 10px;
   color: black;
   font-weight: bolder;
   padding: 10px 13px;
