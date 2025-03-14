@@ -2,7 +2,7 @@
 //Fix current track session variable situation at some point
 import { useState, useEffect } from 'react';
 import './WebPlayback.css'
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import Home from '../../routes/Home';
 import Album from '../../routes/Album';
 import Playlist from '../../routes/Playlist.tsx';
@@ -158,6 +158,7 @@ export default function WebPlayback() {
                     <Route path='/album/:id' element={<Album active={is_active}  paused={is_paused} />} key={3}/>
                     <Route path='/playlist/:id' element={<Playlist active={is_active}  paused={is_paused} />} key={4}/>
                     <Route path='/artist/:id' element={<Artist paused={is_paused} />} key={5}/>
+                    <Route path='*' element={<Navigate to = "/" replace />} />
                     </Routes>    
 
                     {isLoading2 ? null : <BottomBar player={player} is_active={is_active} is_paused={is_paused} setPaused={setPaused} duration={duration} current_track={current_track} pos={pos} currentDev={currentDev} setCurrentDev={setCurrentDev}  />}
