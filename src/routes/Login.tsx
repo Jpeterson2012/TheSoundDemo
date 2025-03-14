@@ -11,6 +11,7 @@ export default function Login() {
         <h1 className="intro">Welcome to TheSound<sup>TM</sup></h1>
       </div>
       <button className="home"onClick={() => {
+        sessionStorage.setItem("token", "something")
         location.href = import.meta.env.VITE_URL + '/login'
       }}>Login
         </button>
