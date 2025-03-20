@@ -31,7 +31,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path = '/loading' element={token ? <Navigate to = "/app" replace /> : <Loading />} />
               <Route path='/app/*' element={token ? <WebPlayback /> : <Navigate to = "/" replace /> } />
 
-              {/* <Route path='*' element={<WebPlayback /> }/> */}
+              <Route path='*' element={token ? <Navigate to = "/app" replace /> : <Navigate to = "/" replace /> }/>
             </Routes>
       </Router>
      </Provider>
