@@ -20,6 +20,7 @@ export default function Loading () {
         const dataDone = async () => {
             await fetchDone()
             setIsLoading(false)
+            sessionStorage.setItem("loading","something")
         }
         dataDone()
     },[])
