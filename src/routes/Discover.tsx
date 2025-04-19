@@ -130,6 +130,41 @@ export default function Discover() {
           a_id={a.artists.map((t: any) => t.id)}
         />
       )
+      function displayWrap(){
+        let array = releases.albums?.items
+        const chunkedArray = [];
+        for (let i = 0; i < array.length; i += 10) {
+          chunkedArray.push(array.slice(i, i + 10));
+        }
+        return (
+          <>
+          <h2 style={{margin: '25px auto'}} >New Releases</h2>
+            {chunkedArray.map((row, rowIndex) => (
+              <div key={rowIndex} className="row">
+                {row.map((item: any, itemIndex: any) => (
+                  <div key={itemIndex} className="item">
+                                              
+                      <Card
+                        // key={a.id}
+                        id={item.id}
+                        uri={item.uri}
+                        image={item.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
+                        name={item.name}
+                        artist={item.artists.map((t: any) => t.name)}
+                        a_id={item.artists.map((t: any) => t.id)}
+                      />
+                    
+    
+                  </div>
+                ))
+    
+                }
+              </div>
+            ))
+            }
+          </>
+        )
+      }
     // const listPlaylists = fplaylists.playlists?.items.map((a: any, i: any) =>
     //     <a key={i} onClick={function handleClick() {
     //         sessionStorage.setItem("p_image", a.images.map((s: any) => s.url))
@@ -150,9 +185,9 @@ export default function Discover() {
 
 
     return (
-        <>
-        { loading ? Spin3() :
-        <div className="discoverContainer" style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw',paddingBottom: '200px'}}>   
+        <>        
+        { loading ? Spin3() :        
+        <div className="discoverContainer" style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw', paddingBottom: '200px'}}>   
             {/* {customRender("Check These Out", listAlbums)}  */}
             <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >Check These Out</h2>
             <div className="scroll-container" >
@@ -163,7 +198,7 @@ export default function Discover() {
             </div>
             
             {customRender("Categories", listCategories)}
-            {customRender("New Releases", listReleases)}
+            {window.innerWidth > 500 ? customRender("New Releases", listReleases) : displayWrap()}
             {/* {customRender("Popular Playlists", listPlaylists)}   */}
             <ButtonScroll />      
         </div>
