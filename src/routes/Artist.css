@@ -1,6 +1,11 @@
 .artistImage{
     animation: fadeIn 0.5s;
 }
+.row{
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+  }
 @keyframes fadeIn {
     0%{
         opacity: 0;
@@ -28,13 +33,13 @@ h5{
         overflow-x: scroll;
         white-space: nowrap;
     }
-    .appearsOn{
+    /* .appearsOn{
         display: none;
-    }
+    } */
     .artistContent{        
-        align-items: center !important;        
+        /* align-items: center !important;         */
     }
     .artistLists{
-        max-height: 160px !important;
+        /* max-height: 160px !important; */
     }    
 }

@@ -254,7 +254,7 @@ export default function Home({setIsLoading2}: any) {
       (ready && !loading) ? setIsLoading2(false) : null            
       switch(sessionStorage.getItem('home')){
         case 'album':
-          setHtml(Albums(listItems))
+          setHtml(Albums(window.innerWidth < 500 ? listItems2() : listItems ))
           break
         case 'playlist':
           setHtml(Playlists(navigate,listPlaylists))
@@ -269,7 +269,7 @@ export default function Home({setIsLoading2}: any) {
         //   setHtml(localSong())
         //   break
         default:
-          setHtml(Albums(listItems))
+          setHtml(Albums(window.innerWidth < 500 ? listItems2() : listItems ))
       }
       setLoading(false)                  
     
@@ -302,6 +302,60 @@ export default function Home({setIsLoading2}: any) {
     />
     </div>
   )
+
+
+  function chunkArray(array: any, size: any) {
+    const chunkedArray = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunkedArray.push(array.slice(i, i + size));
+    }
+    return chunkedArray;
+  }
+  let rowtemp = sortedAlbums()?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase()) || a.artists[0].name.toLowerCase().includes(filter_val.toLowerCase()) )
+  let rows = chunkArray(rowtemp, 10)
+  function listItems2(){
+    return (
+      <>
+        {rows.map((row, rowIndex) => (
+          <div key={rowIndex} className="row">
+            {row.map((item: any, itemIndex: any) => (
+              <div key={itemIndex} className="item">
+                
+                <div className="removeContainer" style={{width: '20px'}}>
+                  <button className="removeAlbum" id={"removeAlbum" +  rowIndex * itemIndex + itemIndex} onClick={function handleClick(){
+                    setOpensnack(true)        
+                    document.getElementById('removeAlbum' + rowIndex * itemIndex + itemIndex)!.style.display = 'none'
+                    setTimeout(() => { deleteAlbum({aID: item.album_id}) },300)
+                  }}>Remove From Library</button>
+                  <img src={dots} className="removeImg" onClick={function handleClick(){
+                    let temp = document.getElementById('removeAlbum' + rowIndex * itemIndex + itemIndex)!
+                    if (temp.style.display === 'block') temp.style.display = 'none'
+                    else {
+                      temp.style.display = 'block'
+                    }
+                  }} style={{marginBottom: '20px', transform: 'rotate(90deg)', height: '30px', width: '30px', margin: '0px', cursor: 'pointer'}} />      
+                  </div>
+
+                  <Card      
+                  id={item.album_id}
+                  uri={item.uri}
+                  image={item.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
+                  name={item.name}
+                  artist={item.artists.map((t: any) => t.name)}
+                  a_id={item.artists.map((t: any) => t.id)}
+                  key={item.album_id}
+                  />
+
+
+              </div>
+            ))}
+          </div>
+        ))
+
+        }
+      </>
+    )
+  }
 
   
 
@@ -359,7 +413,7 @@ export default function Home({setIsLoading2}: any) {
             }} >Clear</button>                                    
         </div>
           <div className="buttonContainer">            
-            <button className="homeButtons" onClick={() => {setHtml(Albums(listItems)),sessionStorage.setItem('home','album')}}>Albums</button>
+          <button className="homeButtons" onClick={() => {setHtml(Albums(window.innerWidth < 500 ? listItems2() : listItems )),sessionStorage.setItem('home','album')}}>Albums</button>
             <button className="homeButtons" onClick={() => {setHtml(Playlists(navigate, listPlaylists)), sessionStorage.setItem('home','playlist')}}>Playlists</button>
             <button className="homeButtons" onClick={() => {setHtml(Podcasts(podcasts)), sessionStorage.setItem('home', 'podcast') }}>Podcasts</button>
             <button className="homeButtons" onClick={() => {setHtml(Audiobooks(audiobooks)), sessionStorage.setItem('home', 'audiobook')}}>AudioBooks</button>

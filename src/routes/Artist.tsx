@@ -118,6 +118,41 @@ export default function Artist({paused}: any) {
     <p hidden>{count++}</p>
     </div>
   )
+  function displayWrap(array: any){
+    const chunkedArray = [];
+    for (let i = 0; i < array.length; i += 10) {
+      chunkedArray.push(array.slice(i, i + 10));
+    }
+    return (
+      <>
+        {chunkedArray.map((row, rowIndex) => (
+          <div key={rowIndex} className="row">
+            {row.map((item: any, itemIndex: any) => (
+              <div key={itemIndex} className="item">
+
+                <div className="artistLists" key={itemIndex}>
+                  <h5>{item.release_date}</h5>
+                  <Card
+                    // key={a.id}
+                    id={item.id}
+                    uri={item.uri}
+                    image={item.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
+                    name={item.name}
+                    artist={item.artists.map((t: any) => t.name)}
+                    a_id={item.artists.map((t: any) => t.id)}
+                  />
+                </div>
+
+              </div>
+            ))
+
+            }
+          </div>
+        ))
+        }
+      </>
+    )
+  }
   const listItems = artists2.albums?.items?.filter((a: any) => a.album_group === 'album').map((a: any, i:any) =>
     <div className="artistLists" key={i}> 
       <h5>{a.release_date}</h5>
@@ -200,7 +235,7 @@ export default function Artist({paused}: any) {
             <div className="appearsOn">
             {listItems4?.length !== 0 ? <p className="headers" >Appears On</p> : null}
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
-                {listItems4}
+                {window.innerWidth > 500 ? listItems4 : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'appears_on'))}
             </div>
             </div>
             
@@ -208,7 +243,7 @@ export default function Artist({paused}: any) {
             <div>
             {listItems?.length !== 0 ? <p className="headers" >Albums</p> : null}
             <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
-                {listItems}
+                {window.innerWidth > 500 ? listItems : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'album'))}
             </div>
             </div>
             
@@ -216,13 +251,13 @@ export default function Artist({paused}: any) {
             <div >
             {listItems2?.length !== 0 ? <p className="headers" >Singles</p> : null}
             <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center'}}>
-                {listItems2}
+                {window.innerWidth > 500 ? listItems2 : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'single'))}
             </div>
             </div>
             
             {listItems3?.length !== 0 ? <p className="headers">Compilations</p> : null}
             <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
-                {listItems3}
+                {window.innerWidth > 500 ? listItems3 : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'compilation'))}
             </div>
             </>
               )}

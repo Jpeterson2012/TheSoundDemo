@@ -1,6 +1,11 @@
 .fade-in-image, .fade-in-image2{
   animation: fadeIn 0.5s;
 }
+.row{
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+}
 .homeButtons{
   animation: fadeIn 0.5s;
   position: relative;
