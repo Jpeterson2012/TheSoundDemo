@@ -131,6 +131,7 @@ export default function Discover() {
         />
       )
       function displayWrap(){
+        if (releases.albums){
         let array = releases.albums?.items
         const chunkedArray = [];
         for (let i = 0; i < array.length; i += 10) {
@@ -164,6 +165,7 @@ export default function Discover() {
             }
           </>
         )
+    }
       }
     // const listPlaylists = fplaylists.playlists?.items.map((a: any, i: any) =>
     //     <a key={i} onClick={function handleClick() {
