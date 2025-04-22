@@ -40,16 +40,17 @@
 
 @media only screen and (max-width: 768px) {
   .loginImage{
-    display: flex;
-    flex-wrap: wrap;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 96vw !important;
   }
   .intro{
-  font-size: 23px;
-  width: 135px;
-  }
-  .introImg{
-    width: 70px;
-    height: auto;
-  }
+    font-size: 50px;
+    
+    }
+    .introImg{
+      width: 80px;
+      height: auto;
+    }
 }
   

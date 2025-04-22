@@ -8,7 +8,7 @@ export default function Login() {
       <Loading2 />
       <div className='loginImage' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <img className='introImg' src={logo} alt='Avatar' />
-        <h1 className="intro">Welcome to TheSound<sup>TM</sup></h1>
+        <h1 className="intro">TheSound<sup>TM</sup></h1>
       </div>
       <button className="home"onClick={() => {
         sessionStorage.setItem("token", "something")
