@@ -6,6 +6,7 @@
   gap: 20px;
   overflow-x: auto;
 }
+
 .homeButtons{
   animation: fadeIn 0.5s;
   position: relative;
@@ -65,23 +66,22 @@
 .removeAlbum{
   display: none;
   position: relative;
-  left: -80px;
+  left: -30px;
   /* bottom: 15px; */
   color: black;
   background: rgb(90, 210, 216);
   font-size: 13px;
-  width: 130px;
+  width: fit-content;
   height: 50px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 16px;
-  z-index: 2;
+  z-index: 2;  
 }
 .removePlay{
   display: none;
   position: relative;
   /* left: 200px; */
   /* bottom: 15px; */
-  /* left: 8.5vw; */
   margin-top: 20px;
   margin-left: -110px;
   color: black;
@@ -265,7 +265,7 @@ form{
 @media only screen and (max-height: 400px){
   .playlistContainer{
     margin-top: 190px !important;
-  }
+  }  
   .audioPodcast{
     margin-top: 200px;
   }
@@ -280,10 +280,12 @@ form{
     margin-top: 30px;
   }
   .removeAlbum{
-    width: 90px;
-    height: 30px;
+    width: fit-content;
+    height: fit-content;
     font-size: 8px;
-    margin-left: 45px;
+    margin-left: 30px;    
+    border-radius: 3px;
+    padding: 3px 3px;
   }
   .removeImg{
     height: 30px;
@@ -301,11 +303,11 @@ form{
   }
   .buttonContainer{
     width: 90vw;
-    /* overflow-x: scroll; */
+    /* overflow-x: auto; */
     white-space: nowrap;
     top: 20vh;
-    margin-left: 10%;
     /* left: 10vw; */
+    margin-left: 10%;
   }
   .homeButtons{
     width: fit-content;
@@ -316,7 +318,7 @@ form{
   .albumContainer{
     top: 50vw;
     padding-top: 25px;
-    padding-bottom: 150px;            
+    padding-bottom: 200px;            
   }
   .likedSongImg{
     height: 150px;
@@ -329,6 +331,7 @@ form{
   }
   .playlistContainer{
     margin-top: 90px;
+    margin-bottom: 200px;
   }
   .filterHome button{
     margin-right: 10vw;
@@ -365,11 +368,12 @@ form{
     margin: 2px;
     padding: 5px 0px;
   }  
-  .dropdown-content{
+  #dropdown-content{
     position: absolute;
     top: 40px;
     left: 0;
     min-width: 10px;
     width: 80px;
+    
   }
 }

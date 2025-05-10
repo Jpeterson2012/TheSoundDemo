@@ -10,6 +10,8 @@ import { useGetPlaylistsQuery,useDeletePlaylistMutation } from '../App/ApiSlice.
 import { filterTracks } from "../components/filterTracks.tsx";
 
 function regPlaylists(ptracks: any, last: any, liked_urls: any, paused: any,setmodal:any,settrack:any,rplay:any,filter_val:any){
+  let temp2 = document.getElementById('dropdown-content2')!
+  temp2 !== null ? temp2.style.display = 'none' : null;
   let key = 0
   return (
     ptracks?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any) => 

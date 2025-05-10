@@ -70,7 +70,7 @@ export default function Categories({active, paused}: any) {
     }
     }, []);
 
-    const listPlaylists = clists?.map((a: any, i: any) =>
+    const listPlaylists = clists?.map((a: any,i: any) =>
         <a key={i} onClick={function handleClick() {            
             var parts = a.uri.split(':');
             var lastSegment = parts.pop() || parts.pop();
@@ -89,7 +89,7 @@ export default function Categories({active, paused}: any) {
 
             <img className="cCardImg" src={a.images.map((s: any) => s.uri)} alt="Avatar"/>
             <div className="container" style={{display: 'flex', justifyContent: 'center'}}>
-                <h4 style={isLight(randColor()) ? {color: 'black'} : {color: 'white'}} ><b>{a.name}</b></h4>
+                <h4 style={{ background: '#7a19e9', color: 'rgb(90, 210, 216)',borderRadius: '3px' }} ><b>{a.name}</b></h4>
                 {/* <p><b>{a.description}</b></p> */}
             </div>
 

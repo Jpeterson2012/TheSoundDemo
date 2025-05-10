@@ -15,9 +15,10 @@ export default function ButtonScroll(){
 
     return(
         <button id="scrollButton" onClick={function handleClick(){
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-          }} >Top</button>
+            window.scrollTo({ top: 0, behavior: "smooth" })
+            // document.body.scrollTop = 0;
+            // document.documentElement.scrollTop = 0;
+          }} >^</button>
     )
 
 }

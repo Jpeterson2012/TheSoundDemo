@@ -39,6 +39,8 @@ function returnUrl(ptracks: any){
 {/* Old method of playling playlist using playlist uri. doesnt work with sorting */}
 {/* {last == 'likedsongs' ? liked_urls.push(t.uri) : liked_urls = null } */}
 function userPlaylists(userLists: any, liked_urls: any, paused: any,removeSong: any, removePTrack: any, lastSegment: any,setmodal:any,settrack: any,setsnack:any,filter_val:any) {
+  let temp2 = document.getElementById('dropdown-content2')!
+  temp2 !== null ? temp2.style.display = 'none' : null;
   let key = 0  
   return (
     userLists?.tracks?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase())).map((t: any) =>

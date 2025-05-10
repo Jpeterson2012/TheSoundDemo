@@ -4,20 +4,21 @@
   bottom: 10vh; /* Place the button at the bottom of the page */
   left: 2vw; /* Place the button 30px from the right */
   z-index: 99; /* Make sure it does not overlap */
-  border: none; /* Remove borders */
+  border: solid 2px rgb(90, 210, 216); /* Remove borders */
   outline: none; /* Remove outline */
-  background-color: rgb(90, 210, 216); /* Set a background color */
-  color: black; /* Text color */
+  background: transparent; /* Set a background color */
+  color: rgb(90, 210, 216); /* Text color */
   cursor: pointer; /* Add a mouse pointer on hover */
   padding: 15px; /* Some padding */
   border-radius: 10px; /* Rounded corners */
-  font-size: 18px; /* Increase font size */
+  font-size: 28px; /* Increase font size */
   width: 80px;
   height: 40px;
   line-height: 0px;
 }
 #scrollButton:hover{
-    background: #7a19e9;
+    color: #7a19e9;
+    border: solid 2px #7a19e9;
 }
 @media only screen and (max-height: 400px){
   #scrollButton{
