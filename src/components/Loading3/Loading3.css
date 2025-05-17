@@ -7,10 +7,10 @@
     width: 90px;            
   }
   
-  .tnoot-2,
-  .tnoot-1,
-  .tnoot-3,
-  .tnoot-4 {
+  .ttnoot-2,
+  .ttnoot-1,
+  .ttnoot-3,
+  .ttnoot-4 {
     position: absolute;
     animation: notes3 2s infinite linear;
     font-size: 30px;
@@ -18,28 +18,28 @@
     opacity: 0;    
   }
   
-  .tnoot-1 {
+  .ttnoot-1 {
     top: 60px;
     left: 0;
     animation-delay: 0.5s;    
     color: #d093e5;
   }
   
-  .tnoot-2 {
+  .ttnoot-2 {
     top: 60px;
     left: 30%;
     animation-delay: 1s;    
     color: rgb(90, 210, 216);
   }
   
-  .tnoot-3 {
+  .ttnoot-3 {
     top: 60px;
     left: 60%;
     animation-delay: 1.5s;    
     color: #d093e5;
   }
   
-  .tnoot-4 {
+  .ttnoot-4 {
     top: 60px;
     left: 90%;
     animation-delay: 2s;    

@@ -31,7 +31,7 @@ function generatePassword() {
 
 function Albums(listRecent:any,listItems: any){
   return(
-    <div style={{marginTop: '120px'}}>
+    <div style={{marginTop: '100px'}}>
       <p style={{fontWeight: 'bolder', fontSize: '25px'}} >{JSON.parse(localStorage.getItem("recent")!) && "Jump Back In"}</p>
       <div style={{maxWidth: '95vw', overflowX: 'auto'}}>        
         {listRecent}
