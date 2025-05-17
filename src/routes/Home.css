@@ -239,7 +239,7 @@ form{
   align-items: center;
   padding-top: 15px;
   width: 90vw;
-  position: absolute;
+  /* position: absolute; */
   left: 5vw;
   top: 550px;
 }
