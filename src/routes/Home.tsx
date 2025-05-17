@@ -17,6 +17,7 @@ import MySnackbar from "../components/MySnackBar.tsx";
 import dots from '../images/dots.png'
 
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
+import Loading3 from '../components/Loading3/Loading3.tsx'
 
 function generatePassword() {
   var length = 22,
@@ -28,10 +29,16 @@ function generatePassword() {
   return retVal;
 }
 
-function Albums(listItems: any){
+function Albums(listRecent:any,listItems: any){
   return(
-    <div className="albumContainer">
-      {listItems}
+    <div style={{marginTop: '120px'}}>
+      <p style={{fontWeight: 'bolder', fontSize: '25px'}} >{JSON.parse(localStorage.getItem("recent")!) && "Jump Back In"}</p>
+      <div style={{maxWidth: '95vw', overflowX: 'auto'}}>        
+        {listRecent}
+      </div>
+      <div className="albumContainer">      
+        {listItems}
+      </div>
     </div>
   )
 }
@@ -165,7 +172,7 @@ function Audiobooks(audiobooks:any){
 //   )
 // }
 
-export default function Home({setIsLoading2}: any) {
+export default function Home({setIsLoading2,paused}: any) {
     const navigate = useNavigate()
     const [html, setHtml] = useState<any>(null)
     const [sorted, setSorted] = useState(+sessionStorage.getItem('sortVal')!)
@@ -262,7 +269,7 @@ export default function Home({setIsLoading2}: any) {
       (ready && !loading) ? setIsLoading2(false) : null            
       switch(sessionStorage.getItem('home')){
         case 'album':
-          setHtml(Albums(window.innerWidth < 500 ? listItems2() : listItems ))
+          setHtml(Albums(listRecent(),window.innerWidth < 500 ? listItems2() : listItems ))
           break
         case 'playlist':
           setHtml(Playlists(navigate,listPlaylists))
@@ -277,11 +284,11 @@ export default function Home({setIsLoading2}: any) {
         //   setHtml(localSong())
         //   break
         default:
-          setHtml(Albums(window.innerWidth < 500 ? listItems2() : listItems ))
+          setHtml(Albums(listRecent(),window.innerWidth < 500 ? listItems2() : listItems ))
       }
       setLoading(false)                  
     
-  }, [ready,isFetching, sorted,psorted,delsuccess,filter_val]);
+  }, [ready,isFetching, sorted,psorted,delsuccess,filter_val,localStorage.getItem("recent")!,paused]);
     
   const listItems = sortedAlbums()?.filter((a:any)=> a.name.toLowerCase().includes(filter_val.toLowerCase()) || a.artists[0].name.toLowerCase().includes(filter_val.toLowerCase()) ).map((a: any, i:any) =>
     <div key={i}>
@@ -309,6 +316,7 @@ export default function Home({setIsLoading2}: any) {
       artist={a.artists.map((t: any) => t.name)}
       a_id={a.artists.map((t: any) => t.id)}
       key={a.album_id}
+      paused={paused}
     />
     </div>
   )
@@ -405,6 +413,45 @@ export default function Home({setIsLoading2}: any) {
       
     </div>
   )
+  function listRecent(){
+    let temp: any = []
+    let temp2 = JSON.parse(localStorage.getItem("recent")!)        
+
+    if (temp2){          
+    Object.keys(temp2).forEach((val:any) => temp.push( {"id": val,"name": temp2[val].name,"artists": temp2[val].artists,"img": temp2[val].images.filter((t: any)=>t.height == 640)[0]} ))    
+    return (
+      <div style={{display: 'flex'}} >
+        {temp.map((val:any,i: number) => 
+        <div key={i} >        
+          <a onClick={function handleClick(){
+          console.log(val.name)
+          console.log(sessionStorage.getItem("name"))
+
+            let found = albums?.find((e: any) => e?.album_id === val.id)
+            found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : sessionStorage.setItem("albumStatus","user")
+            sessionStorage.setItem("image", val.img.url)
+            sessionStorage.setItem("artist", JSON.stringify(val.artists.map((t: any) => t.name)))
+            sessionStorage.setItem("artist_id", JSON.stringify(val.artists.map((t: any) => t.uri.split(':').pop())))
+            navigate(`/app/album/${val.id}`)
+          }}>
+            <div style={{display: 'flex', flexDirection: 'column'}} >
+            {(!paused && sessionStorage.getItem('name') === val.name) ? <Loading3 /> : null}
+            <img key={i} src={val.img.url} style={{width: '150px', height: '190px', borderRadius: '10px'}} /> 
+            </div>           
+          </a>          
+          </div>
+        )}
+      </div>
+    )
+    }
+    else{
+      return (
+        <>
+        </>
+      )
+    }
+  }
+
   return (
     <>
       {!ready && !loading ? Spin3() : (
@@ -421,8 +468,8 @@ export default function Home({setIsLoading2}: any) {
                 (document.getElementById('filterTrack') as HTMLInputElement)!.value = ''
             }} >Clear</button>                                    
         </div>
-          <div className="buttonContainer">            
-            <button className="homeButtons" onClick={() => {setHtml(Albums(window.innerWidth < 500 ? listItems2() : listItems )),sessionStorage.setItem('home','album')}}>Albums</button>
+          <div className="buttonContainer">                        
+            <button className="homeButtons" onClick={() => {setHtml(Albums(listRecent(),window.innerWidth < 500 ? listItems2() : listItems )),sessionStorage.setItem('home','album')}}>Albums</button>
             <button className="homeButtons" onClick={() => {setHtml(Playlists(navigate, listPlaylists)), sessionStorage.setItem('home','playlist')}}>Playlists</button>
             <button className="homeButtons" onClick={() => {setHtml(Podcasts(podcasts)), sessionStorage.setItem('home', 'podcast') }}>Podcasts</button>
             <button className="homeButtons" onClick={() => {setHtml(Audiobooks(audiobooks)), sessionStorage.setItem('home', 'audiobook')}}>AudioBooks</button>
@@ -491,7 +538,7 @@ export default function Home({setIsLoading2}: any) {
           </div>
         
       </div>
-          
+        
         {html}      
       
       </>

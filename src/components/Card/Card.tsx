@@ -3,8 +3,9 @@
 import './Card.css'
 import { useNavigate } from 'react-router-dom';
 import { useGetAlbumsQuery } from '../../App/ApiSlice.ts';
+import Loading3 from '../Loading3/Loading3.tsx'
 
-export default function Card( {id, image, name, artist, a_id}: any ) {
+export default function Card( {id, image, name, artist, a_id,paused}: any ) {
     const navigate = useNavigate()
     let key: number = 0
     //This is for displaying multiple artists with their own spotify ids
@@ -15,8 +16,11 @@ export default function Card( {id, image, name, artist, a_id}: any ) {
     let found = albums?.find((e: any) => e?.album_id === id)
     return (
         <div className="card">
-
+            {(!paused && sessionStorage.getItem('name') === name) ? <Loading3 /> : null}
             <a onClick={function handleClick() {
+                console.log(paused)
+                console.log(sessionStorage.getItem("name"))
+                console.log(name)
                 //Check if album is already in library or not
                 found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : sessionStorage.setItem("albumStatus","user")
                 sessionStorage.setItem("id", id)
@@ -41,7 +45,7 @@ export default function Card( {id, image, name, artist, a_id}: any ) {
                 </div>
             )}</div>
 
-            <div className='mainArtistContainer2'><b>
+            <div className='mainArtistContainer2'><b>                
                 <div className='cardArtistContainer' key={zip[1]}>
                 <a onClick={function handleClick() {
                     zip[0][0] === 'Various Artists' ? null : navigate(`/app/artist/${zip[0][1]}`)
