@@ -132,7 +132,7 @@ export default function WebPlayback() {
                             parts = temp[lastSegment],
                             delete  temp[lastSegment],
                             temp = {[lastSegment]: parts, ...temp}) 
-                            : temp = {[lastSegment]: {name: state?.track_window?.current_track?.album.name,artists: state?.track_window?.current_track?.artists,images: state?.track_window?.current_track?.album.images}, ...temp}        
+                            : temp = {[lastSegment]: {id: lastSegment,name: state?.track_window?.current_track?.album.name,artists: state?.track_window?.current_track?.artists,images: state?.track_window?.current_track?.album.images}, ...temp}        
                         // console.log(temp)
                                 
                         // console.log(keys)     
