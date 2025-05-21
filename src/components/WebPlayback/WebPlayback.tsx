@@ -50,6 +50,7 @@ export default function WebPlayback() {
     const navigate = useNavigate()                
 
     useEffect(() => {        
+        localStorage.clear()
 ///////////////////////////Create Spotify web player client
             const script = document.createElement("script");
             script.src = "https://sdk.scdn.co/spotify-player.js";
