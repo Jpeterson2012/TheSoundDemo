@@ -360,6 +360,7 @@ export default function Home({setIsLoading2,paused}: any) {
                   artist={item.artists.map((t: any) => t.name)}
                   a_id={item.artists.map((t: any) => t.id)}
                   key={item.album_id}
+                  paused={paused}
                   />
 
 
