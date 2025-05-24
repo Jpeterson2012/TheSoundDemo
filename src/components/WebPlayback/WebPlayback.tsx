@@ -124,24 +124,30 @@ export default function WebPlayback() {
                         sessionStorage.setItem("current", state?.track_window?.current_track?.uri)
                         sessionStorage.setItem("currentTrack",JSON.stringify(state?.track_window?.current_track))             
                         
-                        let temp = localStorage.getItem("recent") ? JSON.parse(localStorage.getItem("recent")!) : {}
-                        var parts = state?.track_window?.current_track.album.uri.split(':');
-                        var lastSegment = parts.pop() || parts.pop();           
-                        let keys = Object.keys(temp)                                     
+                        if(state?.track_window?.current_track){
                         
-                        temp[lastSegment] ? (
-                            parts = temp[lastSegment],
-                            delete  temp[lastSegment],
-                            temp = {[lastSegment]: parts, ...temp}) 
-                            : temp = {[lastSegment]: {id: lastSegment,name: state?.track_window?.current_track?.album.name,artists: state?.track_window?.current_track?.artists,images: state?.track_window?.current_track?.album.images}, ...temp}        
-                        // console.log(temp)
-                                
-                        // console.log(keys)     
-                        if (keys.length > 20){
-                            let lastKey: any = keys.pop()
-                            delete temp[lastKey]
-                        }   
-                        localStorage.setItem("recent", JSON.stringify(temp))
+                            let temp = localStorage.getItem("recent") ? JSON.parse(localStorage.getItem("recent")!) : {}
+                            var parts = state?.track_window?.current_track.album.uri.split(':');
+                            var lastSegment = parts.pop() || parts.pop();           
+                            let keys = Object.keys(temp)                                     
+                            
+                            temp[lastSegment] ? (
+                                parts = temp[lastSegment],
+                                delete  temp[lastSegment],
+                                temp = {[lastSegment]: parts, ...temp}) 
+                                : temp = {[lastSegment]: {id: lastSegment,name: state?.track_window?.current_track?.album.name,artists: state?.track_window?.current_track?.artists,images: state?.track_window?.current_track?.album.images}, ...temp}        
+                            // console.log(temp)
+
+                            // console.log(keys)     
+                            if (keys.length > 20){
+                                let lastKey: any = keys.pop()
+                                delete temp[lastKey]
+                            }   
+                            localStorage.setItem("recent", JSON.stringify(temp))       
+                        }        
+                        else{
+                            currentDev.name === "TheSound" ? sessionStorage.setItem("currentContext", "id") : null                      
+                        }
                     
                         player.getCurrentState().then( (state: any) => { 
                             !state ? setActive(false) : setActive(true)                            

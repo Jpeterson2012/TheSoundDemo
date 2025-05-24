@@ -427,8 +427,8 @@ export default function Home({setIsLoading2,paused}: any) {
           // console.log(val)
           // console.log(sessionStorage.getItem("name"))
 
-            let found = albums?.find((e: any) => e?.album_id === val.id)
-            found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : sessionStorage.setItem("albumStatus","user")
+            let found = (albums?.find((e: any) => e?.album_id === val.id) || (albums?.find((e: any) => e?.name === val.name)))            
+            found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : (sessionStorage.setItem("albumStatus","user"),val.id === found?.album_id ? null : val.id = found?.album_id)
             sessionStorage.setItem("image", val.img.url)
             sessionStorage.setItem("artist", JSON.stringify(val.artists.map((t: any) => t.name)))
             sessionStorage.setItem("artist_id", JSON.stringify(val.artists.map((t: any) => t.uri.split(':').pop())))

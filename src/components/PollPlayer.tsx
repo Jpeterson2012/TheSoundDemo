@@ -28,9 +28,11 @@ export default function PollPlayer({setCurrentDev,currentDev,setTrack,duration,p
             const resp = await fetch(import.meta.env.VITE_URL + '/player',{credentials: "include"})
             const data = await resp.json()
             if (currentDev.name !== data.device.name) {
-              if (data.device.name === "TheSound") setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})
-                else setCurrentDev({name: data.device.name, id: data.device.id})
-              sessionStorage.setItem("currentContext", "null")
+              if (data.device.name === "TheSound"){
+                setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})
+                sessionStorage.setItem("currentContext", "null")
+              }
+                else setCurrentDev({name: data.device.name, id: data.device.id})              
             }
             if (data.is_playing === false) paused(true)
             else paused(false)

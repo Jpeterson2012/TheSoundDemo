@@ -353,8 +353,8 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         <img className='deviceImg' src={device} onClick={function handleClick(){      
                             refetch()
                             onOpenModal()
-                            console.log(devices)                                          
-                            !isFetching ? console.log(devices) : null                                                
+                            // console.log(devices)                                          
+                            // !isFetching ? console.log(devices) : null                                                
                             }} />
 
                         <Modal modalId='modal1' open={open} onClose={onCloseModal} closeIcon={closeIcon} >
