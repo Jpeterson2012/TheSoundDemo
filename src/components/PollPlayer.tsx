@@ -32,7 +32,10 @@ export default function PollPlayer({setCurrentDev,currentDev,setTrack,duration,p
                 setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})
                 sessionStorage.setItem("currentContext", "null")
               }
-                else setCurrentDev({name: data.device.name, id: data.device.id})              
+              else {
+                setCurrentDev({name: data.device.name, id: data.device.id})         
+                sessionStorage.setItem("currentContext", data.device.id)  
+              }   
             }
             if (data.is_playing === false) paused(true)
             else paused(false)
