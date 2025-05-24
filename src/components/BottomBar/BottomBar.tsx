@@ -125,8 +125,8 @@ export default function BottomBar({player,is_active,is_paused, setPaused, durati
                         var parts = current_track.album.uri.split(':');
                         var lastSegment = parts.pop() || parts.pop();
 
-                        let found = albums.find((e:any) => e.album_id === lastSegment)
-                        found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : sessionStorage.setItem("albumStatus","user")
+                        let found = (albums?.find((e: any) => e?.album_id === lastSegment) || (albums?.find((e: any) => e?.name === current_track.album.name)))            
+                        found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : (sessionStorage.setItem("albumStatus","user"),lastSegment === found?.album_id ? null : lastSegment = found?.album_id)
 
                         var artistss: any[] = []
                         var artist_idss: any[] = []
