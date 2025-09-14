@@ -176,7 +176,7 @@ export default function Artist() {
             {listTTracks}
           </div>
 
-          { loading2 ? Spin3() : renderFilter(projectTypes)}
+          {/* { loading2 ? Spin3() : renderFilter(projectTypes)} */}
 
           <ButtonScroll />
         </div>      
