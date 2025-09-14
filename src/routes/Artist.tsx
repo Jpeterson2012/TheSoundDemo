@@ -60,6 +60,7 @@ export default function Artist() {
     // setLoading(true)
     const tempArtists2 = await fetchArtist2()    
     setLoading2(false)
+    console.log(tempArtists2)
     setArtists2(tempArtists2)
 
   }
@@ -176,7 +177,7 @@ export default function Artist() {
             {listTTracks}
           </div>
 
-          {/* { loading2 ? Spin3() : renderFilter(projectTypes)} */}
+          { loading2 ? Spin3() : renderFilter(projectTypes)}
 
           <ButtonScroll />
         </div>      
