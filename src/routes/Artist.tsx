@@ -60,8 +60,7 @@ export default function Artist() {
     // setLoading(true)
     const tempArtists2 = await fetchArtist2()    
     setLoading2(false)
-    console.log(tempArtists2)
-    setArtists2(tempArtists2)
+    setArtists2(tempArtists2.albums.items)
 
   }
   assignArtists2()
@@ -87,7 +86,7 @@ export default function Artist() {
     </div>
   )
   function displayWrap(filterVal: string){
-    let array = artists2?.filter((a: any) => a.album_group === filterVal)
+    let array = artists2.filter((a: any) => a.album_group === filterVal)
 
     const chunkedArray = [];
     for (let i = 0; i < array.length; i += 10) {
@@ -122,7 +121,7 @@ export default function Artist() {
   }
 
   function artistFilter(filterVal: string){
-    return artists2?.filter((a: any) => a.album_group === filterVal).map((a: any, i:any) =>
+    return artists2.filter((a: any) => a.album_group === filterVal).map((a: any, i:any) =>
       <div key={i}>
         <h5>{a.release_date}</h5> 
         <Card
