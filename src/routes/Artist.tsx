@@ -86,7 +86,7 @@ export default function Artist() {
     </div>
   )
   function displayWrap(filterVal: string){
-    let array = artists2.filter((a: any) => a.album_group === filterVal)
+    let array = artists2?.filter((a: any) => a.album_group === filterVal)
 
     const chunkedArray = [];
     for (let i = 0; i < array.length; i += 10) {
@@ -121,7 +121,7 @@ export default function Artist() {
   }
 
   function artistFilter(filterVal: string){
-    return artists2.filter((a: any) => a.album_group === filterVal).map((a: any, i:any) =>
+    return artists2?.filter((a: any) => a.album_group === filterVal).map((a: any, i:any) =>
       <div key={i}>
         <h5>{a.release_date}</h5> 
         <Card
