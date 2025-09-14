@@ -245,8 +245,9 @@
     margin-top: 4px;
   }
   .userName2{    
+    /* margin-left: 9px;     */
     font-size: 20px;    
-    line-height: 38px;    
+    line-height: 38px;
   }
 
   #modal3{

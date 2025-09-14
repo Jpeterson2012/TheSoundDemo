@@ -1,8 +1,10 @@
 //Session storage variable uplist, currentContext created here
 //Fix current track session variable situation at some point
-import { useState, useEffect } from 'react';
 import './WebPlayback.css'
+import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
+import { usePlayer } from '../../hooks/usePlayer.ts';
 import Home from '../../routes/Home';
 import Album from '../../routes/Album';
 import Playlist from '../../routes/Playlist.tsx';
@@ -12,186 +14,64 @@ import Discover from '../../routes/Discover.tsx';
 import Categories from '../../routes/Categories.tsx';
 import BottomBar from '../BottomBar/BottomBar.tsx';
 import PollPlayer from '../PollPlayer.tsx';
-import { useNavigate } from 'react-router-dom';
-
-declare global {
-    interface Window{
-        onSpotifyWebPlaybackSDKReady: any;
-        Spotify: any;
-    }
-}
-const track: any = {
-    name: "",
-    album: {
-        images: [
-            { url: "" }
-        ],
-        uri: "",
-        name: ""
-    },
-    artists: [
-        { name: "" }
-    ],
-    uri: ""
-}
+import UsePlayerContext from '../../contexts/PlayerContext.tsx';
 
 export default function WebPlayback() {
+  //Used to keep track of current device. used in Track and Ptrack Component
+  const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)})         
+  const [isLoading, setIsLoading] = useState(false) 
+  const [isLoading2, setIsLoading2] = useState(true)
+  const navigate = useNavigate()          
+      
+  const player = usePlayer()    
 
-    const [player, setPlayer] = useState<any>(undefined);
-    const [isLoading, setIsLoading] = useState(true) 
-    const [isLoading2, setIsLoading2] = useState(true) 
-    const [is_paused, setPaused] = useState<any>(false);
-    const [is_active, setActive] = useState<any>(false);
-    const [current_track, setTrack] = useState(track);
-    const [pos, setPos] = useState<any>(0)
-    const [duration, setDuration] = useState<any>(0)
-    //Used to keep track of current device. used in Track and Ptrack Component
-    const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)}) 
-    const navigate = useNavigate()                
-
-    useEffect(() => {        
-        // localStorage.clear()
-///////////////////////////Create Spotify web player client
-            const script = document.createElement("script");
-            script.src = "https://sdk.scdn.co/spotify-player.js";
-            script.async = true;
-            var token = ''
-            const fetchToken = async () => {
-                try{
-                    const response = await fetch(import.meta.env.VITE_URL + "/token", {credentials: "include"})
-                    const data = await response.json()
-                    token = data.items                
-                    sessionStorage.setItem("token", data.items)    
-                    }
-                    catch(e){console.log(`Error requesting access token: ${e}`)}                
-            }
-            fetchToken()
-            //Handles refresh token
-            setInterval(() => {
-                try{
-                    fetch(import.meta.env.VITE_URL + "/token/refresh_token", {credentials: "include"})
-                    .then(data => data.json()).then(a => {sessionStorage.setItem("token", a.items), token = a.items})
-                    }
-                    catch (e) {`Error requesting access token: ${e}`}              
-            },1000 * 59 * 59)            
-            
-            document.body.appendChild(script);
-            
-            window.onSpotifyWebPlaybackSDKReady = () => {  
-                
-                    const player = new window.Spotify.Player({ 
-                        name: 'TheSound',
-                        getOAuthToken: (cb: any) => { cb(token); },
-                        volume: 1,                              
-                    });
-                    setPlayer(player);                    
-                    
-                    player.addListener('ready', ({ device_id }:any) => {
-                        console.log('Ready with Device ID', device_id);
-                        sessionStorage.setItem("device_id", device_id);
-                        
-                    });
-
-                    player.addListener('not_ready', ({ device_id }: any) => {
-                        console.log('Device ID has gone offline', device_id);
-                    });
-                    player.addListener('initialization_error', ({ message }: any) => {
-                        console.error(message);
-                    });
-                
-                    player.addListener('authentication_error', ({ message }: any) => {
-                        console.error(message);
-                    });
-                
-                    player.addListener('account_error', ({ message }: any) => {
-                        console.error(message);
-                    });
-                    
-                    player.addListener('player_state_changed', ( (state: any) => {
-                        if (!state) {
-                            return;
-                        }
-                                                                            
-                        setTrack(state?.track_window.current_track);      
-                          
-                        setPaused(state?.paused)      
-            
-                        setDuration(state?.duration)        
-            
-                        setPos(state?.position)      
-                        
-                        sessionStorage.setItem("name", state?.track_window?.current_track?.album.name)
-                        sessionStorage.setItem("current", state?.track_window?.current_track?.uri)
-                        sessionStorage.setItem("currentTrack",JSON.stringify(state?.track_window?.current_track))             
-                        
-                        if(state?.track_window?.current_track){
-                        
-                            let temp = localStorage.getItem("recent") ? JSON.parse(localStorage.getItem("recent")!) : {}
-                            var parts = state?.track_window?.current_track.album.uri.split(':');
-                            var lastSegment = parts.pop() || parts.pop();           
-                            let keys = Object.keys(temp)                                     
-                            
-                            temp[lastSegment] ? (
-                                parts = temp[lastSegment],
-                                delete  temp[lastSegment],
-                                temp = {[lastSegment]: parts, ...temp}) 
-                                : temp = {[lastSegment]: {id: lastSegment,name: state?.track_window?.current_track?.album.name,artists: state?.track_window?.current_track?.artists,images: state?.track_window?.current_track?.album.images}, ...temp}        
-                            // console.log(temp)
-
-                            // console.log(keys)     
-                            if (keys.length > 20){
-                                let lastKey: any = keys.pop()
-                                delete temp[lastKey]
-                            }   
-                            localStorage.setItem("recent", JSON.stringify(temp))       
-                        }        
-                        else{
-                            currentDev.name === "TheSound" ? sessionStorage.setItem("currentContext", "id") : null                      
-                        }
-                    
-                        player.getCurrentState().then( (state: any) => { 
-                            !state ? setActive(false) : setActive(true)                            
-                                                                                                                                          
-                        })
-                    }))
-                                                            
-                    player.connect();
-                    setIsLoading(false)                        
-            };            
-            sessionStorage.setItem("windowWidth", window.innerWidth.toString())
-            sessionStorage.setItem("reload", "false")
-
-            let pageAccessedByReload = (
-                (window.performance.navigation && window.performance.navigation.type === 1) ||
-                  window.performance
-                    .getEntriesByType('navigation')
-                    .map((nav:any) => nav.type)
-                    .includes('reload')
-              );
-            pageAccessedByReload && sessionStorage.setItem("reload", "true")
-            pageAccessedByReload && sessionStorage.getItem("reload") === "true" ? (navigate("/app/"), sessionStorage.setItem("reload", "false")) : null
-    }, []);
-
-    return (
-        <>
-            {isLoading ? null : (
-                <>
-                    {isLoading2 ? null : <Logo />}
-                    <Routes>
-                    <Route path = '/' element={<Home setIsLoading2={setIsLoading2} paused={is_paused} />} key={0}/>
-                    <Route path='/discover' element={<Discover/>} key={1} />
-                    <Route path='/categories/:id' element={<Categories active={is_active}  paused={is_paused} />} key={2}/>
-                    <Route path='/album/:id' element={<Album active={is_active}  paused={is_paused} />} key={3}/>
-                    <Route path='/playlist/:id' element={<Playlist active={is_active}  paused={is_paused} />} key={4}/>
-                    <Route path='/artist/:id' element={<Artist paused={is_paused} />} key={5}/>
-                    <Route path='*' element={<Navigate to = "/" replace />} />
-                    </Routes>    
-
-                    {isLoading2 ? null : <BottomBar player={player} is_active={is_active} is_paused={is_paused} setPaused={setPaused} duration={duration} current_track={current_track} pos={pos} currentDev={currentDev} setCurrentDev={setCurrentDev}  />}
-                    <PollPlayer setCurrentDev={setCurrentDev} currentDev={currentDev} setTrack={setTrack} duration={setDuration} paused={setPaused}/>      
-                </>
-            )}
+  useEffect(() => {                        
+    if (!player.player) return        
         
+    //localStorage.clear()        
+    // document.addEventListener('beforeunload', () => {
+    //     sessionStorage.clear()
+    //     localStorage.clear()
+    //     return ''
+    // })                
+    setIsLoading(false)
+    
+    sessionStorage.setItem("reload", "false")
+
+    let pageAccessedByReload = (
+      (window.performance.navigation && window.performance.navigation.type === 1) ||
+      window.performance
+      .getEntriesByType('navigation')
+      .map((nav:any) => nav.type)
+      .includes('reload')
+    );
+    pageAccessedByReload && sessionStorage.setItem("reload", "true")
+    pageAccessedByReload && sessionStorage.getItem("reload") === "true" && (navigate("/app/"), sessionStorage.setItem("reload", "false"))
+      
+  }, [player]);    
+    
+
+  return (
+    <>
+      {!isLoading && (
+        <>
+          {!isLoading2 && <Logo />}                    
+          <UsePlayerContext.Provider value={{ ...player }}>
+            <Routes>                                              
+              <Route path = '/' element={<Home setIsLoading2={setIsLoading2} />} key={0}/>
+              <Route path='/discover' element={<Discover />} key={1} />
+              <Route path='/categories/:id' element={<Categories />} key={2}/>
+              <Route path='/album/:id' element={<Album />} key={3}/>
+              <Route path='/playlist/:id' element={<Playlist />} key={4}/>
+              <Route path='/artist/:id' element={<Artist />} key={5}/>
+              <Route path='*' element={<Navigate to = "/" replace />} />                                           
+            </Routes>    
+
+            {!isLoading2 && <BottomBar currentDev={currentDev} setCurrentDev={setCurrentDev} />} 
+            <PollPlayer setCurrentDev={setCurrentDev} currentDev={currentDev}/>
+          </UsePlayerContext.Provider>                           
         </>
-    )
+      )}        
+    </>
+  )
 }

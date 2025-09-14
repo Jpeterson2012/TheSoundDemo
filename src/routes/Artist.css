@@ -32,13 +32,7 @@ h5{
     .headers2{
         overflow-x: scroll;
         white-space: nowrap;
-    }
-    /* .appearsOn{
-        display: none;
-    } */
-    .artistContent{        
-        /* align-items: center !important;         */
-    }
+    }    
     .artistLists{
         /* max-height: 160px !important; */
     }    

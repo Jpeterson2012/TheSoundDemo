@@ -7,7 +7,10 @@ export const store = configureStore({
         [apiSlice.reducerPath]: apiSlice.reducer
     },
     middleware: getDefaultMiddleware =>
-        getDefaultMiddleware()
+        getDefaultMiddleware({
+            immutableCheck: {warnAfter: 200},
+            serializableCheck: { warnAfter: 200 }
+        })
             .concat(apiSlice.middleware)
 })
 

@@ -18,8 +18,7 @@ export default function AddLiked({active,trackUri: currentTrack,duration}: any){
     return(
         <>
             {!active ? null : (
-                <>                
-                    
+                <>                                    
                     <p id='addSong' onClick={function handleClick(){
                                     
                         const handleSubmit = async () => {
@@ -40,13 +39,11 @@ export default function AddLiked({active,trackUri: currentTrack,duration}: any){
                             temp.style.animation = 'pulse3 linear 1s'
                             setTimeout(()=>{
                                 temp.style.removeProperty('animation')
-                            }, 1000)
-                            
+                            }, 1000)                            
                         }
                         else{
                             setModal(true)
                         }
-
                         
                     }}>{found === undefined && found2 === undefined ? "+" : "✓"}</p>
                 </>

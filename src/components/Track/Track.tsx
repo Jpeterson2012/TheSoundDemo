@@ -3,7 +3,6 @@ import './Track.css'
 import SavedSong from '../SavedSong/SavedSong'
 import musicBar from '../musicBar/musicBar.tsx';
 
-
 function timeCalc (ms: number) {
     const temp = Math.round(ms / 1000)
     let mins = Math.floor(temp / 60)
@@ -25,37 +24,36 @@ export default function Track ( {uri, name, number, duration, album_name, artist
                 album_name && sessionStorage.setItem("albumname", album_name)
                 
                 // sessionStorage.setItem("name", sessionStorage.getItem("albumname"))
-                if (sessionStorage.getItem("currentContext")! === null || sessionStorage.getItem("currentContext")! === "null"){
+                if (!sessionStorage.getItem("currentContext")! || sessionStorage.getItem("currentContext")! === "null"){
                     var url = `https://api.spotify.com/v1/me/player/play?device_id=${sessionStorage.getItem("device_id")}`
                 }
                 else{
                     var url = `https://api.spotify.com/v1/me/player/play?device_id=${sessionStorage.getItem("currentContext")}`
                 }
                 
-                    const headers = {
-                        "Content-Type": "application/json",
-                        Authorization: 'Bearer ' + sessionStorage.getItem("token")
-                    }
-                    
-                    fetch(url, {
-                        method: 'PUT',
-                        headers: headers,                        
-                        body: JSON.stringify({context_uri: uri, offset: {position: number - 1}})
-                    })
+                const headers = {
+                    "Content-Type": "application/json",
+                    Authorization: 'Bearer ' + sessionStorage.getItem("token")
+                }
                 
+                fetch(url, {
+                    method: 'PUT',
+                    headers: headers,                        
+                    body: JSON.stringify({context_uri: uri, offset: {position: number - 1}})
+                })                
             }}>            
                 
                 <div className="innerMain">
                     <div style={{display: 'flex'}}>
-                        {!paused ? <span className="tMusic">{(sessionStorage.getItem('current') === t_uri) ? musicBar() : null}</span> : null}
+                        {!paused && <span className="tMusic">{(sessionStorage.getItem('current') === t_uri) && musicBar()}</span>}
                         <h2>{name}</h2>
                     </div>                    
-                    <h4>{artist.map((a: any,i: number,row: any) => row.length - 1 !== i ? a.name + ", " : a.name)}</h4>                
-            
-            </div>
-            <br></br>            
+                    <h4>{artist.map((a: any,index: number,row: any) => row.length - 1 !== index ? a.name + ", " : a.name)}</h4>                            
+                </div>
+                
+                <br></br>            
             </a>
-            {show === false ? null : <div style={{display: 'flex'}}><SavedSong track={t_uri} /><span className="songLength">{timeCalc(duration)}</span></div>}
+            {show === undefined && <div style={{display: 'flex'}}><SavedSong track={t_uri} /><span className="songLength">{timeCalc(duration)}</span></div>}
       </div>
     )
 }

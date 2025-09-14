@@ -35,29 +35,29 @@ export default function Card( {id, image, name, artist, a_id,paused}: any ) {
             </a>
 
             <div>
+                <div className='mainArtistContainer' >{zip.map((s: any,i: any,row: any) =>
+                    <div className='cardArtistContainer' key={i}>
+                        <a onClick={function handleClick() {
+                            s[0] === 'Various Artists' ? null : navigate(`/app/artist/${s[1]}`)
+                        }} className='cardArtist'>{row.length - 1 !== i ? s[0] + ", " : s[0]}</a>
+                        <span hidden>{key++}</span>
+                    </div>
+                )}</div>
 
-            <div className='mainArtistContainer' >{zip.map((s: any,i: any,row: any) =>
-                <div className='cardArtistContainer' key={i}>
-                <a onClick={function handleClick() {
-                    s[0] === 'Various Artists' ? null : navigate(`/app/artist/${s[1]}`)
-                }} className='cardArtist'>{row.length - 1 !== i ? s[0] + ", " : s[0]}</a>
-                <span hidden>{key++}</span>
-                </div>
-            )}</div>
-
-            <div className='mainArtistContainer2'><b>                
-                <div className='cardArtistContainer' key={zip[1]}>
-                <a onClick={function handleClick() {
-                    zip[0][0] === 'Various Artists' ? null : navigate(`/app/artist/${zip[0][1]}`)
-                }} className='cardArtist'>{zip[0][0]}</a>
-                <span hidden>{key++}</span>
-                </div>
-            </b></div>                
-                
-            <p className='cardName'><b>{name}</b></p>
-
-            </div>
-        
+                <div className='mainArtistContainer2'>
+                    <b>                
+                        <div className='cardArtistContainer' key={zip[1]}>
+                            <a onClick={function handleClick() {
+                                zip[0][0] === 'Various Artists' ? null : navigate(`/app/artist/${zip[0][1]}`)
+                            }}className='cardArtist'>{zip[0][0]}
+                            </a>
+                            <span hidden>{key++}</span>
+                        </div>
+                    </b>
+                </div>                
+                    
+                <p className='cardName'><b>{name}</b></p>
+            </div>        
         </div>
     );
 }

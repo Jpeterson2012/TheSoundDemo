@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import './Artist.css'
+import { useState, useEffect, useContext, useMemo } from "react";
+import UsePlayerContext from '../contexts/PlayerContext.tsx';
 import Track from "../components/Track/Track";
 import Card from "../components/Card/Card";
-import './Artist.css'
 import { Spin3 } from "../components/Spin/Spin.tsx";
 import ButtonScroll from "../components/ButtonScroll/ButtonScroll.tsx";
 import { useParams } from "react-router-dom";
 
-export default function Artist({paused}: any) {
+export default function Artist() {
   var parts = window.location.href.split('/');
   var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
   var {id} = useParams()
@@ -16,38 +17,44 @@ export default function Artist({paused}: any) {
   const [artists, setArtists] = useState<any>([])
   const [artists2, setArtists2] = useState<any>([])
   const [url,setUrl] = useState(id)
+
+  const {playerState} = useContext(UsePlayerContext);
+
+  const projectTypes = useMemo(() => {
+    return  {"appears_on": "Appears On", "album": "Albums", "single": "Singles", "compilation": "Compilations"};
+  },[]);
+
   useEffect (() => {
     setUrl(id)
     lastSegment! !== id ? setArtists2([]): null
     const fetchArtist = async () => {
-        try {
-            var temp = await fetch(import.meta.env.VITE_URL + `/artists/${lastSegment}`,{credentials: "include"})
+      try {
+        var temp = await fetch(import.meta.env.VITE_URL + `/artists/${lastSegment}`,{credentials: "include"})
           .then((res) => {
             // console.log(res.json())
             return res.json();
           }).then((data) => {return data})
-            return temp
-          }
-          catch (err) {}
+        return temp
+      }
+      catch (err) {}
     }
     const assignArtists = async () => {      
       const tempArtists = await fetchArtist()
       setLoading(false)
       setArtists(tempArtists)      
-
     }
     assignArtists()    
 
     const fetchArtist2 = async () => {
       try {
-          var temp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{credentials: "include"})
-        .then((res) => {
+        var temp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{credentials: "include"})
+          .then((res) => {
           // console.log(res.json())
-          return res.json();
-        }).then((data) => {return data})
-          return temp
-        }
-        catch (err) {}
+            return res.json();
+          }).then((data) => {return data})
+        return temp
+      }
+      catch (err) {}
   }
   const assignArtists2 = async () => {
     // setLoading(true)
@@ -58,67 +65,29 @@ export default function Artist({paused}: any) {
   }
   assignArtists2()
 
-
-
-  // const fetchArtist2 = async () => {
-  //   const resp = await fetch(import.meta.env.VITE_URL + `/artists2/${lastSegment}`,{
-  //     method: 'GET',
-  //     credentials: "include",
-  //     headers: {"Content-Type":"application/json"},
-  //   })
-  //   setLoading2(false)
-  //   let reader = resp.body!.getReader()
-  //   let result
-  //   let temp
-  //   let a = []
-  //   let decoder = new TextDecoder('utf8')
-  //   while(!result?.done){
-  //     result = await reader.read()
-  //     if (!result?.done){
-  //     let chunk = decoder.decode(result.value)
-  //     // console.log(chunk ? JSON.parse(chunk) : {})
-  //     // console.log('\n')
-                   
-  //     temp = JSON.parse(chunk).albums.items,
-  //     a.push(...temp),  
-  //     // a.push(...artists2),
-  //     setArtists2([...a])
-  //     }
-    
-  //   }
-  // }
-  //   fetchArtist2()
-
-
-    // console.log(artists2)
-
-
-
- 
-    
   }, [id]);
-  var count: number = 1
-  const listTTracks = artists.tracks?.tracks.map((t: any, i:any) =>
-
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}} key={i}>
+  
+  const listTTracks = artists.tracks?.tracks.map((t: any, index:any) =>    
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',width: '100%'}} key={index}>
           
-    <p className="topTrackNum" style={{marginLeft: '16px',overflow: 'visible'}}>{count < 10 ? '0' + count : count}</p> 
-    <img src={t.album?.images.filter((t: any) => t.height == 64).map((s: any) => s.url)} style={{marginLeft: '20px',borderRadius: '10px'}} />
-    <Track 
-      uri={t.album.uri}
-      name={t.name}
-      number={t.track_number}
-      duration={t.duration_ms}
-      album_name={t.album?.name}
-      artist={t.artists}
-      t_uri={t.uri}   
-      customWidth={80}   
-      paused={paused}
-    />
-    <p hidden>{count++}</p>
+      <p className="topTrackNum" style={{marginLeft: '16px',overflow: 'visible'}}>{(index + 1) < 10 ? '0' + (index + 1) : (index + 1)}</p> 
+      <img src={t.album?.images.filter((t: any) => t.height == 64).map((s: any) => s.url)} style={{marginLeft: '20px',borderRadius: '10px'}} />
+      <Track 
+        uri={t.album.uri}
+        name={t.name}
+        number={t.track_number}
+        duration={t.duration_ms}
+        album_name={t.album?.name}
+        artist={t.artists}
+        t_uri={t.uri}   
+        customWidth={80}   
+        paused={playerState.is_paused}
+      />      
     </div>
   )
-  function displayWrap(array: any){
+  function displayWrap(filterVal: string){
+    let array = artists2.filter((a: any) => a.album_group === filterVal)
+
     const chunkedArray = [];
     for (let i = 0; i < array.length; i += 10) {
       chunkedArray.push(array.slice(i, i + 10));
@@ -144,129 +113,74 @@ export default function Artist({paused}: any) {
                 </div>
 
               </div>
-            ))
-
-            }
+            ))}
           </div>
-        ))
-        }
+        ))}
       </>
     )
   }
-  const listItems = artists2.albums?.items?.filter((a: any) => a.album_group === 'album').map((a: any, i:any) =>
-    <div className="artistLists" key={i}> 
-      <h5>{a.release_date}</h5>
-    <Card
-      // key={a.id}
-      id={a.id}
-      uri={a.uri}
-      image={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
-      name={a.name}
-      artist={a.artists.map((t: any) => t.name)}
-      a_id={a.artists.map((t: any) => t.id)}
-    />
-    </div>
-  )
-  
-  const listItems2 = artists2.albums?.items?.filter((a: any) => a.album_group === 'single').map((a: any, i:any) =>
-    <div className="artistLists" key={i}>
-      <h5>{a.release_date}</h5>
-    <Card
-      // key={a.id}
-      id={a.id}
-      uri={a.uri}
-      image={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
-      name={a.name}
-      artist={a.artists.map((t: any) => t.name)}
-      a_id={a.artists.map((t: any) => t.id)}
-    />
-    </div>
-  )
 
-  const listItems3 = artists2.albums?.items?.filter((a: any) => a.album_group === 'compilation').map((a: any, i: any) =>
-    <div className="artistLists" key={i}>
-      <h5>{a.release_date}</h5> 
-    <Card
-      // key={a.id}
-      id={a.id}
-      uri={a.uri}
-      image={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
-      name={a.name}
-      artist={a.artists.map((t: any) => t.name)}
-      a_id={a.artists.map((t: any) => t.id)}
-    />
-    </div>
-  )
-  const listItems4 = artists2.albums?.items?.filter((a: any) => a.album_group === 'appears_on').map((a: any, i:any) =>
-    <div key={i}>
-      <h5>{a.release_date}</h5> 
-    <Card
-      // key={a.id}
-      id={a.id}
-      uri={a.uri}
-      image={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
-      name={a.name}
-      artist={a.artists.map((t: any) => t.name)}
-      a_id={a.artists.map((t: any) => t.id)}
-    />
-    </div>
-  )
-  
+  function artistFilter(filterVal: string){
+    return artists2.filter((a: any) => a.album_group === filterVal).map((a: any, i:any) =>
+      <div key={i}>
+        <h5>{a.release_date}</h5> 
+        <Card
+          // key={a.id}
+          id={a.id}
+          uri={a.uri}
+          image={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
+          name={a.name}
+          artist={a.artists.map((t: any) => t.name)}
+          a_id={a.artists.map((t: any) => t.id)}
+          paused={playerState.is_paused}
+        />
+      </div>
+    )
+  }
+
+  function renderFilter(projectTypes: any){
+    return (
+      Object.keys(projectTypes).map((key: string, index: number) => 
+        <div key={index}>
+          {artistFilter(key)?.length && <p className="headers">{projectTypes[key]}</p>}
+
+          <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center'}}>
+            {window.innerWidth > 500 ? artistFilter(key) : displayWrap(key)}
+          </div>
+        </div>
+      )
+    )
+  }
+  const artist = artists.artists
 
   return (
     <div style={{width: '95vw'}}>
-    { loading ? Spin3() :
-    <div style={{marginTop: '40px',marginBottom: '80px'}}>
-      <h1>{artists.artists?.name}</h1>
-        {/* <img src={artists.artists?.images.filter(t=>t.height == 320).map(s => s.url)} /> */}
-        <img className="artistImage" src={artists.artists?.images.length == 0 ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : artists.artists?.images[1]?.url} alt={artists.artists?.name} style={{height: '320px', width: '320px',borderRadius: '10px'}} />
-        <p style={{margin: '20px auto'}} >{artists.artists?.followers.total.toLocaleString()} followers</p>
-        <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-            <p className="headers2">Genre(s):</p>
-            {artists?.artists?.genres.length > 0 ? artists.artists?.genres.map((s: any, i: any) => <p key={i}>{s}</p>) : <p>Music I guess. Idk</p>}
-        </div>
-        
-            <p className="headers">Top Tracks</p>
-            <div>
-            {listTTracks}
-            </div>
-            { loading2 ? Spin3() : (
-              <>
-            <div className="appearsOn">
-            {listItems4?.length !== 0 ? <p className="headers" >Appears On</p> : null}
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
-                {window.innerWidth > 500 ? listItems4 : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'appears_on'))}
-            </div>
-            </div>
-            
-
-            <div>
-            {listItems?.length !== 0 ? <p className="headers" >Albums</p> : null}
-            <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
-                {window.innerWidth > 500 ? listItems : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'album'))}
-            </div>
-            </div>
-            
-
-            <div >
-            {listItems2?.length !== 0 ? <p className="headers" >Singles</p> : null}
-            <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center'}}>
-                {window.innerWidth > 500 ? listItems2 : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'single'))}
-            </div>
-            </div>
-            
-            {listItems3?.length !== 0 ? <p className="headers">Compilations</p> : null}
-            <div className="artistContent" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '40px'}}>
-                {window.innerWidth > 500 ? listItems3 : displayWrap(artists2.albums?.items?.filter((a: any) => a.album_group === 'compilation'))}
-            </div>
-            </>
-              )}
-            
+      {loading ? Spin3() :
+        <div style={{marginTop: '40px',marginBottom: '80px'}}>
+          <h1>{artist?.name}</h1>
           
-            <ButtonScroll />
-    </div>
-    
-    }
+          <img className="artistImage" src={!artist?.images.length 
+            ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' 
+            : artist?.images[1]?.url} alt={artist?.name} style={{height: '320px', width: '320px',borderRadius: '10px'}} />
+
+          <p style={{margin: '20px auto'}} >{artist?.followers.total.toLocaleString()} followers</p>
+
+          <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
+            <p className="headers2">Genre(s):</p>
+            {artist?.genres.length ? artist?.genres.map((s: any, i: any) => <p key={i}>{s}</p>) : <p>Music I guess. Idk</p>}
+          </div>
+            
+          <p className="headers">Top Tracks</p>
+
+          <div>
+            {listTTracks}
+          </div>
+
+          { loading2 ? Spin3() : renderFilter(projectTypes)}
+
+          <ButtonScroll />
+        </div>      
+      }
     </div>
   )
 }

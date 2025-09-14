@@ -1,11 +1,11 @@
 //session storage c_icon, c_name variable created here; use for categories playlist click
-
-import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-import Card from "../components/Card/Card";
 import './Discover.css'
-import ButtonScroll from "../components/ButtonScroll/ButtonScroll";
+import { useState, useEffect, useContext } from "react";
+import { UsePlayerContext } from '../contexts/PlayerContext.tsx';
+import { useNavigate } from 'react-router-dom';
 import { Spin3 } from "../components/Spin/Spin";
+import Card from "../components/Card/Card";
+import ButtonScroll from "../components/ButtonScroll/ButtonScroll";
 
 function customRender(name: any, item: any){
     return (
@@ -20,8 +20,7 @@ function customRender(name: any, item: any){
             }}>
                 {item}
             </div>
-        </>
-        
+        </>        
     )
 }
 
@@ -29,23 +28,21 @@ export default function Discover() {
     const navigate = useNavigate()
 
     const [releases, setReleases] = useState<any>([])
-    const [categories, setCategories] = useState([])
-    // const [fplaylists, setFplaylists] = useState<any>([])
+    const [categories, setCategories] = useState([])    
     const [albums, setAlbums] = useState([])
     const [loading, setLoading] = useState(true)    
 
+    const {playerState} = useContext(UsePlayerContext);
+
     useEffect (() => {        
-        const rel = sessionStorage.getItem("releases")
-        const cat = sessionStorage.getItem("categories")
-        const fplay = sessionStorage.getItem("fplaylists")
-        if (rel && cat && fplay){
-            setReleases(JSON.parse(rel));
-            setCategories(JSON.parse(cat))
-            console.log(JSON.parse(cat))
-            // setFplaylists(JSON.parse(fplay))
+        const rel = JSON.parse(sessionStorage.getItem("releases")!)
+        const cat = JSON.parse(sessionStorage.getItem("categories")!)
+        if (rel && cat){            
+            setReleases(rel);
+            setCategories(cat.categories)
+            setAlbums(cat.hipster)            
             setLoading(false)
         }
-
         else {
             const fetchCategories = async () => {
                 const resp = await fetch(import.meta.env.VITE_URL + '/categories', {credentials: "include"})
@@ -61,59 +58,52 @@ export default function Discover() {
             const fetchDiscover = async () => {
                 try {
                     var temp = await fetch(import.meta.env.VITE_URL + '/discover', {credentials: "include"})
-                .then((res) => {
-                    return res.json();
-                }).then((data) => {return data})
-                    return temp
+                        .then((res) => {
+                            return res.json();
+                        }).then((data) => {return data})
+                            return temp
                 }
                 catch (err) {}
             }
             const assignDiscover = async () => {
-            const tempDiscover = await fetchDiscover()
-            setReleases(tempDiscover.releases)
-            // setFplaylists(tempDiscover.fplaylists)
-                
-            sessionStorage.setItem("releases", JSON.stringify(tempDiscover.releases))
-            // sessionStorage.setItem("fplaylists", JSON.stringify(tempDiscover.fplaylists))
-            
+                const tempDiscover = await fetchDiscover()
+                setReleases(tempDiscover.releases)                                    
+                sessionStorage.setItem("releases", JSON.stringify(tempDiscover.releases))                        
             }
             assignDiscover()
         }
 
     }, []);
 
-    const listAlbums = albums?.map((a:any, i:any) =>
-        <a key={i} onClick={function handleClick() {
+    const listAlbums = albums?.map((album:any, index:any) =>
+        <a key={index} onClick={function handleClick() {
             sessionStorage.setItem("albumStatus", "notuser")
-            sessionStorage.setItem("image", a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url))
-            let temp = a.artists.map((a:any) => a.name)
+            sessionStorage.setItem("image", album.images.filter((t: any)=>t.height == 300).map((s: any) => s.url))
+
+            let temp = album.artists.map((a:any) => a.name)
             sessionStorage.setItem("artist", JSON.stringify(temp))
-            temp = a.artists.map((b:any) => b.id)
+
+            temp = album.artists.map((b:any) => b.id)
             sessionStorage.setItem("artist_id", JSON.stringify(temp))
-            navigate(`/app/album/${a.album_id}`)        
-            
+            navigate(`/app/album/${album.album_id}`)                    
         }}>
             <div className="categoryContainer" style={{width: '200px',height: '305px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-
-                <img className="fade-in-image" src={a.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)} alt="Avatar" style={{width:'80%',height:'190px',borderRadius: '10px'}}/>
-                <h4 className="discoverCHeader"><b>{a.name}</b></h4>
-                
+                <img className="fade-in-image" src={album.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)} alt="Avatar" style={{width:'80%',height:'190px',borderRadius: '10px'}}/>
+                <h4 className="discoverCHeader"><b>{album.name}</b></h4>                
             </div>
         </a>
     )
 
-    const listCategories = categories?.map((a: any, i: any) =>
-        <a key={i} onClick={function handleClick() {
+    const listCategories = categories?.map((a: any, index: any) =>
+        <a key={index} onClick={function handleClick() {
             sessionStorage.setItem("c_icon", a.icons.map((s: any) => s.url))
             sessionStorage.setItem("c_name", a.name)
             navigate(`/app/categories/${a.name.toLowerCase().replaceAll(' ','').replace('-','').replace('&','and')}`)        
             
         }}>
             <div className="categoryContainer" style={{width: '200px',height: '305px', marginBottom: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-
                 <img className="fade-in-image" src={a.icons.map((s: any) => s.url)} alt="Avatar" style={{width:'80%',height:'190px',borderRadius: '10px'}}/>
-                <h4 style={{marginTop: '200px'}} ><b>{a.name}</b></h4>
-                
+                <h4 style={{marginTop: '200px'}} ><b>{a.name}</b></h4>                
             </div>
         </a>
         
@@ -128,83 +118,58 @@ export default function Discover() {
           name={a.name}
           artist={a.artists.map((t: any) => t.name)}
           a_id={a.artists.map((t: any) => t.id)}
+          paused={playerState.is_paused}
         />
-      )
-      function displayWrap(){
+    )
+    function displayWrap(){
         if (releases.albums){
-        let array = releases.albums?.items
-        const chunkedArray = [];
-        for (let i = 0; i < array.length; i += 10) {
-          chunkedArray.push(array.slice(i, i + 10));
-        }
-        return (
-          <>
-          <h2 style={{margin: '25px auto'}} >New Releases</h2>
-            {chunkedArray.map((row, rowIndex) => (
-              <div key={rowIndex} className="row">
-                {row.map((item: any, itemIndex: any) => (
-                  <div key={itemIndex} className="item">
-                                              
-                      <Card
-                        // key={a.id}
-                        id={item.id}
-                        uri={item.uri}
-                        image={item.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
-                        name={item.name}
-                        artist={item.artists.map((t: any) => t.name)}
-                        a_id={item.artists.map((t: any) => t.id)}
-                      />
-                    
-    
-                  </div>
-                ))
-    
-                }
-              </div>
-            ))
+            let array = releases?.albums?.items
+            const chunkedArray = [];
+            for (let i = 0; i < array.length; i += 10) {
+                chunkedArray.push(array.slice(i, i + 10));
             }
-          </>
-        )
+            return (
+                <>
+                    <h2 style={{margin: '25px auto'}} >New Releases</h2>
+                    {chunkedArray.map((row, rowIndex) => (
+                        <div key={rowIndex} className="row">
+                            {row.map((item: any, itemIndex: any) => (
+                                <div key={itemIndex} className="item">                                                            
+                                    <Card
+                                    // key={a.id}
+                                    id={item.id}
+                                    uri={item.uri}
+                                    image={item.images.filter((t: any)=>t.height == 300).map((s: any) => s.url)}
+                                    name={item.name}
+                                    artist={item.artists.map((t: any) => t.name)}
+                                    a_id={item.artists.map((t: any) => t.id)}
+                                    />                                
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </>
+            )
+        }
     }
-      }
-    // const listPlaylists = fplaylists.playlists?.items.map((a: any, i: any) =>
-    //     <a key={i} onClick={function handleClick() {
-    //         sessionStorage.setItem("p_image", a.images.map((s: any) => s.url))
-    //         sessionStorage.setItem("playlist_name", a.name)
-    //         navigate(`/app/playlist/${a.id}`)
-    //     }}>
-    //         <div className="card" style={{width: '200px',height: '285px', marginBottom: '50px', background: a.primary_color}}>
-
-    //             <img src={a.images.map((s: any) => s.url)} alt="Avatar" style={{width:'80%',height:'190px'}}/>
-    //             <div className="container">
-    //                 <h4><b>{a.name}</b></h4>
-    //                 <p><b>{a.description}</b></p>
-    //             </div>
-
-    //         </div>
-    //     </a>
-    // )
-
-
+    
     return (
         <>        
         { loading ? Spin3() :        
-        <div className="discoverContainer" style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw', paddingBottom: '200px'}}>   
-            {/* {customRender("Check These Out", listAlbums)}  */}
-            <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >Check These Out</h2>
-            <div className="scroll-container" >
-                <div className="carousel-primary" >
-                {listAlbums}
-                {listAlbums}
-                </div>                                                         
+            <div className="discoverContainer" style={{width: '90vw', position: 'absolute', left: '5vw', top: '9vw', paddingBottom: '200px'}}>                   
+                <h2 style={{marginLeft: 'auto', marginRight: 'auto'}} >Check These Out</h2>
+                <div className="scroll-container" >
+                    <div className="carousel-primary">
+                        {listAlbums}
+                        {listAlbums}
+                    </div>                                                         
+                </div>
+                
+                {customRender("Categories", listCategories)}
+                {window.innerWidth > 500 ? customRender("New Releases", listReleases) : displayWrap()}                
+                <ButtonScroll />      
             </div>
-            
-            {customRender("Categories", listCategories)}
-            {window.innerWidth > 500 ? customRender("New Releases", listReleases) : displayWrap()}
-            {/* {customRender("Popular Playlists", listPlaylists)}   */}
-            <ButtonScroll />      
-        </div>
-         }         
+        }         
         </>
     )
 }

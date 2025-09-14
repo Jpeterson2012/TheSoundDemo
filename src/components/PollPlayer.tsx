@@ -1,58 +1,40 @@
 //Session storage var progress created here, used in SeekBar
-import { useEffect,useRef } from "react";
+import { useInterval } from "../hooks/useInterval.ts";
+import { useContext } from "react";
+import UsePlayerContext from "../contexts/PlayerContext.tsx";
 
-function useInterval(callback: any, delay: any){
-    const savedCallback: any = useRef();
-   
-    // Remember the latest callback.
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-   
-    // Set up the interval.
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
+export default function PollPlayer({setCurrentDev,currentDev}: any){
+  const {setPlayerState} = useContext(UsePlayerContext);
+
+  useInterval(() => {                
+    const poll = async () => {      
+      const resp = await fetch(import.meta.env.VITE_URL + '/player',{credentials: "include"})
+      const data = await resp.json()
+      if (currentDev.name !== data.device.name) {
+        if (data.device.name === "TheSound") {
+          setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})
+          sessionStorage.setItem("currentContext", "null")
+        }
+        else {
+          setCurrentDev({name: data.device.name, id: data.device.id})   
+          sessionStorage.setItem("currentContext", data.device.id)          
+        }           
       }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
+      if(currentDev.name !== "TheSound"){
+          setPlayerState({current_track: data.item, is_paused: !data.is_playing, duration: data.item.duration_ms})
 
-export default function PollPlayer({setCurrentDev,currentDev,setTrack,duration,paused}: any){
+          sessionStorage.setItem("name", data.item.album.name)
+          sessionStorage.setItem("current", data.item.uri)
+          sessionStorage.setItem("currentTrack",JSON.stringify(data.item))            
+          sessionStorage.setItem("progress",data.progress_ms)
 
-    useInterval(() => {            
-        const poll = async () => {
-            const resp = await fetch(import.meta.env.VITE_URL + '/player',{credentials: "include"})
-            const data = await resp.json()
-            if (currentDev.name !== data.device.name) {
-              if (data.device.name === "TheSound"){
-                setCurrentDev({name: "TheSound", id: sessionStorage.getItem("device_id"!)})
-                sessionStorage.setItem("currentContext", "null")
-              }
-              else {
-                setCurrentDev({name: data.device.name, id: data.device.id})         
-                sessionStorage.setItem("currentContext", data.device.id)  
-              }   
-            }
-            if (data.is_playing === false) paused(true)
-            else paused(false)
-            setTrack(data.item)
-            duration(data.item.duration_ms)
-            sessionStorage.setItem("name", data.item.album.name)
-            sessionStorage.setItem("current", data.item.uri)
-            sessionStorage.setItem("currentTrack",JSON.stringify(data.item))
-            sessionStorage.setItem("progress",data.progress_ms)
-                        
-        } 
-        //Checks if current device is The Sound. If not uses spotify api to get current track
-        (sessionStorage.getItem("currentContext") === null || sessionStorage.getItem("currentContext") === "null") ? null :  poll()
+          console.log('hi')
+      }                                  
+    } 
+    //Checks if current device is The Sound. If not uses spotify api to get current track
+    poll()
 
-    },3000)
-    return(
-        <>
-        </>
-    )
+  },(sessionStorage.getItem("currentContext") && sessionStorage.getItem("currentContext") !== "null") ? 3000 : 5000)
+  
+  return <></>;
 }
