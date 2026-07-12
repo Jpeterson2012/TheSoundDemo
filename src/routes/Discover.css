@@ -1,41 +1,5 @@
-.fade-in-image{
+.fade-in-image, .iconImage{
     animation: fadeIn 0.5s;
-}
-@keyframes fadeIn {
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
-}
-
-
-@media only screen and (max-width: 768px){
-    .discoverContainer{
-        top: 15vh !important;
-    }
-    .categoryContainer{
-        width: fit-content !important;
-        /* height: fit-content !important; */
-        height: 110px !important;
-        margin-bottom: 0px !important;
-    }
-    .categoryContainer h4{
-        margin-top: 90px !important;
-        font-size: 10px;
-    }
-    .categoryContainer .fade-in-image{
-        height: 90px !important;
-        width: 90px !important;
-    }
-    .scroll-container, .carousel-primary, .categoryContainer{
-        height: 120px;
-    }
-    .discoverCHeader{
-        max-width: 85px;
-    }
-    
 }
 
 .scroll-container{
@@ -49,6 +13,7 @@
     mask: linear-gradient(90deg, transparent, white 20% 80%, transparent);
     
 }
+
 .carousel-primary{
     /* top: 26%; */
     /* left: 100%; */
@@ -60,42 +25,62 @@
     
     white-space: nowrap;
 }
-@media (hover:hover){
+
+.discoverCHeader{
+    margin-top: 200px;
+    max-width: 150px;
+    color: white;
+}
+
+.categoryContainer {
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
     .carousel-primary:hover{
         -webkit-animation-play-state: paused;
         -moz-animation-play-state: paused;
         -o-animation-play-state: paused;
         animation-play-state: paused;
     }
+
+    .categoryContainer:hover {
+        transform: scale(1.07);
+    }
 }
 
-@keyframes scroll-horizontal{
-    0% {
-        left: 100%;
+@media only screen and (max-width: 768px) {
+    .discoverContainer {
+        top: 15vh !important;
     }
-    100% {
-        left: -100%;
-    }
-}
-.discoverCHeader{
-    margin-top: 200px;
-    max-width: 150px;
-}
 
-@keyframes scrollText {
-    from {
-      transform: translateX(0%);
+    .categoryContainer {
+        width: fit-content !important;
+        /* height: fit-content !important; */
+        height: 110px !important;
+        margin-bottom: 0px !important;
     }
-    to {
-      transform: translateX(-50%);
-    }
-  }
 
-@media only screen and (max-width: 768px){
-    .scroll-container, .carousel-primary, .categoryContainer{
+    .categoryContainer h4 {
+        margin-top: 90px !important;
+        font-size: 10px;
+    }
+
+    .categoryContainer .fade-in-image {
+        height: 90px !important;
+        width: 90px !important;
+    }
+
+    .scroll-container, .carousel-primary, .categoryContainer {
         height: 120px;
     }
-    .discoverCHeader{
+    
+    .discoverCHeader {
         max-width: 85px;
+    }
+
+    .iconImage {
+        height: 125px !important;
+        width: 90px !important;
     }
 }

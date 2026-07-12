@@ -1,5 +1,6 @@
 .fade-in-image, .fade-in-image2{
   animation: fadeIn 0.5s;
+  border-radius: 10px;
 }
 .row{
   display: flex;
@@ -10,53 +11,20 @@
 .homeButtons{
   animation: fadeIn 0.5s;
   position: relative;
-  border-radius: 10px;
+  border-radius: 0px;
   color: black;
   font-weight: bolder;
   padding: 10px 13px;
-  background: #7a19e9;
+  /* background: #7a19e9; */
   outline: 0 !important;
 }
-@keyframes pulse {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(238, 238, 238, 0.7);
-    }
 
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-    }
-
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    }
-}
 .pulseClass{
   box-shadow: 0 0 0 0 rgb(255, 255, 255);
     transform: scale(1);
     animation: pulse 2s infinite;
 }
-@keyframes fadeIn {
-  0%{
-      opacity: 0;
-  }
-  100%{
-      opacity: 1;
-  }
-}
-.dropbtn {
-  background-color: rgb(90, 210, 216);
-  color: black;
-  /* padding: 16px; */
-  font-size: 16px;
-  border: none;
-  position: relative;
-  /* left: 200px; */
-  animation: fadeIn 0.5s;
-  
-}
+
 .theme{
   height: 40px;
   width: 65px;
@@ -64,30 +32,14 @@
   font-size: 12px;
   background-color: rgb(90, 210, 216);
   color: black;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  /* left: 200px; */
-  background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
-  min-width: 10px;
-  width: 80px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  border-radius: 16px;
-  z-index: 2;
+  border-radius: 10px;
 }
 
 .removeAlbum{
   display: none;
-  position: relative;
-  left: -30px;
+  position: absolute;
+  top: 0;
+  left: 0;
   /* bottom: 15px; */
   color: black;
   background: rgb(90, 210, 216);
@@ -100,11 +52,11 @@
 }
 .removePlay{
   display: none;
-  position: relative;
-  /* left: 200px; */
-  /* bottom: 15px; */
-  margin-top: 20px;
-  margin-left: -110px;
+  position: absolute;
+  top: 0;
+  left: -100px;
+  /* margin-top: 20px; */
+  /* margin-left: -110px; */
   color: black;
   background: rgb(90, 210, 216);
   font-size: 13px;
@@ -115,31 +67,19 @@
   z-index: 2;
 }
 
-/* Links inside the dropdown */
-/* .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-} */
-
-/* Change color of dropdown links on hover */
-.dropdown-content, a:hover {background-color: #ddd;}
+.recents {
+  transition: transform 0.3s ease;
+}
 
 /* Show the dropdown menu on hover */
 @media (hover:hover){
   .removePContainer:hover .removePlay {display: block;}
+
   .removeContainer:hover .removeAlbum {display: block;}
-}
-/* .dropdown:hover .dropdown-content {display: block;} */
 
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #7a19e9;}
-
-.homeContainer{
-  /* margin-top: 40px; */
-  /* margin-bottom: 25vw; */
+  .recents:hover {
+    transform: scale(1.05);
+  }
 }
 
 .addPlaylist{
@@ -151,8 +91,8 @@
   height: 35px; 
   width: 35px;
   font-size: 30px;
-  position: absolute;
-  left: 37vw;  
+  /* position: absolute;
+  left: 37vw;   */
   line-height: 28px;  
   padding: 3px 5px;     
   transform: scale(1);
@@ -207,25 +147,8 @@ form{
   background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
 }
 
-@keyframes pulse3 {
-  0% {
-      transform: scale(0.95);
-      box-shadow: 0 0 0 0 rgba(238, 238, 238, 0.7);
-  }
 
-  70% {
-      transform: scale(1);
-      box-shadow: 0 0 0 10px rgb(90, 210, 216);
-  }
-
-  100% {
-      transform: scale(0.95);
-      box-shadow: 0 0 0 0 rgb(90, 210, 216);
-  }
-}
-.homeContainer{
-  position: absolute;
-  top: 8vw; right: 40vw;
+.homeContainer{  
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -247,7 +170,7 @@ form{
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding-top: 10vw;
+  padding-top: 50px;
   margin-bottom: 90px;
 }
 .likedSongImg{
@@ -271,7 +194,8 @@ form{
 
 @media(min-height: 1000px){
   .homeContainer{
-    margin-top: 0px;
+    margin-top: -50px;
+    right: 40vw;
   }
   .removePlay{
     /* left: 24vw; */
@@ -307,37 +231,28 @@ form{
     width: fit-content;
     height: fit-content;
     font-size: 15px;
-    margin-left: 30px;    
-    border-radius: 3px;
-    padding: 3px 3px;
+    margin-left: 40px;    
+    /* border-radius: 3px; */
+    padding: 3px 6px;
   }
   .removeImg{
     height: 30px;
     width: 30px;
   }
-  .homeContainer{
-    /* max-width: 350px; */
-    margin-top: 60px;
-    right: 5vw;        
-    flex-direction: column;
-  }
+
   #filterTrack{
-    /* margin-bottom: 10px; */
-    /* margin-right: 100px;     */
+    justify-self: center;
+    width: 70vw !important;
   }
-  .buttonContainer{
-    width: 90vw;
-    /* overflow-x: auto; */
+  .buttonContainer{        
     white-space: nowrap;
-    top: 20vh;
-    /* left: 10vw; */
-    margin-left: 10%;
+    top: 20vh;    
+    margin-left: 2px;
   }
   .homeButtons{
     width: fit-content;
-    padding: 10px 5px;
-    font-size: 12px;
-    /* overflow: hidden;     */
+    padding: 10px 8.5px;
+    font-size: 12px;    
   }
   .albumContainer{
     top: 580px;
@@ -354,15 +269,10 @@ form{
     max-width: 100px;
   }
   .playlistContainer{
-    margin-top: 90px;
+    margin-top: 0px;
     margin-bottom: 200px;
   }
-  .filterHome button{
-    margin-right: 10vw;
-  }
-  .addPlaylist{
-    margin-top: 60px;
-  }
+  
   .fade-in-image,.fade-in-image2{
     height: 150px !important;
     width: 150px !important;
@@ -382,8 +292,8 @@ form{
   }
   #modal4{
     max-height: 90vh !important;
-      max-width: 90vw !important;
-      min-width: 90vw !important;
+    max-width: 90vw !important;
+    min-width: 90vw !important;
   }
   .theme{
     height: 30px;
@@ -391,13 +301,5 @@ form{
     font-size: 9px;
     margin: 2px;
     padding: 5px 0px;
-  }  
-  #dropdown-content{
-    position: absolute;
-    top: 40px;
-    left: 0;
-    min-width: 10px;
-    width: 80px;
-    
   }
 }

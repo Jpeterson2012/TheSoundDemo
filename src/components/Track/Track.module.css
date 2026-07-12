@@ -1,0 +1,84 @@
+.innerMain{
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  text-align: left;
+  color: rgb(90, 210, 216);
+}
+
+.innerMainName {
+  margin: 0px;
+  padding: 0px;
+  font-size: 20px;  
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #7b1ce7;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+h4{
+  position: static;
+  margin: 0;
+  /* max-width: 700px; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.songLength {
+  font-weight: bold;
+  color: rgb(90, 210, 216);
+}
+  
+.trackContainer{
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;  
+  align-items: center;
+  margin-bottom: 20px;
+  /* border-bottom: 1px solid rgba(90, 210, 216, 0.3); */
+}
+
+.trackContainer > a {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .innerMainName:hover {
+    color: rgb(90, 210, 216);
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .innerMain, h2, .songLength{
+    font-size: 15px;
+  }
+  .trackContainer{
+    width: 100%;
+  } 
+  .innerMain h2, .innerMain h4{
+    max-width: 51vw;
+
+    -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+  }
+
+  .innerMainName {
+    font-size: 15px;
+  }
+}

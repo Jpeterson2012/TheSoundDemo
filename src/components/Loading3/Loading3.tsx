@@ -13,5 +13,5 @@ export default function Loading3() {
                 <div className="ttnoot-4">&#9834;</div>                
             </div>            
         </div>
-    )
-}
+    );
+};

@@ -1,37 +1,30 @@
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    width: 200px;
-    height: 285px;
-    margin-bottom: 50px;
-    /* background-color: #212351; */
-    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);  
-    border-radius: 10px;
-    z-index: 1;
-    position: relative;
-    animation: fadeIn 0.5s;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 200px;
+  height: 285px;
+  margin-bottom: 50px;
+  /* background-color: #212351; */
+  background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);  
+  border-radius: 10px;
+  z-index: 1;
+  position: relative;
+  animation: fadeIn 0.5s;
+  font-size: 17px;
+  color: rgb(90, 210, 216);
+}
 
-    font-size: 17px;
-    color: rgb(90, 210, 216);
-    /* text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden; */
-    
-    /* display: flex;
-    flex-direction: column; */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 
-    
-  }
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
 a {
   cursor: pointer;
 }
-a:hover{
-  color: black
-}
 
+.cardArtistContainer .cardArtist:hover {
+  color: black;
+}
 
 .cardImg {
   border-radius: 10px;
@@ -42,23 +35,14 @@ a:hover{
 .cardName{
   width: 100%;
 }
+
 p {
   color: rgb(90, 210, 216);
   font-size: 17px;
   white-space: nowrap;
   overflow-x: auto;
-  /* text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;  */
 } 
-@keyframes fadeIn {
-  0%{
-      opacity: 0;
-  }
-  100%{
-      opacity: 1;
-  }
-}
+
 .cardArtist{
   color: rgb(90, 210, 216);
   font-weight: bold;
@@ -66,50 +50,39 @@ p {
   overflow-x: auto;  
   
 }
-.mainArtistContainer2{
-  display: none;
-}
-.mainArtistContainer{  
-  
-  display: flex;      
-  overflow-x: auto;
 
+.mainArtistContainer{      
+  overflow-x: auto;
 }
 
 .cardArtistContainer{
+  display: inline;
   margin: auto;
 }
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: scale(1.05);
+  }
+}
+
 @media only screen and (max-width: 768px),
 (max-height: 400px){
   .card{
-    width: 165px;
-    height: 250px;        
-    font-size: 15px;
+    width: 115px;
+    height: 190px;        
+    font-size: 13px;
   }
-  /* .cardArtist{        
-  }
-  .cardImg{
-    position:absolute;
-    height: auto;
-    width: 65px;
-        
-    top: 0;    
-    left: 0;
-  }
-  .cardName{        
-    width: 170px;
-    margin-left: 110px;      
-  }
-  .cardArtistContainer{           
-    margin-left: 100px;
-    overflow: hidden;
-  }
-  .mainArtistContainer{
-    display: none;
-  }
-  .mainArtistContainer2{
-    display: block;
-    margin-top: 15px;
-  } */
 
+  .cardImg {
+    height: 130px;
+  }
+
+  .cardName {
+    font-size: 13px;
+  }
 }

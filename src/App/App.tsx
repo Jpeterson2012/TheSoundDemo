@@ -5,15 +5,13 @@ import ErrorPage from '../error-page.tsx'
 import Login from '../routes/Login.tsx'
 import WebPlayback from '../components/WebPlayback/WebPlayback.tsx'
 import LoadingPage from '../routes/LoadingPage.tsx';
-import ProtectedRoute from './ProtectedRoute.tsx';
-import AuthRedirect from './AuthRedirect.tsx';
 
 declare global {
   interface Window{
     onSpotifyWebPlaybackSDKReady: any;
     Spotify: any;
   }
-}
+};
 
 export default function App() {         
 
@@ -21,27 +19,9 @@ export default function App() {
         <Router>
             <ScrollToTop />
             <Routes>
-              {/* <Route path='/' element={<Login />} errorElement={<ErrorPage />} /> */}
-              <Route
-                  path="/"
-                  element={
-                    <AuthRedirect>
-                      <Login />
-                    </AuthRedirect>
-                  }
-                  errorElement={<ErrorPage />}
-                />
-                            
+              <Route path='/' element={<Login />} errorElement={<ErrorPage />} />              
               <Route path = '/loading' element={<LoadingPage />} />
-              {/* <Route path='/app/*' element={loggedIn ? <WebPlayback /> : <Navigate to = "/" replace />} /> */}
-               <Route
-                  path="/app/*"
-                  element={
-                    <ProtectedRoute>
-                      <WebPlayback />
-                    </ProtectedRoute>
-                  }
-                />
+              <Route path='/app/*' element={<WebPlayback />} />
 
               <Route path='*' element={<Navigate to = "/" replace />}/>
             </Routes>

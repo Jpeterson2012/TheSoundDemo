@@ -1,0 +1,221 @@
+.mainLogo{
+  display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  justify-content: centr;
+  align-items: center;
+  width: 98vw;  
+  position: absolute;
+  top: 15px;
+  left: 0;
+}
+
+.userName, .navIcon1, .searchimg, .navIcon2, .logoIcon {
+    transition: transform 0.15s ease;
+}
+
+.userName:hover, .navIcon1:hover, .searchimg:hover, .navIcon2:hover, .logoIcon:hover {
+  transform: scale(1.07);
+}
+
+.userName:active, .navIcon1:active, .searchimg,:active .navIcon2:active, .logoIcon:active {
+  transform: scale(0.99);
+}
+
+.userName, .navIcon1, .navIcon2, .Discover {    
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.searchimg{
+  cursor: pointer;
+  width: 70px;
+  height: 70px;   
+  width: fit-content;
+  justify-self: center;
+ 
+}
+
+.Discover{ 
+  cursor: pointer;
+}
+
+.logoIcon{    
+  width: 80px;
+  height: 80px;
+}
+
+.search {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #7a19e9;
+  border-right: none;
+  padding: 5px;
+  height: 25px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+  background: black;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 41px;
+  border: 1px solid #7a19e9;
+  background: #7a19e9;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrap{
+  z-index: 9;
+  width: 400px;
+  position: absolute;
+  /*top: 10%;
+  left: 50%; */
+  margin-top: 2%;
+  margin-left: 50%;
+  margin-right: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.fade-in-image{
+  animation: fadeIn 0.5s;
+}
+
+.recents {
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .recents:hover {
+      transform: scale(1.07);
+  }
+}
+
+@media(min-height: 1000px){
+  
+}
+@media only screen and (max-height: 400px){
+  .mainLogo{
+    /* top: 0; */
+    
+  }
+  .userName{
+    width: 20px;
+    overflow: none;
+    display: none;
+  }
+  .navIcon1,.navIcon2{
+    display: none;
+  }
+  
+  .searchimg{
+    width: 55px;
+    height: 55px;
+    right: 43vw;
+    top: -1.9vh;
+  }
+  .Discover{
+    font-size: 20px;
+    right: 25vw;
+  }
+  .logoIcon{
+    width: 60px;
+    height: 60px;
+    top: -20px;
+  }
+
+  .wrap{
+    width: 100%;
+    margin-top: 85px;
+  }
+  .searchTerm{
+    width: 100%;    
+  }
+  #modalbuttons{
+    margin-top: 37vh !important;
+  }
+  .fade-in-image img{
+    height: 50px;
+    width: 50px;
+  }
+  .fade-in-image{
+    font-size: 15px !important;    
+    max-height: fit-content !important;    
+    flex-wrap: nowrap !important;
+  }
+  .logoModal{
+    max-width: 85vw !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+}
+@media only screen and (max-width: 768px){
+  .mainLogo{
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .navIcon1,.navIcon2{
+    display: none;
+  }
+  
+  .searchimg{
+    width: 55px;
+    height: 55px;
+    right: 43vw;
+    top: -1.9vh;
+  }
+  .Discover{
+    font-size: 20px;
+    right: 25vw;
+  }
+  .logoIcon{
+    width: 60px;
+    height: 60px;
+    top: -20px;
+  }
+
+  .wrap{
+    width: 100%;
+    margin-top: 85px;
+  }
+  #searchTerm{
+    width: 100%;    
+  }
+  #modalbuttons{
+    margin-top: 15vh !important;
+  }
+  .fade-in-image img{
+    height: 50px;
+    width: 50px;
+  }
+  .fade-in-image{
+    font-size: 15px !important;    
+    max-height: fit-content !important;    
+    flex-wrap: nowrap !important;
+  }
+  .logoModal{
+    max-width: 85vw !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+}

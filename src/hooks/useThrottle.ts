@@ -26,4 +26,4 @@ function debounce<T extends Function>(func: T, delay: number): (...args: any[]) 
   };
 }
 
-export {throttle, debounce}
+export {throttle, debounce};

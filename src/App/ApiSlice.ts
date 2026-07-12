@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { BASE_URL } from '../utils/utils'
 // import { createSelector } from '@reduxjs/toolkit'
 // import { RootState } from './store'
 
@@ -22,7 +23,8 @@ interface Albums {
         total: number
     }
     copyrights: any[]
-    label_name: string
+    label_name: string,
+    date_added: string
 }
 interface Playlists {
     playlist_id: string
@@ -38,7 +40,8 @@ interface pTrack {
     name: string
     track_number: number
     duration_ms: string
-    artists: []
+    artists: [],
+    date_added: string
 }
 interface Liked {
     tracks: any[]
@@ -49,10 +52,12 @@ interface likedSong{
     artists: []
     duration_ms: string
     uri: string
-    name: string    
+    name: string,
+    date_added: string
 }
 interface User {
-    items: string
+    id: number;
+    name: string;
 }
 interface Devices {
     id: string
@@ -74,12 +79,12 @@ export type { Playlists, Albums, Devices }
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_URL }),
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     keepUnusedDataFor: 60 * 60,
     endpoints: builder => ({
         getAlbums: builder.query<Albums[], void>({
             query: () => ({
-                url: '/homepage2/albums',
+                url: '/homepage/albums',
                 credentials: "include"
             })
         }),
@@ -98,10 +103,14 @@ export const apiSlice = createApi({
                     })
                 )
                 try {
-                    await lifecycleApi.queryFulfilled
+                    console.log("success");
+
+                    await lifecycleApi.queryFulfilled;
                 }
-                catch{
-                    getAlbumPatchResult.undo()
+                catch {
+                    console.log("fail");
+                    
+                    getAlbumPatchResult.undo();
                 }
             }
         }),
@@ -130,13 +139,13 @@ export const apiSlice = createApi({
         }),
         getPlaylists: builder.query<Playlists[], void>({
             query: () => ({
-                url: '/homepage2/playlists',
+                url: '/homepage/playlists',
                 credentials: "include",
             })
         }),
         getPlaylist: builder.query<Playlists, string>({
             query: playId => ({
-                url: `/homepage2/playlists/${playId}`,
+                url: `/homepage/playlists/${playId}`,
                 credentials: "include",
             })
         }),
@@ -163,7 +172,38 @@ export const apiSlice = createApi({
                 }
             }
         }),
-        deletePlaylist: builder.mutation<Playlists,{pID: any}>({
+        bulkEditPTracks: builder.mutation<void, {pUpdates: any}>({
+            query: ({pUpdates}) => ({
+                url: '/update/playlist/bulk',
+                method: 'POST',
+                credentials: "include",
+                body: {pUpdates}
+            }),
+            async onQueryStarted({pUpdates}, lifecycleApi) {
+                const getPBulkPatchResult = lifecycleApi.dispatch(
+                    apiSlice.util.updateQueryData('getPlaylists', undefined, draft => {                        
+                        pUpdates.updates.map((up: any) => {
+                            const temp = draft.find(p => p.playlist_id === up.pID);
+
+                            if (temp) {
+                                if (up.status.includes("add")) {
+                                    temp.tracks.push(up.initialP);
+                                } else {
+                                    temp.tracks = temp.tracks.filter(a => a.uri !== pUpdates.trackUri);
+                                }
+                            }
+                        });
+                    })
+                );
+                try {
+                    await lifecycleApi.queryFulfilled;
+                } catch(e) {
+                    console.log("RTK ERROR:", e);
+                    getPBulkPatchResult.undo();
+                }
+            }
+        }),
+        deletePlaylist: builder.mutation<void,{pID: any}>({
             query: ({pID}) => ({
                 url: '/update/playlist',
                 method: 'DELETE',
@@ -188,7 +228,7 @@ export const apiSlice = createApi({
         }),
         getLiked: builder.query<Liked, void>({
             query: () => ({
-                url: '/homepage2/liked',
+                url: '/homepage/liked',
                 credentials: "include",
             })
         }),
@@ -275,18 +315,18 @@ export const apiSlice = createApi({
         }),
         getPodcasts: builder.query<Podcasts, void>({
             query: () => ({
-                url: '/homepage2/podcasts',
+                url: '/homepage/podcasts',
                 credentials: "include",
             })
         }),
         getAudiobooks: builder.query<Audiobooks, void>({
             query: () => ({
-                url: '/homepage2/audiobooks',
+                url: '/homepage/audiobooks',
                 credentials: "include",
             })
         }),
     })
-})
+});
 
 // type getPlaylistfromResultArg = TypedUseQueryStateResult<Playlists[],any,any>
 
@@ -320,7 +360,8 @@ export const {
     useAddAlbumMutation,
     useDeleteAlbumMutation,
     useAddNewLikedMutation,
-    useAddPTrackMutation, 
+    useAddPTrackMutation,
+    useBulkEditPTracksMutation, 
     useDeleteNewLikedMutation,
     useDeletePTrackMutation,
     useGetDevicesQuery,

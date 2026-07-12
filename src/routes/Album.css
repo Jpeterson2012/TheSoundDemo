@@ -1,26 +1,17 @@
-.topDiv{
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
 .albumImage{
     height: 359px;
     position: absolute;
     right: 440px;
     top: 18px;
-    z-index: 1;
-}
-.topDiv h2{
-    margin-left: auto;
-    margin-right: auto;
+    z-index: 0;
 }
 .artistName{
     font-weight: bolder;
 }
 .albumDescription{
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-self: flex-start;
     margin-bottom: 20px;
     color: rgb(90, 210, 216);
 }
@@ -34,10 +25,10 @@
 .tinyArtist{
     border-radius: 50%;
     height: 40px;
-    width: 40px;
+    width: 40px;    
 }
 
-.lol, .lol2 {
+.uTitle,.uTitle2 {
     font-weight: bolder;
     font-size: large;
     font-family: Arial,Helvetica, sans-serif;
@@ -46,70 +37,95 @@
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 }
-.lol2{
-    margin-left: 65vw;
-}
 
 .fade-in-image2{
     animation: fadeIn 0.5s;
     margin-left: 28vw;
     margin-top: 30px;
-     margin-bottom: 450px;
-    position: relative;
+     /* margin-bottom: 450px; */
+    /* position: relative; */
      
 }
-@keyframes fadeIn {
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
+.removeContainer3{
+    display: flex;
+    align-items: center;
 }
-@keyframes hithere {
-    30% { transform: scale(1.2); }
-    40%, 60% { transform: rotate(-20deg) scale(1.2); }
-    50% { transform: rotate(20deg) scale(1.2); }
-    70% { transform: rotate(0deg) scale(1.2); }
-    100% { transform: scale(1); }
-  }
-
-  #snackbar2{
-    visibility: hidden; /* Hidden by default. Visible on click */
-    min-width: 250px; /* Set a default minimum width */
-    margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #7a19e9; /* Black background color */
-    color: rgb(90, 210, 216); /* White text color */
-    text-align: center; /* Centered text */
-    border-radius: 16px; /* Rounded borders */
-    padding: 16px; /* Padding */
-    position: fixed; /* Sit on top of the screen */
-    z-index: 2; /* Add a z-index if needed */
-    left: 50%; /* Center the snackbar */
-    bottom: 30px; /* 30px from the bottom */
-  }
-  #snackbar2.show {
-    visibility: visible; /* Show the snackbar */
-    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-    However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 4.0s;
-    animation: fadein 0.5s, fadeout 0.5s 4.0s;
-  }  
+.removeAlbum3{
+    display: none;
+    position: absolute;
+    left: 100%;
+    /* left: 200px; */
+    /* bottom: 15px; */
+    padding: 5px;
+    color: black;
+    background: rgb(90, 210, 216);
+    font-size: 13px;
+    width: 130px;
+    height: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* border-radius: 16px; */
+    z-index: 2;
+}
+.removeContainer3:hover .removeAlbum3 {display: block;}
 
 @media(min-height: 1000px){
     .fade-in-image2{
         margin-left: 19.2vw;
     }
-    .lol2{
-        margin-left: 56vw;
-    }
-    .topDiv{
-        margin-top: 0px;
-    }
     .albumImage{
         height: 459px;
         right: 500px;
     }
+    .artistName{
+        margin-top: 10vw;
+        font-size: 35px;
+    }
   }
-  
-  
+
+  .listContainer{
+    display: flex;
+    align-items: start;
+  }
+  .tdContainer{
+    width: 90vw;
+
+    position: relative;
+  }
+  .removeImg2{
+    padding-top: 10px;
+    height: 27px;
+    width: 27px;
+    pointer-events: none;
+    cursor: pointer;
+}
+@media only screen and (max-height: 400px){
+    #removeContainer3:hover .removeAlbum3{
+        display: none;
+    }
+    .removeImg2{
+        height: 25px;
+        width: 25px;
+        pointer-events: all;
+    }
+}
+  @media only screen and (max-width: 768px){
+    #removeContainer3:hover .removeAlbum3{
+        display: none;
+    }
+    .removeImg2{
+        height: 20px;
+        width: 20px;
+        pointer-events: all;
+    }
+    .desc1{
+        margin-left: 12vw;
+    }
+    .listContainer{
+        /* margin-left: 5vw; */
+        /* width: 100%; */
+    }
+    .tdContainer{        
+        width: 90%;
+        margin-left: 4vw;
+    }    
+  }  

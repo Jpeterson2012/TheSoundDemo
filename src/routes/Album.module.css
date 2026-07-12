@@ -1,0 +1,159 @@
+.albumImage{
+    height: 359px;
+    z-index: 0;
+}
+.artistName{
+    font-weight: bolder;
+    align-self: center;
+}
+.tdContainer{        
+    width: 100% !important;    
+    max-width: 100% !important;    
+}
+
+.albumDescription{
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    margin-bottom: 20px;
+    color: rgb(90, 210, 216);
+}
+.innerDescription{
+    display: flex;
+    margin-right: 10px;
+}
+.desc1{
+    margin-right: 5px;
+}
+.tinyArtist{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;    
+}
+
+.uTitle,.uTitle2 {
+    font-weight: bolder;
+    font-size: large;
+    font-family: Arial,Helvetica, sans-serif;
+    background: linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.fade-in-image2{
+    animation: fadeIn 0.5s;
+    margin-left: 28%;
+    margin-top: 30px;
+     /* margin-bottom: 450px; */
+    /* position: relative; */
+     
+}
+.removeContainer3{
+    display: flex;
+    align-items: center;
+}
+.removeAlbum3{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: -80px !important;
+    /* left: 200px; */
+    /* bottom: 15px; */
+    padding: 5px;
+    color: black;
+    border-radius: 10px;
+    background: rgb(90, 210, 216);
+    font-size: 13px;
+    width: 100px;
+    height: 50px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* border-radius: 16px; */
+    z-index: 2;
+}
+
+.removeContainer3:hover .removeAlbum3 {display: block;}
+
+@media(min-height: 1000px){
+    .fade-in-image2{
+        margin-left: 19.2%;
+    }
+    .albumImage{
+        height: 459px;
+        right: 500px;
+    }
+    .artistName{
+        /* margin-top: 10vw; */
+        font-size: 35px;
+    }
+  }
+
+  .listContainer{
+    display: flex;
+    align-items: start;
+  }
+  .tdContainer{
+    
+
+    position: relative;
+  }
+  .removeImg2{
+    padding-top: 10px;
+    height: 27px;
+    width: 27px;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.discog, .discogMore, .artist {  
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .discog:hover {
+    transform: scale(1.05);
+  }
+
+  .discogMore:hover {
+    transform: scale(1.05);
+  }
+
+  .artist:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media only screen and (max-height: 400px) {
+    #removeContainer3:hover .removeAlbum3{
+        display: none;
+    }
+    
+    .removeImg2{
+        height: 25px;
+        width: 25px;
+        pointer-events: all;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #removeContainer3:hover .removeAlbum3{
+        display: none;
+    }
+    .removeImg2{
+        height: 20px;
+        width: 20px;
+        pointer-events: all;
+    }
+    
+    .innerDescription {
+        font-size: 13px;
+        white-space: nowrap;
+        margin-left: 15px;                
+    }
+
+    .albumDescription {
+        align-self: center !important;
+        justify-self: center;
+        gap: 10px;
+    }
+}  

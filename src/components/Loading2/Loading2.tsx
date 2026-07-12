@@ -20,7 +20,8 @@ export default function Loading ({yes}: any) {
 
                 <div className="tnoot-8">&#9839;</div>
             </div>
-            {yes ? <h2>Preparing your experience...</h2> : null}
+
+            {yes && <h2>Preparing your experience...</h2>}
         </>
-    )
-}
+    );
+};

@@ -1,10 +1,37 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import { throttle } from './useThrottle';
-import { track } from '../utils';
-import useAuth from './useAuth';
+import { useAppSelector, useAppDispatch } from '../App/hooks.ts';
+import { setPlaying } from '../App/defaultSlice.ts';
+import { useNavigate } from 'react-router-dom';
+import { spotifyRequest } from '../utils/utils';
+import { setLogoutCallback, resetInactivityTimer, initInactivityTimer, stopInactivityTimer } from '../utils/authTimerV2.ts';
+
+
+const track: any = {
+    name: "",
+    album: {
+        images: [
+            { url: "" }
+        ],
+        uri: "",
+        name: ""
+    },
+    artists: [
+        { name: "" }
+    ],
+    uri: ""
+};
+
+const intialPlayerState = {
+    current_track: track,
+    is_paused: false,
+    duration: 0,
+    pos: 0
+};
 
 function stateUpdates(state: any, setPlayerState: any){
-    console.log('hi')      
+    //console.log('hi');
+
     setPlayerState({current_track: state?.track_window.current_track, is_paused: state?.paused, duration: state?.duration, pos: state?.position})
     
     sessionStorage.setItem("paused", state?.paused)
@@ -27,7 +54,7 @@ function stateUpdates(state: any, setPlayerState: any){
         // console.log(temp)
 
         // console.log(keys)     
-        if (keys.length > 20){
+        if (keys.length > 35){
             let lastKey: any = keys.pop()
             delete temp[lastKey]
         }   
@@ -35,20 +62,44 @@ function stateUpdates(state: any, setPlayerState: any){
     }
 }
 
-export const usePlayer = () => {
-    const [player, setPlayer] = useState(null); 
-    const [playerState, setPlayersState] = useState({current_track: track, is_paused: false, duration: 0, pos: 0})   
-    function setPlayerState(newData: any) {
-        setPlayersState((prev) => ({...prev, ...newData}));
-    }; 
-    
-    const [is_active, setActive] = useState(false);                    
+let cachedToken: string | null = null;
+let cachedAt = 0;     
+const TTL = 4 * 60 * 1000;
 
-    const access_token = useAuth()
+export const usePlayer = () => {
+    const [player, setPlayer] = useState<any>(null); 
+    const [playerState, setPlayerState] = useState(intialPlayerState)                   
+    const [is_active, setActive] = useState(false); 
+    const playing = useAppSelector(state => state.defaultState.playing);
+    const dispatch = useAppDispatch();      
+    const navigate = useNavigate();
+
+    const resetPlayer = async () => {   
+        sessionStorage.clear();
+
+        stopInactivityTimer();
+        
+        await player?.disconnect();
+
+        setPlayer(null);
+
+        setPlayerState(intialPlayerState);
+
+        setActive(false);          
+    };
+
+    const playingRef = useRef(playing);
 
     useEffect(() => {
-        if(!access_token) return        
+        playingRef.current = playing;
+    }, [playing]);
 
+    useEffect(() => {
+        //if(!access_token) return;
+        resetPlayer();
+
+        initInactivityTimer();
+        
         const debUpdate = throttle(stateUpdates, 500);
 
         const script = document.createElement("script");
@@ -56,13 +107,31 @@ export const usePlayer = () => {
         script.async = true;
         document.body.appendChild(script);      
 
-        window.onSpotifyWebPlaybackSDKReady = () => {                                      
+        window.onSpotifyWebPlaybackSDKReady = () => {         
             const player = new window.Spotify.Player({ 
                 name: 'TheSound',
-                getOAuthToken: (cb: any) => { cb(access_token); },
+                //getOAuthToken: (cb: any) => { cb(access_token); },
+                getOAuthToken: async (cb: any) => {
+                    const now = Date.now();
+
+                    if (cachedToken && now - cachedAt < TTL) {
+                        return cb(cachedToken);
+                    }
+
+                    try {
+                        const data = await spotifyRequest("/token");
+
+                        cachedToken = data.access_token;
+                        cachedAt = now;
+
+                        cb(cachedToken);
+                    } catch (err) {
+                        console.error("Spotify token fetch failed", err);
+                    }
+                },
                 volume: 1,                              
             });
-            setPlayer(player);                    
+            setPlayer(player);                                
             
             player.addListener('ready', ({ device_id }:any) => {
                 console.log('Ready with Device ID', device_id);
@@ -87,15 +156,28 @@ export const usePlayer = () => {
             player.addListener('player_state_changed', ( (state: any) => {
                 if (!state) {                                        
                     return;
-                }
+                }                                
+                
+                dispatch(setPlaying(!state.paused));
 
-                if(!sessionStorage.getItem("current")) setActive(true)
-                debUpdate(state, setPlayersState);                                                                
+                if(!sessionStorage.getItem("current")) setActive(true);
+                
+                debUpdate(state, setPlayerState);                                                                
             }))
                                                     
             player.connect();                                    
-        };
-    }, [access_token]);
+        };  
+
+        setLogoutCallback(() => {            
+            if (!playingRef.current) {
+                resetPlayer();
+
+                navigate("/", {replace: true});
+            } else {
+                resetInactivityTimer();
+            }            
+        });                
+    }, []);    
     
-    return {player, playerState, setPlayerState, is_active};
+    return {player, playerState, setPlayerState, is_active, resetPlayer};
 }

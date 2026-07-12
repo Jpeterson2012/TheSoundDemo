@@ -1,56 +1,82 @@
-.ptrackInfo{
-    position: relative;
-    display: flex;
-    /* margin-right: 300px; */
-    text-align: left;
+.pTrackContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(90, 210, 216, 0.3);
+}
+
+.pInnerMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: rgb(90, 210, 216);
+}
+
+.pInnerMain > div {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pInnerMainName {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #7b1ce7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+@media (hover: hover) {
+  .pInnerMainName:hover {
     color: rgb(90, 210, 216);
+  }
 }
-.ptrackName{
-    text-align: left;
-    margin: 0px;
-    padding: 0px;
-    font-size: 20px;
-    /* max-width: 700px; */
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+
+.ptrackArtist {
+  position: static;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.ptrackArtist{
-    /* position: absolute;
-    max-width: 700px; */
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
+.pSongLength {
+  font-weight: bold;
+  color: rgb(90, 210, 216);
 }
-.ptrackDur{
-    /* position: absolute;
-    left: 83.5vw; */
-    font-weight: bold;
-    color: rgb(90, 210, 216);
-}
-@media(min-height: 1000px){
-    .mbar2{
-      left: 480px;
-    }
+
+@media only screen and (max-width: 768px) {
+  .pTrackContainer {
+    width: 100%;
+    margin-bottom: 30px;
   }
 
-  @media only screen and (max-width: 768px){
-    .pTrackContainer{
-        margin-bottom: 30px;
-    }
-    .ptrackName, .ptrackArtist, .ptrackDur{
-      font-size: 15px;
-      -webkit-tap-highlight-color: transparent;
-          -webkit-touch-callout: none;
-          -webkit-user-select: none;
-          -khtml-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-    }
-    .trackContainer{
-      width: 100%;
-    }
-    .ptrackName,h4{
-      max-width: 45vw;
-    }      
+  .pInnerMainName,
+  .ptrackArtist,
+  .pSongLength {
+    font-size: 15px;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
+
+  .pInnerMainName,
+  .ptrackArtist {
+    max-width: 45vw;
+  }
+}

@@ -1,54 +1,61 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useRef} from 'react';
+import { store } from '../App/store.ts';
+import { setAuthToken, setRefreshToken } from '../App/defaultSlice.ts';
+import { spotifyRequest } from '../utils/utils';
 
 export default function useAuth(){
-    const [accessToken, setAccessToken] = useState()
-    const [refreshToken, setRefreshToken] = useState()
-    const [expiresIn, setExpiresIn] = useState(0)
+    const timeoutRef = useRef<any>(null);        
 
-    useEffect(() => {                                            
-        const fetchToken = async () => {
-            try{
-                const response = await fetch(import.meta.env.VITE_URL + "/token", {credentials: "include"})
-                const data = await response.json()           
+    const tokenManager = async () => {
+        try{                
+            const data = await spotifyRequest("/token");                                                                                                       
 
-                setAccessToken(data.access_token)                
-                setRefreshToken(data.refresh_token)                
-                setExpiresIn(data.expires_in)                                         
-                
-                sessionStorage.setItem("token", data.access_token)    
-            }
-            catch(e){
-                console.log(`Error requesting access token: ${e}`)
-                window.location.href = '/'
-            }                
+            store.dispatch(setAuthToken(data.access_token));            
+            
+            store.dispatch(setRefreshToken(data.refresh_token));
+
+            //scheduleRefresh(data.expires_in, data.refresh_token);
         }
+        catch(e){
+            console.error(`Error requesting access token: ${e}`);
+            
+            clearTimeout(timeoutRef.current);
 
-        fetchToken()
-    }, []);
+            timeoutRef.current = setTimeout(tokenManager, 5000);
+        }
+    };
+
+    const scheduleRefresh = (expires: any, refresh: any) => {
+        clearTimeout(timeoutRef.current);
+
+        const refreshTime = (expires - 60) * 1000;
+
+        timeoutRef.current = setTimeout(() => refreshAccessToken(refresh), refreshTime);
+    };
+
+    const refreshAccessToken = async (refresh: any) => {        
+        try{
+            const data = await spotifyRequest("/token/refresh_token", "POST", {
+                body: JSON.stringify({refresh_token: refresh})
+            });
+
+            store.dispatch(setAuthToken(data.access_token));     
+                
+            scheduleRefresh(data.expires_in, refresh);
+        } catch (e) {
+            console.error(`Error requesting access token: ${e}`);
+
+            clearTimeout(timeoutRef.current);
+
+            timeoutRef.current = setTimeout(() => refreshAccessToken(refresh), 10000);
+        }
+    };
 
     useEffect(() => {              
-        if (!refreshToken || !expiresIn) return        
-        setInterval(() => {
-            console.log('hi', refreshToken)
-            try{
-                fetch(import.meta.env.VITE_URL + "/token/refresh_token", {
-                    method: 'POST',
-                    headers: {"Content-Type":"application/json"},
-                    credentials: "include", 
-                    body: JSON.stringify({refresh_token: refreshToken})
-                })
-                .then(data => data.json())
-                .then(item => {                    
-                    sessionStorage.setItem("token", item.token), 
-                    setAccessToken(item.token)                                                                            
-                })
-            }
-            catch (e) {
-                `Error requesting access token: ${e}`
-            }              
-        }, (expiresIn - 60) * 1000)
+        tokenManager();
 
-    }, [refreshToken, expiresIn]);    
+        return () => clearTimeout(timeoutRef.current);
+    }, []);    
 
-    return accessToken;
-}
+    return;    
+};

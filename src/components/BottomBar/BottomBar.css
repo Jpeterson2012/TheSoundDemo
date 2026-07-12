@@ -64,20 +64,19 @@
   .volAddContainer{
     display: flex;
   }
-  #volumeIcon{
+  /* #volumeIcon{
     position: absolute;
     right: 28.2vw;
     bottom: 8px;
     height: 30px;
     cursor: pointer;
-  }
-  #volumeBar{
-    display: flex;
+  } */
+  /* #volumeBar{    
     position: absolute;
     bottom: 14px;
     right: 18.5vw;
     width: 8.8vw;
-  }
+  } */
   .now_playing{
     position: fixed;
     bottom: 50px;
@@ -222,40 +221,41 @@ input[type=range]{
     /* margin-bottom: 150px; */
   }
 
+.songDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
   @media(min-height: 1000px){
     .scrollbar1, .scrollbar2{
       max-width: 450px;
     }
-    #volumeBar{
+    /* #volumeBar{
       width: 16.5vw;
       right: 11vw;
-    }
+    } */
   }
   .spotifyButtonContainer{
     display: none;
   }
   #toggle1{
-    position: absolute;
+    /* position: absolute;
     right: 240px;
-    bottom: 12px;
+    bottom: 12px; */
     height: 20px;
     cursor: pointer;
   }
   #toggle2{
-    position: absolute;
+    /* position: absolute;
     left: 240px;
-    bottom: 12px;
+    bottom: 12px; */
     height: 19px;
     cursor: pointer;
 
-  }
-  .deviceImg{
-    position: absolute;
-    right: -42vw;
-    bottom: 0;
-    height: 42px;
-    cursor: pointer;
   }
   .now-playing__side2{
     display: none;
@@ -270,24 +270,15 @@ input[type=range]{
     }
   }
   @media only screen and (max-height: 400px){
-    .now-playing__side2{
+    .songDescription{
       min-width: 100vw;
       max-width: 100vw;
-    }
-  }
-
-  @keyframes fadeIn {
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
     }
   }
   
   @media only screen and (max-width: 768px),
   (max-height: 400px){
-    .now-playing__side2{
+    .songDescription{
       display: flex;
       flex-direction: column;
       align-items: start;

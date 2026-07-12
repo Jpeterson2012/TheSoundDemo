@@ -1,128 +1,161 @@
 import './EditPlaylist.css'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-import { useGetLikedQuery, useGetPlaylistsQuery, useAddNewLikedMutation, useDeleteNewLikedMutation, useAddPTrackMutation, useDeletePTrackMutation } from '../../App/ApiSlice'
+import { useGetLikedQuery, useGetPlaylistsQuery, useAddNewLikedMutation, useDeleteNewLikedMutation, useBulkEditPTracksMutation } from '../../App/ApiSlice';
 import { useState, useEffect } from 'react';
 import { imageRender } from '../ImageRender/ImageRender';
-import escape from '../../images/escape.jpg'
+import { useAppDispatch } from '../../App/hooks.ts';
+import { setExitingSong } from '../../App/defaultSlice.ts';
+import { closeIcon } from '../../helpers/CloseIcon.tsx';
 
-export default function EditPlaylist({track,boolVal,setbool,setsnack}: any){
-    const {data: liked, isSuccess: lsuccess} = useGetLikedQuery()
+export default function EditPlaylist({track,boolVal,setbool,setsnack}: any) {    
+    const {data: liked, isSuccess: lsuccess} = useGetLikedQuery();
     const {data: playlists} = useGetPlaylistsQuery()
 
     let newPlaylists: any = {};
+
     playlists!.map((item: any) => {            
-            newPlaylists[item.playlist_id] = {checked: item.tracks?.find((e: any)=>e.uri === track?.uri && e.name === track?.name && e.artists[0].name === track?.artists[0].name) !== undefined, ...item}
-    })
+        newPlaylists[item.playlist_id] = {checked: item.tracks?.find((e: any)=>e.uri === track?.uri && e.name === track?.name && e.artists[0].name === track?.artists[0].name) !== undefined, ...item}
+    });
+
     newPlaylists = Object.values(newPlaylists)!.sort((a:any,b:any) => Number(b.checked) - Number(a.checked));
     
-    const [removeSong] = useDeleteNewLikedMutation()
-    const [addNewsong] = useAddNewLikedMutation()
-    const [addpTrack] = useAddPTrackMutation()
-    const [removePTrack] = useDeletePTrackMutation()            
+    const [removeSong] = useDeleteNewLikedMutation();
+    const [addNewsong] = useAddNewLikedMutation();   
+    const [bulkEdit] = useBulkEditPTracksMutation();         
     
-    let found = liked?.tracks.find((e:any)=>e.uri === track.uri)
-    let found2 = liked?.tracks?.find((e:any)=>e.name === track?.name && e.artists[0].name === track?.artists[0].name)    
+    let found = liked?.tracks.find((e:any) => e.uri === track.uri || (e.name === track?.name && e.artists[0].name === track?.artists[0].name));    
     
-    var submit1: boolean[] = []
-    var submit2: boolean[] = []
-    var parts = track?.album?.uri.split(':');
-    let lastSegment: any
-    parts !== undefined ? lastSegment = parts.pop() : lastSegment = null
+    let parts = track?.uri?.split(':') ?? track?.album?.uri?.split(':');
+    let lastSegment: any;
+    parts ? lastSegment = null : lastSegment = parts.pop();
 
     const [open, setOpen] = useState(boolVal);
+    const [originalChecked, setOriginalChecked] = useState(new Set());
+    const [currentChecked, setCurrentChecked] = useState(new Set());
 
-    const onOpenModal = () => {setOpen(true),submit1 = [], submit2 = []}
+    const dispatch = useAppDispatch();
+
+    const onOpenModal = () => {setOpen(true)};
+
     const onCloseModal = () => {               
-        //Potential idea for delaying backend requests
-        // let num = 500
+        //Potential idea for delaying backend requests        
         setOpen(false);
         let changes = false;
         // console.log(submit1)
-        let temp = (document.getElementById('checkbox') as HTMLInputElement).checked
+        let temp = (document.getElementById('checkbox') as HTMLInputElement).checked;
 
-        if (submit1[0] !== temp){            
-            changes = true
-            submit1[0] === false 
-            ? addNewsong({ album_id: lastSegment === null ? track.album_id : lastSegment, images: track?.album?.images?.length === undefined ? track.images : track.album.images, artists: track.artists, duration_ms: track.duration_ms, uri: track.uri, name: track.name })            
-            : removeSong({name: track.name})
-        }          
+        if ((found !== undefined) !== temp) {            
+            changes = true;
 
-        submit2.push(temp)
-        for (let i = 0; i < newPlaylists!.length; i++){
-            submit2.push((document.getElementById(`checkbox${i}`) as HTMLInputElement).checked)
-            // if (submit1[i+1] !== (document.getElementById(`checkbox${i}`) as HTMLInputElement).checked){
-            if (submit1[i+1] !== submit2[i+1]){
-                changes = true
-                submit1[i+1] === false ? 
+            if (found) {
+                dispatch(setExitingSong(track.uri));
+
                 setTimeout(() => {
-                    let p_id = newPlaylists![i].playlist_id
-                    let ptrackData = {images: track?.album?.images?.length === undefined ? track.images : track.album.images, uri: track.uri, name: track.name, track_number: 0, duration_ms: track.duration_ms, artists: track.artists}
-                    addpTrack({pID: p_id, initialP: ptrackData})
-                },(sessionStorage.getItem("currentContext") === null || sessionStorage.getItem("currentContext") === "null") ? 500 : 250) :
-                setTimeout(() => {
-                    let p_id = newPlaylists![i].playlist_id
-                    removePTrack({pID: p_id, name: track.name})
-                },(sessionStorage.getItem("currentContext") === null || sessionStorage.getItem("currentContext") === "null") ? 500 : 250)
-                
-                // num += 500
+                    removeSong({name: track.name});
+
+                    dispatch(setExitingSong(null));
+                }, 250);                
+            } else {
+                addNewsong({ 
+                    album_id: lastSegment ?? track.album_id, 
+                    images: track?.album?.images?.length === undefined ? track.images : track.album.images, 
+                    artists: track.artists, 
+                    duration_ms: track.duration_ms, 
+                    uri: track.uri, 
+                    name: track.name,
+                    date_added: new Date().toISOString(), 
+                });
             }
-        }
-         //console.log(submit2)
-        setbool(false)
-        changes ? setsnack(changes) : null        
-    }
-    const closeIcon = (
-        <img src={escape} style={{height: '44px', width: '44px'}}/>
-    )    
-    useEffect(() => {                           
-        // console.log(newPlaylists)
-    },[])
+        }                  
 
+        const pUpdates: any = {trackUri: track.uri, updates: []};
+
+        const { added, removed } = getChangedPlaylists();    
+        
+        added.map(remove => {
+            const ptrackData = {images: track?.album?.images?.length === undefined ? track.images : track.album.images, 
+                uri: track.uri, name: track.name, track_number: 0, duration_ms: track.duration_ms, artists: track.artists, date_added: new Date().toISOString()};
+
+            pUpdates.updates.push({pID: remove, initialP: ptrackData, status: "add"});
+        });
+
+        removed.map(add => pUpdates.updates.push({pID: add, status: "remove"}));        
+
+        dispatch(setExitingSong(track.uri));
+
+        pUpdates.updates.length && bulkEdit({pUpdates});
+        setbool(false);
+        changes && setsnack(changes);     
+
+        dispatch(setExitingSong(null));
+    };
+
+    useEffect(() => {                                   
+        const initialSet = new Set(
+            newPlaylists.filter((p: any) => p.checked).map((p: any) => p.playlist_id)
+        );
+
+        setOriginalChecked(initialSet);
+
+        setCurrentChecked(new Set(initialSet));
+    },[]);
+
+    function togglePlaylist(id: any) {
+        setCurrentChecked(prev => {
+            const next = new Set(prev);
+
+            next.has(id) ? next.delete(id) : next.add(id);
+
+            return next;
+        });
+    };
+
+    function getChangedPlaylists() {
+        const added = [...currentChecked].filter(id => !originalChecked.has(id));
+        const removed = [...originalChecked].filter(id => !currentChecked.has(id));
+
+        return {added, removed};
+    };
     
     return (
-        <>
-        `  <div>                    
-                <Modal modalId='modalComp' open={open} onClose={onCloseModal} center closeIcon={closeIcon}>                            
-                    <div style={{display: 'flex', alignItems: 'center',marginTop: '45px'}}>
-                        <img className='modalCompImg' src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" alt="Liked Songs"  style={{height: '80px', width: '80px', marginRight: '20px',borderRadius: '10px'}}/>
-                        <h3 style={{fontSize: '18px',color: 'white', marginRight: 'auto'}} >Liked Songs</h3>
-                         {/* <button>{found === undefined ? "Add" : "Remove"}</button> */}
-                        <input id='checkbox' type='checkbox' />
-                        <p hidden>
-                        {open && (()=>{
-                            setTimeout(()=>{                                
-                                if(found !== undefined && found2 !== undefined) (document.getElementById('checkbox') as HTMLInputElement ).checked = true
-                                submit1.push((document.getElementById('checkbox') as HTMLInputElement).checked)
-                            },300)
-                            return ''
-                        }                                    
-                        )()}
-                        </p>
-                    </div>
-                    {newPlaylists.map((a: any,i: any) =>
-                        <div style={{display: 'flex', alignItems: 'center'}} key={i}>
-                            {imageRender(a,80,80,20)}
-                            <h3 style={{maxWidth: '500px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', fontSize: '18px',color: 'white', marginRight: 'auto'}} >{a.name}</h3>
-                            <input id={"checkbox" + i} type='checkbox'/>
-                            <p hidden>
-                                {open && (()=>{
-                                    setTimeout(()=>{                                        
-                                        // some track uris are from their single version which is diff from the album version so this checks track uri && (name and artist) together
-                                        if(a.checked)
-                                            (document.getElementById(`checkbox${i}`) as HTMLInputElement ).checked = true
-                                        submit1.push((document.getElementById(`checkbox${i}`) as HTMLInputElement).checked)
-                                    },300)
-                                    return ''
-                                }
-                                )()}
-                            </p>
-                
-                        </div>    
-                    )}                                                          
-                </Modal>
-            </div>`
-        </>
-    )
+        <>                 
+            <Modal modalId='modalComp' open={open} onClose={onCloseModal} center closeIcon={closeIcon()}>                            
+                <div style={{display: 'flex', alignItems: 'center',marginTop: '60px'}}>
+                    <img 
+                        className='modalCompImg' 
+                        src="https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg" 
+                        alt="Liked Songs"  
+                        style={{height: '80px', width: '80px', marginRight: '20px',borderRadius: '10px'}}
+                    />
 
-}
+                    <h3 style={{fontSize: '18px',color: 'white', marginRight: 'auto'}}>Liked Songs</h3>
+                        
+                    <input 
+                        id='checkbox' 
+                        type='checkbox'
+                        defaultChecked={found !== undefined}
+                        
+                    />
+                </div>
+
+                {newPlaylists.map((a: any,i: any) =>
+                    <div style={{display: 'flex', alignItems: 'center'}} key={i}>
+
+                        {imageRender(a,80,80,20)}
+
+                        <h3 style={{maxWidth: '500px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', fontSize: '18px',color: 'white', marginRight: 'auto'}} >{a.name}</h3>
+
+                        <input 
+                            id={"checkbox" + i} 
+                            type='checkbox'
+                            checked={currentChecked.has(a.playlist_id)}
+                            onChange={() => togglePlaylist(a.playlist_id)}
+
+                        />
+                    </div>    
+                )}                                                          
+            </Modal>
+        </>
+    );
+};

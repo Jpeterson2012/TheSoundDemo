@@ -1,248 +1,567 @@
-import './Logo.css'
+import styles from './Logo.module.css';
 import 'react-responsive-modal/styles.css';
 import { useGetUserQuery,useGetAlbumsQuery, useGetPlaylistsQuery } from '../../App/ApiSlice';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { Modal } from 'react-responsive-modal';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import Track from '../Track/Track';
-import escape from '../../images/escape.jpg'
-import search from '../../images/search.png'
-import space from '../../images/music.gif'
-import logo from '../../images/logo.png'
+import search from '../../images/search.png';
+import keyboard from '../../images/music.gif';
+import logo from '../../images/logo.png';
+import UsePlayerContext from '../.././hooks/PlayerContext.tsx';
+import { spotifyRequest } from '../../utils/utils.ts';
+import { closeIcon } from '../../helpers/CloseIcon.tsx';
+import { useAppDispatch } from '../../App/hooks.ts';
+import { setCurrentAlbum } from '../../App/defaultSlice.ts';
+import InfiniteObserver from '../../helpers/InfiniteObserver.tsx';
+import { useResponsive } from '../../hooks/ResponsiveContext.tsx';
 
 function getTracks(ptracks: any) {
-    var key = 0
-    return (
-      ptracks.map((t:any, index:any) =>
-  
-        <div className='logoTracks' style={{display: 'flex', alignItems: 'center', fontSize: '20px'}} key={index}>
-            
-          <img src={t.images.filter((t:any) => t.height == 64).map((s:any) => s.url)} style={{height: '64px', width: '64px'}}/>
-          <Track 
-          uri={t.url}
-          name={t.name}
-          number={t.track_number}
-          duration={t.duration_ms}
-          album_name={t.album_name}
-          artist={t.artists}
-          show={false}
-          />
-          <p hidden>{key++}</p>
-        </div>
-      )
-    )
-}
-function getAlbums(albumss: any,palbums: any, nav: any, close: any) {
-  var artists: any = []
-  var a_ids: any = []
-  
-  return (
-    palbums.map((t:any) =>
-      <a key={t.id} onClick={function handleClick() {
-        //Check if album is already in library or not
-        let found = albumss?.find((e: any) => e?.album_id === t.id)
-        found === undefined ? sessionStorage.setItem("albumStatus", "notuser") : sessionStorage.setItem("albumStatus","user")
+  return (    
+    ptracks.map((track:any, index:any) =>  
+      <div 
+        className='logoTracks fade-in-image' 
+        style={{display: 'flex', alignItems: 'center', fontSize: '20px'}} 
+        key={index}
+      >            
+        <img 
+          src={track.images.filter((image:any) => image.height == 64).map((image:any) => image.url)} 
+          style={{height: '64px', width: '64px', borderRadius: '5px'}}
+        />
 
-        t.artists.map((s:any) => artists.push(s.name))
-        t.artists.map((s:any) => a_ids.push(s.id))
-        sessionStorage.setItem("artist", JSON.stringify(artists))
-        sessionStorage.setItem("artist_id", JSON.stringify(a_ids))
-        sessionStorage.setItem("image", t.images.filter((t:any) => t.height == 300).map((s:any) => s.url))
-        nav(`/app/album/${t.id}`)
-        close()
-      }}>
+        <Track 
+          uri={track.url}
+          name={track.name}
+          number={track.track_number}
+          duration={track.duration_ms}
+          album_name={track.album_name}
+          artist={track.artists}
+          show={false}
+        />        
+      </div>
+    )
+  );
+};
+
+function getAlbums(storeAlbums: any, albums: any, nav: any, close: any, dispatch: any) {
+  const handleAlbumClick = (album: any) => {
+    const found = storeAlbums?.find((e: any) => e?.album_id === album.id);
+
+    const artistNames = album.artists.map((a: any) => a.name);
+    const artistIDs = album.artists.map((a: any) => a.id);
+
+    dispatch(
+      setCurrentAlbum({
+        image: album.images.find((i: any) => i.height === 300)?.url,
+        artists: artistNames,
+        artist_ids: artistIDs,
+      })
+    );
+
+    nav(`/app/album/${album.id}`);
+
+    close();
+  };
+
+  return (
+    albums.map((album:any) =>
+      <a 
+        key={album.id} 
+          onClick={() => handleAlbumClick(album)}
+      >
         <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold',fontSize: '20px'}}>
-          <img src={t.images.filter((t:any) => t.height == 64).map((s:any) => s.url)} style={{height: '64px'}}/>
+          <img src={album.images.find((image: any) => image.height === 64)?.url} style={{height: '64px', borderRadius: '5px'}}/>
+
           <div style={{display: 'flex', flexDirection: 'column'}}>
-            <div>{t.name}</div>
-            <div>{t.artists.map((a:any) => a.name + " ")}</div>
+            <div>{album.name}</div>
+
+            <div>{album.artists.map((artist:any) => artist.name + " ")}</div>
           </div>            
         </div>
       </a>
     )    
-  )
-}
-function getArtists(partists: any, nav: any, close: any){
+  );
+};
+
+function getArtists(artists: any, nav: any, close: any) {
   return (
-    partists.map((a:any) => 
-      <a key={a.id} onClick={function handleClick() {
-        nav(`/app/artist/${a.id}`)
-        close()
-      }}>
-        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold',fontSize: '20px'}}>
-          {/* <img src={a.images?.length == 1 ? a.images?.map(s => s.url) : a.images?.filter(s => s.height == 160).map(s => s.url)} alt={a.name} style={{height: '64px', width: '64px'}}/> */}
-          <img src={a.images?.length == 0 ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : a.images[2]?.url} alt={a.name} style={{height: '64px', width: '64px'}} />
-            {a.name}
+    artists.map((artist:any) => 
+      <a 
+        key={artist.id} 
+        onClick={() => {
+          nav(`/app/artist/${artist.id}`);
+
+          close();
+        }}
+      >
+        <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold',fontSize: '20px'}}>          
+          <img 
+            src={!artist.images?.length ? 'https://images.inc.com/uploaded_files/image/1920x1080/getty_626660256_2000108620009280158_388846.jpg' : artist.images[2]?.url} 
+            alt={artist.name} 
+            style={{height: '64px', width: '64px', borderRadius: '5px'}} 
+          />
+
+          {artist.name}
         </div>
       </a>
     )
-  )
-}
-function getPlaylists(plistss:any,plists: any, nav: any, close: any){
-  return (
-    plists.map((a:any) =>
-      <div key={a.id}>
+  );
+};
 
-        <a onClick={function handleClick() {
-          sessionStorage.removeItem("cplaylist")
-          let found = plistss?.find((e: any) => e?.playlist_id === a.id)
-          found === undefined ? sessionStorage.setItem("uplist", "false") : sessionStorage.setItem("uplist", "true")
-          sessionStorage.setItem("playlist_name", a.name)
-          sessionStorage.setItem("fullp_image", JSON.stringify(a.images))
-          sessionStorage.setItem("p_image", a.images.length == 1 ? a.images.map((s:any) => s.url) : a.images.filter((s:any) => s.height == 60).map((s:any) => s.url))
-          nav(`/app/playlist/${a.id}`)
-          close()
+function getPlaylists(playlists: any, plists: any, nav: any, close: any){
+  return (
+    plists.map((playlist: any) =>
+      <div key={playlist.id}>
+        <a onClick={() => {
+          sessionStorage.removeItem("cplaylist");
+
+          let found = playlists?.find((e: any) => e?.playlist_id === playlist.id)
+
+          sessionStorage.setItem("uplist", found ? "true" : "false");
+
+          sessionStorage.setItem("playlist_name", playlist.name);
+
+          sessionStorage.setItem("fullp_image", JSON.stringify(playlist.images));
+
+          sessionStorage.setItem("p_image", playlist.images.length == 1 ? playlist.images.map((s:any) => s.url) : playlist.images.filter((s:any) => s.height == 60).map((s:any) => s.url));
+
+          nav(`/app/playlist/${playlist.id}?type=search`);
+
+          close();
         }}>
           <div className='fade-in-image' style={{display: 'flex', alignItems: 'center', color: 'rgb(90, 210, 216)', fontWeight: 'bold',fontSize: '20px'}}>
-            <img src={a.images?.length == 1 ? a.images?.map((s:any) => s.url) : a.images?.filter((s:any) => s.height == 60).map((s:any) => s.url)} alt={a.name} style={{height: '64px', width: '64px'}}/>
-            {a.name}
+            <img 
+              src={playlist.images?.length == 1 ? playlist.images?.map((s:any) => s.url) : playlist.images?.filter((s:any) => s.height == 60).map((s:any) => s.url)} 
+              alt={playlist.name} 
+              style={{height: '64px', width: '64px', borderRadius: '5px'}}
+            />
+
+            {playlist.name}
           </div>
         
           <br></br>
-        </a>
-      
+        </a>      
       </div>
     )
-  )
-}
+  );
+};
 
-let counter = 0
+let counter = 0;
 
 export default function Logo () {
-  const navigate: any = useNavigate()
+  const dispatch = useAppDispatch();
 
+  const navigate: any = useNavigate();
+
+  const selectorRef = useRef(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [html, setHtml] = useState<any>(null)
   const [tracks, setTracks] = useState<any>([]);
   const [albums, setAlbums] = useState<any>([]);
   const [plist, setPlist] = useState<any>([]);
-  const [artist, setArtist] = useState<any>([])
-  const {data: albumss = []} = useGetAlbumsQuery()
-  const {data: playlists = []} = useGetPlaylistsQuery()    
+  const [artist, setArtist] = useState<any>([]);
+  const {data: storeAlbums = []} = useGetAlbumsQuery();
+  const {data: playlists = []} = useGetPlaylistsQuery();    
+  const [activeButton, setActiveButton] = useState<string>("tracks");
 
   const [open, setOpen] = useState(false);        
   const onOpenModal = () => {setOpen(true)};
-  const onCloseModal = () => {setOpen(false); setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); counter = 0};
+  const onCloseModal = () => {setOpen(false); setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); setIsLoading(false); counter = 0};
+  
+  const {resetPlayer} = useContext(UsePlayerContext);
+
+  const {isMobile} = useResponsive();
+
+  const buttonNames = ["tracks", "albums", "artists", "playlists"];
+
+  const capitalize = (str: any) => {return str.charAt(0).toUpperCase() + str.slice(1)};
 
   const fetchSearch = async () => {        
-    try {
-      var temp = fetch(import.meta.env.VITE_URL + `/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`,{credentials: "include"})
-        .then((res) => {
-          // console.log(res.json())
-          return res.json();
-          }).then((data) => {
-            if (counter){
-            setTracks([...tracks,...data.tracks])
-            setAlbums([...albums,...data.albums])
-            setArtist([...artist,...data.artists])
-            setPlist([...plist,...data.playlists])
-            }
-            else{
-              setTracks([...data.tracks])
-              setAlbums([...data.albums])
-              setArtist([...data.artists])
-              setPlist([...data.playlists])
-            }
-          })
-      return temp
-    }
-    catch (err) {console.log(err)}               
-  }
+    try {      
+      const data = await spotifyRequest(`/search/${(document.getElementById("searchTerm") as HTMLInputElement).value},${counter}`)
+       
+      if (counter){
+        setTracks((prev: []) => [...prev, ...data.tracks]);
+        
+        setAlbums((prev: []) => [...prev, ...data.albums]);
+                
+        setArtist((prev: []) => [...prev, ...data.artists]);
+                
+        setPlist((prev: []) => [...prev, ...data.playlists]);
+      }
+      else{
+        setTracks([...data.tracks]);
 
-  const closeIcon = (
-    <img src={escape} style={{height: '44px', width: '44px'}}/>
-  );
-  const {data: user,isSuccess} = useGetUserQuery()    
+        setAlbums([...data.albums]);
+
+        setArtist([...data.artists]);
+
+        setPlist([...data.playlists]);
+      }
+    } catch (err) {
+      console.log(err);
+    }               
+  };
+
+  const {data: user, isSuccess} = useGetUserQuery();
   
   useEffect(() => {         
-    isSuccess && sessionStorage.setItem("username", user.items)      
-    switch(sessionStorage.getItem('searchHome')){
+    switch(activeButton) {
       case 'tracks':
-        setHtml(getTracks(tracks))
-        break
+        setHtml(getTracks(tracks));
+
+        break;
+
       case 'albums':
-        setHtml(getAlbums(albumss,albums, navigate, onCloseModal))
-        break
+        setHtml(getAlbums(storeAlbums, albums, navigate, onCloseModal, dispatch));
+
+        break;
       case 'artists':
-        setHtml(getArtists(artist, navigate, onCloseModal))
-        break
+        setHtml(getArtists(artist, navigate, onCloseModal));
+
+        break;
       case 'playlists':
-        setHtml(getPlaylists(playlists,plist, navigate, onCloseModal))
-        break
+        setHtml(getPlaylists(playlists, plist, navigate, onCloseModal));
+
+        break;
       default:
-        setHtml(getTracks(tracks))
+        setHtml(getTracks(tracks));
+    };
+  }, [tracks]);
+
+  function listRecent() {     
+    const recentlyPlayed = JSON.parse(localStorage.getItem("recent")!);        
+
+    if (recentlyPlayed && !isMobile) {                      
+      const recents = Object.keys(recentlyPlayed).reduce<any>((acc, recent) => {
+        acc.push({
+          "id": recentlyPlayed[recent].id,
+          "name": recentlyPlayed[recent].name,
+          "artists": recentlyPlayed[recent].artists,
+          "img": recentlyPlayed[recent].images.filter((t: any) => t.height == 640)[0],
+        });
+
+        return acc;
+      }, []);
+
+      return (
+        <div 
+          style={{
+            display: 'flex', flexDirection: 'column', position: 'fixed', right: '0', top: '0', maxHeight: '92%', 
+            overflowY: 'auto', padding: '3px', background: 'linear-gradient(to bottom, #0066ff 0%, #cc33ff 100%)',
+          }}
+        >
+          {recents.map((recent: any,i: number) => 
+            <div key={i}>        
+              <a onClick={() => {
+                const found = (storeAlbums?.find((e: any) => e?.album_id === recent.id) || (storeAlbums?.find((e: any) => e?.name === recent.name)));                                                                
+
+                if (found && recent.id !== found?.album_id) {
+                  recent.id = found?.album_id;
+                }
+
+                const artistMetadata = recent.artists.reduce((acc: any ,artist: any) => {
+                  acc.names.push(artist.name);
+
+                  acc.ids.push(artist.uri.split(':').pop() as string);
+
+                  return acc;
+                }, {names: [] as string[], ids: [] as string[]});
+                
+                dispatch(setCurrentAlbum({
+                  image: recent.img.url,
+                  artists: artistMetadata.names,
+                  artist_ids: artistMetadata.ids,
+                }));
+
+                navigate(`/app/album/${recent.id}`);
+              }}>                
+                <img className={styles.recents} key={i} src={recent.img.url} style={{width: '43px', height: '43px', borderRadius: '5px'}}/>           
+              </a>          
+            </div>
+          )}
+        </div>
+      );
     }
-  }, [tracks])
+
+    return (
+      <>
+      </>
+    );    
+  };
+
+  const userNameRender = () => {
+    return (
+      <button 
+        className={styles.userName}
+        style={{
+          cursor: 'pointer',
+          ...(isMobile && {backgroundColor: 'rgb(90, 210, 216)', fontSize: '13px', borderRadius: '50%'}),
+        }} 
+        onClick={() => {
+          resetPlayer();
+
+          navigate('/', {replace: true});              
+        }}
+      >
+        {isSuccess ? user!.name : ''}
+      </button>
+    );
+  };
+
+  const navigateBack = () => {
+    return (
+      <h2 
+        className={styles.navIcon1} 
+        onClick={() => {
+          if (window.history?.length && window.history.length > 1) navigate(-1, {replace: true});
+
+          else navigate('/app/', {replace: true});
+        }}
+      >
+        {"<"}
+      </h2>
+    );
+  };
+
+  const searchLogo = () => {
+    return (
+      <img 
+        className={styles.searchimg} 
+        src={search} 
+        onClick={() => {onOpenModal()}}
+      />
+    );
+  };
+
+  const navigateForward = () => {
+    return (
+      <h2 
+        className={styles.navIcon2} 
+        onClick={() => {
+          if (window.history?.length && window.history.length > 1) navigate(1, {replace: true});
+
+          else navigate('/app/', {replace: true});
+        }}
+      >
+        {">"}
+      </h2>
+    );
+  };
+
+  const discoverButton = () => {
+    return (
+      <button className={styles.Discover} onClick={() => {navigate('/app/discover')}}>Discover</button>
+    );
+  };
+
+  const theSoundLogo = () => {
+    return (
+      <a onClick={(() => {navigate('/app')})}>
+        <img className={styles.logoIcon} src={logo} alt="Avatar" onClick={(() => {navigate('/app')})}/>
+      </a>
+    );
+  };
+
+  const searchBar = () => {
+    return (
+      <input 
+        type="text" 
+        className={styles.searchTerm} 
+        id='searchTerm'  
+        placeholder="What are you looking for?" 
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); counter = 0;
+          
+            let t = document.getElementById('modalbuttons')!;
+            t.style.display = 'flex';
+            t.style.animation = 'fadeIn 0.5s';
+
+            fetchSearch();
+
+            return;
+          }
+        }}
+      />
+    );
+  };
+
+  const searchButton = () => {
+    return (
+      <button 
+        type="button" 
+        className={styles.searchButton} 
+        onClick={() => {                    
+          setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); counter = 0;
+          
+          let t = document.getElementById('modalbuttons')!;
+          t.style.display = 'flex';
+          t.style.animation = 'fadeIn 0.5s';
+
+          fetchSearch();
+
+          return;
+        }}
+      >
+        <i className="fa fa-search" style={{position: 'absolute', bottom: '9px', right: '14px', color: 'black'}}></i>
+      </button>
+    );
+  };
+
+  const headerGif = () => {
+    return (
+      <img 
+        src={keyboard} 
+        style={{zIndex: '0', width: '100%', height: '180px', position: 'fixed', top: '0', left: '0', opacity: '0.3', objectFit: 'cover', objectPosition: '20% 50%'}}
+      />
+    );
+  };
+
+  const searchCategories = () => {
+    return (
+      <div id='modalbuttons' style={{display: 'none', justifyContent: 'center', zIndex: '9', position: 'absolute', top: '120px', left: '50%', right: '50%'}}>
+        {buttonNames.map((name: string, index: number) =>
+          <button 
+            key={index}
+            style={{
+              color: 'black', fontWeight: '900', fontFamily: 'math',
+              ...(activeButton === name ? {background: 'rgb(90, 210, 216)'} : {background: '#7a19e9'}),
+              ...(name === "tracks" ? {borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px'} : {}),
+              ...(name === "playlists" ? {borderTopRightRadius: '10px', borderBottomRightRadius: '10px'} : {})
+            }}
+            onClick={() => {
+              setActiveButton(name);
+
+              switch (name) {
+                case "tracks":
+                  setHtml(getTracks(tracks));
+                  break;
+                case "albums":
+                  setHtml(getAlbums(storeAlbums,albums, navigate, onCloseModal, dispatch));
+                  break;
+                case "artists":
+                  setHtml(getArtists(artist, navigate, onCloseModal));
+                  break;
+                case "playlists":
+                  setHtml(getPlaylists(playlists,plist, navigate, onCloseModal));
+                  break;
+                default:
+                  return;
+              };                                    
+            }}
+          >
+            {capitalize(name)}
+          </button>
+        )}                
+      </div>
+    );
+  };
+
+  const spinner = () => {
+    return (
+      <div 
+        style={{
+          width: '24px',
+          height: '24px',
+          border: '4px solid rgb(90, 210, 216)',
+          borderTop: '4px solid #7a19e9',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          margin: '10px 5px 0px',
+        }}
+      />
+    );
+  };
+
+  const itemsList = () => {
+    return (
+      <div                 
+        className={styles.logoModal} 
+        style={{maxWidth: '55vw', textOverflow: 'ellipsis', whiteSpace: 'nowrap', position: 'relative', overflowY: 'auto', top: '170px', paddingBottom: '20px'}}
+      >
+        {html ?? getTracks(tracks)}               
+        
+        {isLoading && spinner()}
+      </div>
+    );
+  };
 
   return(
     <>
-      {isSuccess &&
-      
-        <div className='mainLogo'>
-          <h2 className='userName' style={{cursor: "pointer"}} onClick={() => {sessionStorage.clear(), navigate('/', {replace: true})}}>{isSuccess ? user!.items : 'hi'}</h2>
-          <div className='u2Container' style={{backgroundColor: 'rgb(90, 210, 216)', width: '32px', height: '32px', borderRadius: '50%'}}>
-            <h2 className='userName2' style={{cursor: "pointer"}} onClick={() => {sessionStorage.clear(), navigate('/', {replace: true})}}>{isSuccess ? user!.items[0] : 'hi'}</h2>
-          </div>          
+      {isSuccess &&     
+        <>
+        {listRecent()} 
 
-          <h2 className='navIcon1' onClick={function handleClick(){
-            if (window.history?.length && window.history.length > 1) navigate(-1, {replace: true})
-            else navigate('/app/', {replace: true})
-          }}>{"<"}</h2>
+        <div className={styles.mainLogo}>          
+          {userNameRender()}         
 
-          <img className='searchimg' src={search} onClick={function handleClick(){onOpenModal()}} />
+          {!isMobile && <div></div>} 
 
-          <h2 className='navIcon2' onClick={function handleClick(){
-            if (window.history?.length && window.history.length > 1) navigate(1, {replace: true})
-            else navigate('/app/', {replace: true})
-          }}>{">"}</h2>
+          {navigateBack()}
+
+          {searchLogo()}
+
+          {navigateForward()}
           
-          <h2 className='Discover' onClick={function handleClick() {navigate('/app/discover')}} >Discover</h2>   
+          {discoverButton()}   
                           
-          <a onClick={function handleClick() {navigate('/app')}}>
-            <img className='logoIcon' src={logo} alt="Avatar" onClick={function handleClick() {navigate('/app')}}/>
-          </a>
+          {theSoundLogo()}
+                    
+          <Modal 
+            ref={selectorRef}
+            modalId='modal3' 
+            open={open} 
+            onClose={onCloseModal} 
+            center 
+            closeIcon={closeIcon()}
+            styles={{
+              modal: {
+                minWidth: '85vw',
+                minHeight: '90vh',     
+                maxHeight: '90vh',                                             
+                background: 'rgb(33, 33, 33)',                
+              },
+            }}
+          >
+            <InfiniteObserver
+              root={selectorRef.current}
+              rootMargin="300px"
+              disabled={isLoading || !tracks.length}
+              onIntersect={async (obj: IntersectionObserverEntry) => {
+                //if (counter > 29) return;
+                //console.log(obj);
 
-          <div>          
-            <Modal modalId='modal3' open={open} onClose={onCloseModal} center closeIcon={closeIcon}>
-            
-              <div className="wrap">
-                <div className="search">
-                    <input type="text" className="searchTerm" id='searchTerm'  placeholder="What are you looking for?" />
-                    <button type="button" className="searchButton" onClick={function handleSubmit(){                    
+                setIsLoading(true);                                
 
-                      setHtml(null); setTracks([]); setAlbums([]); setPlist([]); setArtist([]); counter = 0;
+                counter += 20;
 
-                      // console.log((document.getElementById("searchTerm") as HTMLInputElement).value);
-                      let t = document.getElementById('modalbuttons')!
-                      t.style.display = 'flex'
-                      t.style.animation = 'fadeIn 0.5s'
+                //await new Promise(resolve => setTimeout(resolve, 500));  
+                
+                await fetchSearch();                                    
 
-                      fetchSearch()
-                      return false
-                    }}>
-                      <i className="fa fa-search" style={{position: 'absolute', bottom: '9px', right: '14px', color: 'black'}} ></i>
-                    </button>
-                  </div>
+                setIsLoading(false);                
+              }}
+            >
+              <div className={styles.wrap}>
+                <div className={styles.search}>
+                  {searchBar()}
+
+                  {searchButton()}
+                </div>
               </div>
-              <img src={space} style={{zIndex: '0', width: '100%', height: '180px', position: 'fixed', top: '0', opacity: '0.3', objectFit: 'cover', objectPosition: '20% 50%'}} />
 
+              {headerGif()}
 
-              <div id='modalbuttons' style={{display: 'none', justifyContent: 'center', zIndex: '9', position: 'relative', marginTop: '8vw'}}>
-                <button onClick={() => {setHtml(getTracks(tracks)), sessionStorage.setItem('searchHome', 'tracks')}}>Tracks</button>
-                <button onClick={() => {setHtml(getAlbums(albumss,albums, navigate, onCloseModal)), sessionStorage.setItem('searchHome', 'albums')}}>Albums</button>
-                <button onClick={() => {setHtml(getArtists(artist, navigate, onCloseModal)), sessionStorage.setItem('searchHome', 'artists')}}>Artists</button>
-                <button onClick={() => {setHtml(getPlaylists(playlists,plist, navigate, onCloseModal)), sessionStorage.setItem('searchHome', 'playlists')}}>Playlists</button>
-              </div>
+              {searchCategories()}
 
-              <div className='logoModal' style={{maxWidth: '55vw', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', marginTop: '40px'}}>{html ? html : getTracks(tracks)}</div>
-
-              {tracks.length > 0 && <button onClick={function handleSubmit(){
-                counter += 10
-                fetchSearch()
-              }} style={{width: '100%', marginTop: '10px', height: '54px', fontSize: '25px', fontWeight: 'bolder'}} >Load More</button>}                      
-            </Modal>
-          </div>
+              {itemsList()}
+              </InfiniteObserver>                      
+          </Modal>          
         </div>
+        </>
       }
     </>
-  )
-}
+  );
+};
