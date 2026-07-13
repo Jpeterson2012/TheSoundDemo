@@ -16,6 +16,7 @@ import BottomBar from '../BottomBar/BottomBar.tsx';
 import PollPlayer from '../PollPlayer.tsx';
 import ButtonScroll from "../ButtonScroll/ButtonScroll.tsx";
 import UsePlayerContext from '../../hooks/PlayerContext.tsx';
+import { ResponsiveProvider } from '../../hooks/ResponsiveContext.tsx';
 
 export default function WebPlayback() {  
   const [currentDev, setCurrentDev] = useState({name: "TheSound", id: sessionStorage.getItem("device_id"!)});         
@@ -59,23 +60,25 @@ export default function WebPlayback() {
       {!isLoading && (
         <>                              
           <UsePlayerContext.Provider value={{...player}}>
-            {!isLoading2 && <Logo />}
+            <ResponsiveProvider>
+              {!isLoading2 && <Logo />}
 
-            <Routes>                                              
-              <Route path = '/' element={<Home setIsLoading2={setIsLoading2} />} key={0}/>
-              <Route path='/discover' element={<Discover />} key={1} />
-              <Route path='/categories/:id' element={<Categories />} key={2}/>
-              <Route path='/album/:id' element={<Album />} key={3}/>
-              <Route path='/playlist/:id' element={<Playlist />} key={4}/>
-              <Route path='/artist/:id' element={<Artist />} key={5}/>
-              <Route path='*' element={<Navigate to = "/" replace />} />                                           
-            </Routes>    
+              <Routes>                                              
+                <Route path = '/' element={<Home setIsLoading2={setIsLoading2} />} key={0}/>
+                <Route path='/discover' element={<Discover />} key={1} />
+                <Route path='/categories/:id' element={<Categories />} key={2}/>
+                <Route path='/album/:id' element={<Album />} key={3}/>
+                <Route path='/playlist/:id' element={<Playlist />} key={4}/>
+                <Route path='/artist/:id' element={<Artist />} key={5}/>
+                <Route path='*' element={<Navigate to = "/" replace />} />                                           
+              </Routes>    
 
-            {!isLoading2 && <BottomBar currentDev={currentDev} setCurrentDev={setCurrentDev} />}
-             
-            <PollPlayer setCurrentDev={setCurrentDev} currentDev={currentDev}/>
+              {!isLoading2 && <BottomBar currentDev={currentDev} setCurrentDev={setCurrentDev} />}
+              
+              <PollPlayer setCurrentDev={setCurrentDev} currentDev={currentDev}/>
 
-            <ButtonScroll />
+              <ButtonScroll />
+            </ResponsiveProvider>
           </UsePlayerContext.Provider>                           
         </>
       )}        
